@@ -11,7 +11,7 @@
       <div class="logo-container">
 
         <img
-          src="/src/components/icons/proa.jpg"
+          src="./assets/proa.jpg"
           alt="Logo PROA"
           class="logo-image"
         />
@@ -288,9 +288,23 @@
 
 <script>
 
+import { useRouter } from 'vue-router'
+
+
 export default {
 
   name: "Login",
+
+
+  setup() {
+
+    const router = useRouter()
+
+    return {
+      router
+    }
+
+  },
 
 
   data() {
@@ -298,17 +312,24 @@ export default {
     return {
 
       // Datos del formulario
+
       email: "",
 
       password: "",
 
+
       // Checkbox
+
       recordar: false,
 
+
       // Mostrar contraseña
+
       mostrarPassword: false,
 
+
       // Tipo de error
+
       errorTipo: ""
 
     }
@@ -326,58 +347,62 @@ export default {
     iniciarSesion() {
 
       // Eliminamos errores anteriores
-      this.errorTipo = "";
+
+      this.errorTipo = ""
 
 
       // Credenciales de prueba
-      const correoCorrecto = "admin@proa.com";
 
-      const passwordCorrecta = "123456";
+      const correoCorrecto = "admin@proa.com"
+
+      const passwordCorrecta = "123456"
 
 
       // Ambos están mal
+
       if (
         this.email !== correoCorrecto &&
         this.password !== passwordCorrecta
       ) {
 
-        this.errorTipo = "ambos";
+        this.errorTipo = "ambos"
 
-        return;
+        return
 
       }
 
 
       // Correo incorrecto
+
       if (
         this.email !== correoCorrecto
       ) {
 
-        this.errorTipo = "email";
+        this.errorTipo = "email"
 
-        return;
+        return
 
       }
 
 
       // Contraseña incorrecta
+
       if (
         this.password !== passwordCorrecta
       ) {
 
-        this.errorTipo = "password";
+        this.errorTipo = "password"
 
-        return;
+        return
 
       }
 
 
-      // Login correcto
-      alert("¡Inicio de sesión correcto!");
+      // =========================
+      // LOGIN CORRECTO
+      // =========================
 
-      console.log("Usuario:", this.email);
-
-      console.log("Recordar:", this.recordar);
+      this.router.push("/home")
 
     },
 
@@ -388,7 +413,7 @@ export default {
 
     limpiarError() {
 
-      this.errorTipo = "";
+      this.errorTipo = ""
 
     },
 
@@ -401,7 +426,7 @@ export default {
 
       alert(
         "Función para recuperar contraseña"
-      );
+      )
 
     }
 
