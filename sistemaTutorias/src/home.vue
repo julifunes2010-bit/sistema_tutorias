@@ -60,7 +60,9 @@
 
         <a href="#" class="menu-item">
           <span class="icon">⚙</span>
-          <span>Configuración</span>
+          <button @click="irAConfiguracion">
+            Configuración
+          </button>
         </a>
 
       </nav>
@@ -293,8 +295,34 @@
     </main>
 
   </div>
+
 </template>
 
+<script>
+
+import { useRouter } from "vue-router"
+
+export default {
+
+  name: "Home",
+
+  setup() {
+
+    const router = useRouter()
+
+    const irAConfiguracion = () => {
+      router.push("/setting")
+    }
+
+    return {
+      irAConfiguracion
+    }
+
+  }
+
+}
+
+</script>
 
 <style scoped>
 
