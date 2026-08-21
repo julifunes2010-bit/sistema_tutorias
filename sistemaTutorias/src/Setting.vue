@@ -6,32 +6,32 @@
 
       <div class="sidebar-menu">
 
-        <button class="menu-item">
+        <button @click="router.push('/home')" class="menu-item">
           Inicio
         </button>
 
-        <button class="menu-item">
+        <button @click="router.push('/tutorias')" class="menu-item">
           Tutorías
         </button>
 
-        <button class="menu-item">
+        <button @click="router.push('/mis-tutorias')" class="menu-item">
           Mis tutorías
         </button>
 
-        <button class="menu-item">
+        <button @click="router.push('/ayuda')" class="menu-item">
           Ayuda
         </button>
 
         <!-- CONFIGURACIÓN SELECCIONADA -->
-        <button class="menu-item active">
+        <button @click="router.push('/configuracion')" class="menu-item active">
           Configuración
         </button>
 
-        <button class="menu-item">
+        <button @click="router.push('/notificaciones')" class="menu-item">
           Notificaciones
         </button>
 
-        <button class="menu-item">
+        <button @click="router.push('/contacto')" class="menu-item">
           Contacto
         </button>
 
