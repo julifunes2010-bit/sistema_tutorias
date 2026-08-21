@@ -6,6 +6,7 @@ import Home from "../home.vue"
 
 
 
+
 const router = createRouter({
 
   history: createWebHistory(),
