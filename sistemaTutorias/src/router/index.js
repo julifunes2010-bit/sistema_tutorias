@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router"
 import Setting from "../Setting.vue"
 import Login from "../login.vue"
 import Home from "../home.vue"
-
+import register from "../register.vue"
 
 
 
@@ -28,6 +28,11 @@ const router = createRouter({
       path: "/home",
       name: "Home",
       component: Home
+    },
+    {
+      path: "/register",
+      name: "Register",
+      component: register
     }
 
   ]
