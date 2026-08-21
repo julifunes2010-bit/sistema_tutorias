@@ -192,7 +192,7 @@ const reenviarCodigo = () => {
               id="correo"
               v-model="correo"
               type="email"
-              placeholder="nombre@proa.edu.ar"
+              placeholder="nombre@escuelasproa.edu.ar"
               autocomplete="email"
             />
 
