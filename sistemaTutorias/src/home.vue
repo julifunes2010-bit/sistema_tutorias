@@ -54,8 +54,10 @@
         </a>
 
         <a href="#" class="menu-item">
-          <span class="icon">▥</span>
-          <span>Reportes</span>
+          <span class="icon">⚙</span>
+          <button @click="irAreporte">
+            reportes
+          </button>
         </a>
 
         <a href="#" class="menu-item">
@@ -313,9 +315,13 @@ export default {
     const irAConfiguracion = () => {
       router.push("/setting")
     }
+    const irAreporte = () => {
+      router.push("/reportes")
+    } 
 
     return {
-      irAConfiguracion
+      irAConfiguracion,
+      irAreporte,
     }
 
   }

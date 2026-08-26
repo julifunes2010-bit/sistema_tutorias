@@ -1,61 +1,259 @@
 <template>
+
   <div class="settings-page">
 
-    <!-- BARRA LATERAL -->
+    <!-- =========================================
+         BARRA LATERAL
+    ========================================== -->
+
     <aside class="sidebar">
 
-      <div class="sidebar-menu">
+      <!-- LOGO -->
+      <div class="sidebar-header">
 
-        <button @click="router.push('/home')" class="menu-item">
-          Inicio
-        </button>
+        <div class="logo">
+          T
+        </div>
 
-        <button @click="router.push('/tutorias')" class="menu-item">
-          Tutorías
-        </button>
+        <div class="brand">
 
-        <button @click="router.push('/mis-tutorias')" class="menu-item">
-          Mis tutorías
-        </button>
+          <span class="brand-title">
+            Tutorías
+          </span>
 
-        <button @click="router.push('/ayuda')" class="menu-item">
-          Ayuda
-        </button>
+          <span class="brand-subtitle">
+            ProA
+          </span>
 
-        <!-- CONFIGURACIÓN SELECCIONADA -->
-        <button @click="router.push('/configuracion')" class="menu-item active">
-          Configuración
-        </button>
+        </div>
 
-        <button @click="router.push('/notificaciones')" class="menu-item">
-          Notificaciones
-        </button>
+      </div>
 
-        <button @click="router.push('/contacto')" class="menu-item">
-          Contacto
-        </button>
+
+      <!-- SEPARADOR -->
+      <div class="separator"></div>
+
+
+      <!-- =========================================
+           MENÚ PRINCIPAL
+      ========================================== -->
+
+      <nav class="menu">
+
+        <!-- INICIO -->
+        <router-link
+          to="/home"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ♧
+          </span>
+
+          <span>
+            Inicio
+          </span>
+
+        </router-link>
+
+
+        <!-- NUEVA CITACIÓN -->
+        <router-link
+          to="/nueva-citacion"
+          class="menu-item"
+        >
+
+          <span class="menu-icon plus">
+            +
+          </span>
+
+          <span>
+            Nueva citación
+          </span>
+
+        </router-link>
+
+
+        <!-- MIS CITACIONES -->
+        <router-link
+          to="/mis-citaciones"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ▣
+          </span>
+
+          <span>
+            Mis citaciones
+          </span>
+
+        </router-link>
+
+
+        <!-- CURSOS -->
+        <router-link
+          to="/cursos"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ▤
+          </span>
+
+          <span>
+            Cursos
+          </span>
+
+        </router-link>
+
+
+        <!-- MATERIAS -->
+        <router-link
+          to="/materias"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            📚
+          </span>
+
+          <span>
+            Materias
+          </span>
+
+        </router-link>
+
+
+        <!-- ESTUDIANTES -->
+        <router-link
+          to="/estudiantes"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            👤
+          </span>
+
+          <span>
+            Estudiantes
+          </span>
+
+        </router-link>
+
+
+        <!-- HORARIOS -->
+        <router-link
+          to="/horarios"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ◷
+          </span>
+
+          <span>
+            Horarios de tutoría
+          </span>
+
+        </router-link>
+
+      </nav>
+
+
+      <!-- =========================================
+           MENÚ INFERIOR
+      ========================================== -->
+
+      <div class="bottom-menu">
+
+        <!-- REPORTES -->
+        <router-link
+          to="/reportes"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ⚙
+          </span>
+
+          <span @click="irAreporte">
+            Reportes
+          </span>
+
+        </router-link>
+
+
+        <!-- CONFIGURACIÓN ACTIVA -->
+        <router-link
+          to="/setting"
+          class="menu-item active"
+        >
+
+          <span class="menu-icon">
+            ⚙
+          </span>
+
+          <span>
+            Configuración
+          </span>
+
+        </router-link>
 
       </div>
 
     </aside>
 
 
-    <!-- CONTENIDO -->
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+    ========================================== -->
+
     <main class="settings-content">
 
-      <h1>Configuración</h1>
+
+      <!-- ENCABEZADO -->
+
+      <div class="page-header">
+
+        <div>
+
+          <h1>
+            CONFIGURACIÓN
+          </h1>
+
+          <p>
+            Administrá las opciones generales de tu cuenta.
+          </p>
+
+        </div>
+
+      </div>
 
 
-      <!-- CONFIGURACIÓN GENERAL -->
+      <!-- =========================================
+           TARJETA DE CONFIGURACIÓN
+      ========================================== -->
+
       <section class="settings-card">
 
 
-        <!-- PRIVACIDAD -->
-        <div class="setting-row privacy-row">
+        <!-- =====================================
+             PRIVACIDAD
+        ====================================== -->
+
+        <div class="setting-row">
+
+          <div class="setting-icon">
+            🔒
+          </div>
+
 
           <div class="setting-info">
 
-            <h2>Privacidad</h2>
+            <h2>
+              Privacidad
+            </h2>
 
             <p>
               Elegí quién puede ver tu información.
@@ -75,7 +273,9 @@
                 v-model="privacidad"
               />
 
-              Público
+              <span>
+                Público
+              </span>
 
             </label>
 
@@ -89,7 +289,9 @@
                 v-model="privacidad"
               />
 
-              Privado
+              <span>
+                Privado
+              </span>
 
             </label>
 
@@ -98,12 +300,22 @@
         </div>
 
 
-        <!-- BLOQUEAR CUENTA -->
+        <!-- =====================================
+             BLOQUEAR CUENTA
+        ====================================== -->
+
         <div class="setting-row">
+
+          <div class="setting-icon">
+            🔐
+          </div>
+
 
           <div class="setting-info">
 
-            <h2>Bloquear cuenta</h2>
+            <h2>
+              Bloquear cuenta
+            </h2>
 
             <p>
               Bloqueá temporalmente el acceso a tu cuenta.
@@ -116,18 +328,30 @@
             class="action-button"
             @click="bloquearCuenta"
           >
+
             Bloquear
+
           </button>
 
         </div>
 
 
-        <!-- NOTIFICACIONES -->
+        <!-- =====================================
+             NOTIFICACIONES
+        ====================================== -->
+
         <div class="setting-row">
+
+          <div class="setting-icon">
+            🔔
+          </div>
+
 
           <div class="setting-info">
 
-            <h2>Notificaciones</h2>
+            <h2>
+              Notificaciones
+            </h2>
 
             <p>
               Recibí avisos sobre tus tutorías y actividades.
@@ -150,12 +374,22 @@
         </div>
 
 
-        <!-- AYUDA -->
+        <!-- =====================================
+             AYUDA
+        ====================================== -->
+
         <div class="setting-row">
+
+          <div class="setting-icon">
+            ❓
+          </div>
+
 
           <div class="setting-info">
 
-            <h2>Ayuda</h2>
+            <h2>
+              Ayuda
+            </h2>
 
             <p>
               Consultá información y asistencia sobre el sistema.
@@ -168,18 +402,30 @@
             class="action-button"
             @click="mostrarAyuda"
           >
+
             Ver ayuda
+
           </button>
 
         </div>
 
 
-        <!-- CERRAR SESIÓN -->
+        <!-- =====================================
+             CERRAR SESIÓN
+        ====================================== -->
+
         <div class="setting-row logout-row">
+
+          <div class="setting-icon logout-icon">
+            ↪
+          </div>
+
 
           <div class="setting-info">
 
-            <h2>Cerrar sesión</h2>
+            <h2>
+              Cerrar sesión
+            </h2>
 
             <p>
               Salí de tu cuenta y volvé a la pantalla de inicio.
@@ -192,7 +438,9 @@
             class="logout-button"
             @click="cerrarSesion"
           >
+
             Cerrar sesión
+
           </button>
 
         </div>
@@ -200,32 +448,78 @@
 
       </section>
 
+
+      <!-- =========================================
+           INFORMACIÓN
+      ========================================== -->
+
+      <div class="settings-help">
+
+        <span class="help-icon">
+          💡
+        </span>
+
+        <div>
+
+          <h3>
+            Configuración general
+          </h3>
+
+          <p>
+            Desde esta sección podés administrar las
+            preferencias de tu cuenta y del sistema de tutorías.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- =========================================
+           FOOTER
+      ========================================== -->
+
+      <footer class="footer">
+
+        <p class="contact-title">
+          Comunicate con nosotros
+        </p>
+
+
+        <div class="contact-info">
+
+          <span>
+            🟢 +54 9 3548 32-0643
+          </span>
+
+
+          <span>
+            ✉️ jfqmw@esc.edu.ar
+          </span>
+
+        </div>
+
+
+        <p class="copyright">
+          © 2026 Tutorías ProA · Sistema de tutorías
+        </p>
+
+      </footer>
+
+
     </main>
 
   </div>
+
 </template>
+
 
 
 <script>
 
-import { useRouter } from "vue-router"
-
-
 export default {
 
   name: "Setting",
-
-
-  setup() {
-
-    const router = useRouter()
-
-    return {
-      router
-    }
-
-  },
-
 
   data() {
 
@@ -262,7 +556,7 @@ export default {
 
     cerrarSesion() {
 
-      this.router.push("/")
+      this.$router.push("/")
 
     }
 
@@ -273,7 +567,12 @@ export default {
 </script>
 
 
+
 <style scoped>
+
+/* =========================================
+   GENERAL
+========================================= */
 
 * {
   box-sizing: border-box;
@@ -295,7 +594,7 @@ export default {
     Helvetica,
     sans-serif;
 
-  color: #222;
+  color: #333;
 
 }
 
@@ -306,73 +605,236 @@ export default {
 
 .sidebar {
 
-  width: 240px;
+  width: 250px;
 
-  min-height: 100vh;
+  min-width: 250px;
+
+  height: 100vh;
 
   background: #ffffff;
 
-  border-right: 1px solid #e5e5e5;
+  border-right: 1px solid #e1e4e8;
 
   padding: 30px 15px;
-
-}
-
-
-.sidebar-menu {
 
   display: flex;
 
   flex-direction: column;
 
-  gap: 6px;
+}
+
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.sidebar-header {
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 10px;
+
+  margin-bottom: 25px;
+
+}
+
+
+.logo {
+
+  width: 40px;
+
+  height: 40px;
+
+  border-radius: 8px;
+
+  background: #5159d8;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+}
+
+
+.brand {
+
+  display: flex;
+
+  flex-direction: column;
+
+  margin-left: 10px;
+
+}
+
+
+.brand-title {
+
+  font-size: 16px;
+
+  color: #333;
+
+  font-weight: 500;
+
+}
+
+
+.brand-subtitle {
+
+  margin-top: 3px;
+
+  font-size: 13px;
+
+  color: #888;
+
+}
+
+
+/* =========================================
+   SEPARADOR
+========================================= */
+
+.separator {
+
+  height: 1px;
+
+  background: #e5e5e5;
+
+  margin: 0 0 18px;
+
+}
+
+
+/* =========================================
+   MENÚ
+========================================= */
+
+.menu {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
 
 }
 
 
 .menu-item {
 
-  width: 100%;
+  min-height: 44px;
 
-  padding: 14px 18px;
-
-  border: none;
+  padding: 0 14px;
 
   border-radius: 8px;
 
-  background: transparent;
+  display: flex;
 
-  color: #555;
+  align-items: center;
 
-  text-align: left;
+  gap: 15px;
+
+  color: #5f6470;
+
+  text-decoration: none;
 
   font-size: 14px;
 
-  cursor: pointer;
-
-  transition: 0.2s;
+  transition: all 0.2s ease;
 
 }
 
 
 .menu-item:hover {
 
-  background: #f0f4f8;
+  background: #f1f3ff;
 
-  color: #2d7ff9;
+  color: #5159d8;
 
 }
 
 
-/* CONFIGURACIÓN ACTIVA */
+/* =========================================
+   ICONOS
+========================================= */
+
+.menu-icon {
+
+  width: 20px;
+
+  min-width: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #69717d;
+
+  font-size: 17px;
+
+}
+
+
+.menu-item:hover .menu-icon {
+
+  color: #5159d8;
+
+}
+
+
+.menu-icon.plus {
+
+  font-size: 24px;
+
+  font-weight: 300;
+
+}
+
+
+/* =========================================
+   ELEMENTO ACTIVO
+========================================= */
 
 .menu-item.active {
 
-  background: #e8eef7;
+  background: #e9eaff;
 
-  color: #2d7ff9;
+  color: #5159d8;
 
-  font-weight: bold;
+}
+
+
+.menu-item.active .menu-icon {
+
+  color: #5159d8;
+
+}
+
+
+/* =========================================
+   MENÚ INFERIOR
+========================================= */
+
+.bottom-menu {
+
+  margin-top: auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
 
 }
 
@@ -385,26 +847,52 @@ export default {
 
   flex: 1;
 
-  padding: 50px;
+  min-height: 100vh;
 
-  max-width: 1000px;
+  padding: 45px 50px 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  max-width: 1100px;
 
 }
 
 
-.settings-content h1 {
+/* =========================================
+   ENCABEZADO
+========================================= */
 
-  margin:
+.page-header {
 
-    0 0 30px;
+  margin-bottom: 30px;
+
+}
+
+
+.page-header h1 {
+
+  margin: 0 0 8px;
 
   font-size: 32px;
 
   font-weight: 500;
 
-  text-transform: uppercase;
+  letter-spacing: 2px;
 
   color: #333;
+
+}
+
+
+.page-header p {
+
+  margin: 0;
+
+  color: #888;
+
+  font-size: 14px;
 
 }
 
@@ -426,7 +914,6 @@ export default {
   overflow: hidden;
 
   box-shadow:
-
     0 4px 15px
     rgba(0, 0, 0, 0.04);
 
@@ -449,9 +936,11 @@ export default {
 
   align-items: center;
 
-  gap: 30px;
+  gap: 20px;
 
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e8e8e8;
+
+  transition: background 0.2s ease;
 
 }
 
@@ -459,6 +948,40 @@ export default {
 .setting-row:last-child {
 
   border-bottom: none;
+
+}
+
+
+.setting-row:hover {
+
+  background: #fafbff;
+
+}
+
+
+/* =========================================
+   ICONOS DE CONFIGURACIÓN
+========================================= */
+
+.setting-icon {
+
+  width: 42px;
+
+  height: 42px;
+
+  min-width: 42px;
+
+  border-radius: 9px;
+
+  background: #eef0ff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 19px;
 
 }
 
@@ -491,6 +1014,8 @@ export default {
 
   font-size: 13px;
 
+  line-height: 1.5;
+
 }
 
 
@@ -521,6 +1046,8 @@ export default {
 
   font-size: 13px;
 
+  color: #555;
+
   cursor: pointer;
 
 }
@@ -528,44 +1055,48 @@ export default {
 
 .privacy-options input {
 
-  accent-color: #2d7ff9;
+  accent-color: #5159d8;
 
 }
 
 
 /* =========================================
-   BOTONES
+   BOTÓN GENERAL
 ========================================= */
 
 .action-button {
 
   padding: 9px 17px;
 
-  border: 1px solid #2d7ff9;
+  border: 1px solid #5159d8;
 
   border-radius: 7px;
 
-  background: white;
+  background: #ffffff;
 
-  color: #2d7ff9;
+  color: #5159d8;
 
   font-size: 13px;
 
   cursor: pointer;
 
-  transition: 0.2s;
+  transition: all 0.2s ease;
 
 }
 
 
 .action-button:hover {
 
-  background: #2d7ff9;
+  background: #5159d8;
 
-  color: white;
+  color: #ffffff;
 
 }
 
+
+/* =========================================
+   BOTÓN CERRAR SESIÓN
+========================================= */
 
 .logout-button {
 
@@ -582,6 +1113,8 @@ export default {
   font-size: 13px;
 
   cursor: pointer;
+
+  transition: 0.2s;
 
 }
 
@@ -604,6 +1137,8 @@ export default {
   width: 46px;
 
   height: 24px;
+
+  min-width: 46px;
 
 }
 
@@ -661,7 +1196,7 @@ export default {
 
 .switch input:checked + .slider {
 
-  background: #2d7ff9;
+  background: #5159d8;
 
 }
 
@@ -674,21 +1209,137 @@ export default {
 
 
 /* =========================================
-   RESPONSIVE
+   AYUDA
 ========================================= */
 
-@media (max-width: 768px) {
+.settings-help {
+
+  margin-top: 20px;
+
+  padding: 22px 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e1e1;
+
+  border-radius: 12px;
+
+}
+
+
+.help-icon {
+
+  font-size: 24px;
+
+}
+
+
+.settings-help h3 {
+
+  margin: 0 0 5px;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  color: #444;
+
+}
+
+
+.settings-help p {
+
+  margin: 0;
+
+  color: #888;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+
+  margin-top: auto;
+
+  border-top: 1px solid #dcdcdc;
+
+  padding: 25px 0 20px;
+
+  text-align: center;
+
+}
+
+
+.contact-title {
+
+  margin: 0 0 15px;
+
+  color: #777;
+
+  font-size: 15px;
+
+}
+
+
+.contact-info {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 40px;
+
+  color: #888;
+
+  font-size: 13px;
+
+}
+
+
+.copyright {
+
+  margin: 15px 0 0;
+
+  color: #aaa;
+
+  font-size: 12px;
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 800px) {
 
   .sidebar {
 
-    width: 190px;
+    width: 210px;
+
+    min-width: 210px;
 
   }
 
 
   .settings-content {
 
-    padding: 35px 25px;
+    padding: 35px 25px 0;
 
   }
 
@@ -701,6 +1352,10 @@ export default {
 
 }
 
+
+/* =========================================
+   CELULAR
+========================================= */
 
 @media (max-width: 600px) {
 
@@ -715,22 +1370,35 @@ export default {
 
     width: 100%;
 
+    min-width: 100%;
+
+    height: auto;
+
     min-height: auto;
 
-    padding: 10px;
+    padding: 15px;
 
     border-right: none;
 
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e1e4e8;
 
   }
 
 
-  .sidebar-menu {
+  .sidebar-header {
+
+    margin-bottom: 15px;
+
+  }
+
+
+  .menu {
 
     flex-direction: row;
 
     overflow-x: auto;
+
+    gap: 5px;
 
   }
 
@@ -739,39 +1407,98 @@ export default {
 
     min-width: max-content;
 
-    text-align: center;
+    padding: 10px 13px;
+
+  }
+
+
+  .bottom-menu {
+
+    margin-top: 10px;
+
+    flex-direction: row;
+
+    overflow-x: auto;
 
   }
 
 
   .settings-content {
 
-    padding: 25px 15px;
+    padding: 25px 15px 0;
 
   }
 
 
-  .settings-content h1 {
+  .page-header h1 {
 
-    font-size: 26px;
+    font-size: 27px;
 
   }
 
 
   .setting-row {
 
-    flex-direction: column;
+    flex-wrap: wrap;
 
-    align-items: flex-start;
+    padding: 22px;
 
-    gap: 18px;
+  }
+
+
+  .setting-icon {
+
+    width: 38px;
+
+    height: 38px;
+
+    min-width: 38px;
+
+  }
+
+
+  .setting-info {
+
+    min-width: calc(100% - 58px);
+
+  }
+
+
+  .action-button,
+  .logout-button {
+
+    width: 100%;
+
+    margin-top: 5px;
 
   }
 
 
   .privacy-options {
 
+    width: 100%;
+
     flex-direction: row;
+
+    padding-left: 58px;
+
+  }
+
+
+  .settings-help {
+
+    align-items: flex-start;
+
+    padding: 20px;
+
+  }
+
+
+  .contact-info {
+
+    flex-direction: column;
+
+    gap: 10px;
 
   }
 
