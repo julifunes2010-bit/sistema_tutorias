@@ -207,10 +207,9 @@
 
       <!-- REGISTRO -->
       <p class="register">
-
         ¿No tenés una cuenta?
 
-        <a href="#">
+        <a href="#" @click="iraregister">
           Registrate
         </a>
 
@@ -294,18 +293,22 @@ import { useRouter } from 'vue-router'
 export default {
 
   name: "Login",
+  name: "register",
 
 
   setup() {
 
     const router = useRouter()
+    const iraregister = () => {
+      router.push("/register")
+    }
 
     return {
-      router
+      router,
+      iraregister
     }
 
   },
-
 
   data() {
 
