@@ -33,15 +33,11 @@
           <span>Mis citaciones</span>
         </a>
 
-        <a href="#" class="menu-item">
+
+        <router-link to="/cursos" class="menu-item">
           <span class="icon">▤</span>
           <span>Cursos</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <span class="icon">📚</span>
-          <span>Materias</span>
-        </a>
+        </router-link>
 
         <a href="#" class="menu-item">
           <span class="icon">👤</span>
@@ -53,19 +49,16 @@
           <span>Horarios de tutoría</span>
         </a>
 
-        <a href="#" class="menu-item">
-          <span class="icon">⚙</span>
-          <button @click="irAreporte">
-            reportes
-          </button>
-        </a>
+        <router-link to="/reportes" class="menu-item">
+          <span class="icon">📊</span>
+            <span>Reportes</span>
+        </router-link>
 
-        <a href="#" class="menu-item">
+        
+        <router-link to="/setting" class="menu-item">
           <span class="icon">⚙</span>
-          <button @click="irAConfiguracion">
-            Configuración
-          </button>
-        </a>
+          <span>Configuración</span>
+        </router-link>
 
       </nav>
 
