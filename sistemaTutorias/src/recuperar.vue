@@ -52,9 +52,14 @@
 
         </div>
 
-        <button class="boton" @click="verificarCodigo">
-          Verificar código
-        </button>
+        <button><router-link
+        
+          to="/home"
+          class="boton"
+          @click="verificarCodigo"
+        >
+          Continuar
+        </router-link></button>
 
         <button class="boton volver" @click="volver">
           Volver

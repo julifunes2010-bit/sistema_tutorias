@@ -206,9 +206,9 @@
       <p class="register">
         ¿No tenés una cuenta?
 
-        <router-link to="/register">
+        <a href="#" @click="iraregister">
           Registrate
-        </router-link>
+        </a>
 
       </p>
 
