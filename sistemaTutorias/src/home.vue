@@ -39,10 +39,6 @@
           <span>Cursos</span>
         </router-link>
 
-        <a href="#" class="menu-item">
-          <span class="icon">👤</span>
-          <span>Estudiantes</span>
-        </a>
 
         <a href="#" class="menu-item">
           <span class="icon">◷</span>

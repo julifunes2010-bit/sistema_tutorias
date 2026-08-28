@@ -87,13 +87,7 @@
 
 
         <!-- ESTUDIANTES -->
-        <router-link
-          to="/estudiantes"
-          class="menu-item"
-        >
-          <span class="menu-icon">👤</span>
-          <span>Estudiantes</span>
-        </router-link>
+        
 
 
         <!-- HORARIOS -->
