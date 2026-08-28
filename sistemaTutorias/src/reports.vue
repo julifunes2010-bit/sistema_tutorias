@@ -1,6 +1,6 @@
 <template>
 
-  <div class="settings-page">
+  <div class="reports-page">
 
     <!-- =========================================
          BARRA LATERAL
@@ -8,7 +8,7 @@
 
     <aside class="sidebar">
 
-      <!-- LOGO -->
+      <!-- LOGO / NOMBRE -->
       <div class="sidebar-header">
 
         <div class="logo">
@@ -34,10 +34,7 @@
       <div class="separator"></div>
 
 
-      <!-- =========================================
-           MENÚ PRINCIPAL
-      ========================================== -->
-
+      <!-- MENÚ PRINCIPAL -->
       <nav class="menu">
 
         <!-- INICIO -->
@@ -162,32 +159,32 @@
 
 
       <!-- =========================================
-           MENÚ INFERIOR
+           OPCIONES INFERIORES
       ========================================== -->
 
       <div class="bottom-menu">
 
         <!-- REPORTES -->
         <router-link
-          to="/reportes"
-          class="menu-item"
+          to="/reports"
+          class="menu-item bottom-item active"
         >
 
           <span class="menu-icon">
             ⚙
           </span>
 
-          <span @click="irAreporte">
+          <span>
             Reportes
           </span>
 
         </router-link>
 
 
-        <!-- CONFIGURACIÓN ACTIVA -->
+        <!-- CONFIGURACIÓN -->
         <router-link
-          to="/setting"
-          class="menu-item active"
+          to="/Setting"
+          class="menu-item bottom-item"
         >
 
           <span class="menu-icon">
@@ -209,242 +206,76 @@
          CONTENIDO PRINCIPAL
     ========================================== -->
 
-    <main class="settings-content">
+    <main class="reports-content">
 
 
       <!-- ENCABEZADO -->
 
       <div class="page-header">
 
-        <div>
+        <h1>
+          REPORTES
+        </h1>
 
-          <h1>
-            CONFIGURACIÓN
-          </h1>
-
-          <p>
-            Administrá las opciones generales de tu cuenta.
-          </p>
-
-        </div>
+        <p>
+          Consultá información o comunicate con nosotros.
+        </p>
 
       </div>
 
 
       <!-- =========================================
-           TARJETA DE CONFIGURACIÓN
+           PERFIL
       ========================================== -->
 
-      <section class="settings-card">
+      <div class="profile">
+
+        <div class="profile-image">
+
+          <div class="profile-head"></div>
+
+          <div class="profile-body"></div>
+
+        </div>
+
+        <span class="profile-name">
+          LUIS
+        </span>
+
+      </div>
 
 
-        <!-- =====================================
-             PRIVACIDAD
-        ====================================== -->
+      <!-- =========================================
+           TARJETA PRINCIPAL
+      ========================================== -->
 
-        <div class="setting-row">
+      <section class="report-card">
 
-          <div class="setting-icon">
-            🔒
-          </div>
-
-
-          <div class="setting-info">
-
-            <h2>
-              Privacidad
-            </h2>
-
-            <p>
-              Elegí quién puede ver tu información.
-            </p>
-
-          </div>
+        <div class="report-icon">
+          ?
+        </div>
 
 
-          <div class="privacy-options">
+        <div class="report-info">
 
-            <label>
+          <h2>
+            ¿Tenés alguna consulta?
+          </h2>
 
-              <input
-                type="radio"
-                name="privacy"
-                value="publico"
-                v-model="privacidad"
-              />
-
-              <span>
-                Público
-              </span>
-
-            </label>
-
-
-            <label>
-
-              <input
-                type="radio"
-                name="privacy"
-                value="privado"
-                v-model="privacidad"
-              />
-
-              <span>
-                Privado
-              </span>
-
-            </label>
-
-          </div>
+          <p>
+            Cualquier consulta, duda o pregunta
+            comunicate con nosotros.
+          </p>
 
         </div>
 
 
-        <!-- =====================================
-             BLOQUEAR CUENTA
-        ====================================== -->
-
-        <div class="setting-row">
-
-          <div class="setting-icon">
-            🔐
-          </div>
-
-
-          <div class="setting-info">
-
-            <h2>
-              Bloquear cuenta
-            </h2>
-
-            <p>
-              Bloqueá temporalmente el acceso a tu cuenta.
-            </p>
-
-          </div>
-
-
-          <button
-            class="action-button"
-            @click="bloquearCuenta"
-          >
-
-            Bloquear
-
-          </button>
-
-        </div>
-
-
-        <!-- =====================================
-             NOTIFICACIONES
-        ====================================== -->
-
-        <div class="setting-row">
-
-          <div class="setting-icon">
-            🔔
-          </div>
-
-
-          <div class="setting-info">
-
-            <h2>
-              Notificaciones
-            </h2>
-
-            <p>
-              Recibí avisos sobre tus tutorías y actividades.
-            </p>
-
-          </div>
-
-
-          <label class="switch">
-
-            <input
-              type="checkbox"
-              v-model="notificaciones"
-            />
-
-            <span class="slider"></span>
-
-          </label>
-
-        </div>
-
-
-        <!-- =====================================
-             AYUDA
-        ====================================== -->
-
-        <div class="setting-row">
-
-          <div class="setting-icon">
-            ❓
-          </div>
-
-
-          <div class="setting-info">
-
-            <h2>
-              Ayuda
-            </h2>
-
-            <p>
-              Consultá información y asistencia sobre el sistema.
-            </p>
-
-          </div>
-
-
-          <button
-            class="action-button"
-            @click="mostrarAyuda"
-          >
-
-            Ver ayuda
-
-          </button>
-
-        </div>
-
-
-        <!-- =====================================
-             CERRAR SESIÓN
-        ====================================== -->
-
-        <div class="setting-row logout-row">
-
-          <div class="setting-icon logout-icon">
-            ↪
-          </div>
-
-
-          <div class="setting-info">
-
-            <h2>
-              Cerrar sesión
-            </h2>
-
-            <p>
-              Salí de tu cuenta y volvé a la pantalla de inicio.
-            </p>
-
-          </div>
-
-
-          <button
-            class="logout-button"
-            @click="cerrarSesion"
-          >
-
-            Cerrar sesión
-
-          </button>
-
-        </div>
-
+        <button
+          class="contact-button"
+          @click="contactar"
+        >
+          Contactanos
+        </button>
 
       </section>
 
@@ -453,26 +284,20 @@
            INFORMACIÓN
       ========================================== -->
 
-      <div class="settings-help">
+      <section class="information-card">
 
-        <span class="help-icon">
-          💡
-        </span>
+        <h2>
+          Información
+        </h2>
 
-        <div>
+        <p>
+          Si encontraste un problema en el sistema,
+          necesitás realizar una consulta o querés
+          informar alguna situación, podés comunicarte
+          con nosotros a través de los medios de contacto.
+        </p>
 
-          <h3>
-            Configuración general
-          </h3>
-
-          <p>
-            Desde esta sección podés administrar las
-            preferencias de tu cuenta y del sistema de tutorías.
-          </p>
-
-        </div>
-
-      </div>
+      </section>
 
 
       <!-- =========================================
@@ -499,11 +324,6 @@
 
         </div>
 
-
-        <p class="copyright">
-          © 2026 Tutorías ProA · Sistema de tutorías
-        </p>
-
       </footer>
 
 
@@ -519,44 +339,15 @@
 
 export default {
 
-  name: "Setting",
-
-  data() {
-
-    return {
-
-      privacidad: "publico",
-
-      notificaciones: true
-
-    }
-
-  },
-
+  name: "Reports",
 
   methods: {
 
-    bloquearCuenta() {
+    contactar() {
 
       alert(
-        "La función para bloquear la cuenta estará disponible próximamente."
+        "Podés comunicarte con nosotros mediante WhatsApp o correo electrónico."
       )
-
-    },
-
-
-    mostrarAyuda() {
-
-      alert(
-        "Acá podrás encontrar ayuda sobre el sistema de tutorías."
-      )
-
-    },
-
-
-    cerrarSesion() {
-
-      this.$router.push("/")
 
     }
 
@@ -579,7 +370,7 @@ export default {
 }
 
 
-.settings-page {
+.reports-page {
 
   min-height: 100vh;
 
@@ -625,7 +416,7 @@ export default {
 
 
 /* =========================================
-   ENCABEZADO
+   ENCABEZADO DE LA BARRA
 ========================================= */
 
 .sidebar-header {
@@ -839,11 +630,18 @@ export default {
 }
 
 
+.bottom-item {
+
+  margin-top: 2px;
+
+}
+
+
 /* =========================================
-   CONTENIDO
+   CONTENIDO PRINCIPAL
 ========================================= */
 
-.settings-content {
+.reports-content {
 
   flex: 1;
 
@@ -866,7 +664,7 @@ export default {
 
 .page-header {
 
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 
 }
 
@@ -890,18 +688,107 @@ export default {
 
   margin: 0;
 
-  color: #888;
-
   font-size: 14px;
+
+  color: #888;
 
 }
 
 
 /* =========================================
-   TARJETA
+   PERFIL
 ========================================= */
 
-.settings-card {
+.profile {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 30px;
+
+}
+
+
+.profile-image {
+
+  width: 75px;
+
+  height: 75px;
+
+  border: 1px solid #cfcfcf;
+
+  border-radius: 50%;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background: #fafafa;
+
+}
+
+
+/* CABEZA */
+
+.profile-head {
+
+  width: 27px;
+
+  height: 27px;
+
+  background: #8c8c8c;
+
+  border-radius: 50%;
+
+  position: absolute;
+
+  top: 13px;
+
+  left: 23px;
+
+}
+
+
+/* CUERPO */
+
+.profile-body {
+
+  width: 60px;
+
+  height: 31px;
+
+  background: #8c8c8c;
+
+  border-radius: 50% 50% 0 0;
+
+  position: absolute;
+
+  bottom: -4px;
+
+  left: 7px;
+
+}
+
+
+.profile-name {
+
+  font-size: 15px;
+
+  color: #777;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* =========================================
+   TARJETA DE REPORTE
+========================================= */
+
+.report-card {
 
   width: 100%;
 
@@ -911,7 +798,13 @@ export default {
 
   border-radius: 12px;
 
-  overflow: hidden;
+  padding: 30px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 25px;
 
   box-shadow:
     0 4px 15px
@@ -920,60 +813,13 @@ export default {
 }
 
 
-/* =========================================
-   FILAS
-========================================= */
+.report-icon {
 
-.setting-row {
+  width: 55px;
 
-  min-height: 105px;
+  height: 55px;
 
-  padding: 24px 30px;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  gap: 20px;
-
-  border-bottom: 1px solid #e8e8e8;
-
-  transition: background 0.2s ease;
-
-}
-
-
-.setting-row:last-child {
-
-  border-bottom: none;
-
-}
-
-
-.setting-row:hover {
-
-  background: #fafbff;
-
-}
-
-
-/* =========================================
-   ICONOS DE CONFIGURACIÓN
-========================================= */
-
-.setting-icon {
-
-  width: 42px;
-
-  height: 42px;
-
-  min-width: 42px;
-
-  border-radius: 9px;
-
-  background: #eef0ff;
+  min-width: 55px;
 
   display: flex;
 
@@ -981,21 +827,108 @@ export default {
 
   justify-content: center;
 
-  font-size: 19px;
+  border-radius: 50%;
+
+  background: #e8eef7;
+
+  color: #5159d8;
+
+  font-size: 25px;
+
+  font-weight: bold;
 
 }
 
 
-.setting-info {
+.report-info {
 
   flex: 1;
 
 }
 
 
-.setting-info h2 {
+.report-info h2 {
 
-  margin: 0 0 7px;
+  margin: 0 0 8px;
+
+  font-size: 18px;
+
+  font-weight: 500;
+
+  color: #333;
+
+}
+
+
+.report-info p {
+
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  color: #888;
+
+}
+
+
+/* =========================================
+   BOTÓN
+========================================= */
+
+.contact-button {
+
+  padding: 10px 18px;
+
+  border: 1px solid #5159d8;
+
+  border-radius: 7px;
+
+  background: white;
+
+  color: #5159d8;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+
+.contact-button:hover {
+
+  background: #5159d8;
+
+  color: white;
+
+}
+
+
+/* =========================================
+   INFORMACIÓN
+========================================= */
+
+.information-card {
+
+  margin-top: 20px;
+
+  padding: 25px 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e1e1;
+
+  border-radius: 12px;
+
+}
+
+
+.information-card h2 {
+
+  margin: 0 0 10px;
 
   font-size: 17px;
 
@@ -1006,262 +939,17 @@ export default {
 }
 
 
-.setting-info p {
+.information-card p {
 
   margin: 0;
 
-  color: #888;
+  max-width: 700px;
 
-  font-size: 13px;
+  font-size: 14px;
 
-  line-height: 1.5;
-
-}
-
-
-/* =========================================
-   PRIVACIDAD
-========================================= */
-
-.privacy-options {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-
-  min-width: 100px;
-
-}
-
-
-.privacy-options label {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 7px;
-
-  font-size: 13px;
-
-  color: #555;
-
-  cursor: pointer;
-
-}
-
-
-.privacy-options input {
-
-  accent-color: #5159d8;
-
-}
-
-
-/* =========================================
-   BOTÓN GENERAL
-========================================= */
-
-.action-button {
-
-  padding: 9px 17px;
-
-  border: 1px solid #5159d8;
-
-  border-radius: 7px;
-
-  background: #ffffff;
-
-  color: #5159d8;
-
-  font-size: 13px;
-
-  cursor: pointer;
-
-  transition: all 0.2s ease;
-
-}
-
-
-.action-button:hover {
-
-  background: #5159d8;
-
-  color: #ffffff;
-
-}
-
-
-/* =========================================
-   BOTÓN CERRAR SESIÓN
-========================================= */
-
-.logout-button {
-
-  padding: 9px 17px;
-
-  border: none;
-
-  border-radius: 7px;
-
-  background: #dc3545;
-
-  color: white;
-
-  font-size: 13px;
-
-  cursor: pointer;
-
-  transition: 0.2s;
-
-}
-
-
-.logout-button:hover {
-
-  background: #bb2d3b;
-
-}
-
-
-/* =========================================
-   SWITCH
-========================================= */
-
-.switch {
-
-  position: relative;
-
-  width: 46px;
-
-  height: 24px;
-
-  min-width: 46px;
-
-}
-
-
-.switch input {
-
-  opacity: 0;
-
-  width: 0;
-
-  height: 0;
-
-}
-
-
-.slider {
-
-  position: absolute;
-
-  inset: 0;
-
-  background: #ccc;
-
-  border-radius: 20px;
-
-  cursor: pointer;
-
-  transition: 0.2s;
-
-}
-
-
-.slider::before {
-
-  content: "";
-
-  position: absolute;
-
-  width: 18px;
-
-  height: 18px;
-
-  left: 3px;
-
-  top: 3px;
-
-  background: white;
-
-  border-radius: 50%;
-
-  transition: 0.2s;
-
-}
-
-
-.switch input:checked + .slider {
-
-  background: #5159d8;
-
-}
-
-
-.switch input:checked + .slider::before {
-
-  transform: translateX(22px);
-
-}
-
-
-/* =========================================
-   AYUDA
-========================================= */
-
-.settings-help {
-
-  margin-top: 20px;
-
-  padding: 22px 25px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
-
-  background: #ffffff;
-
-  border: 1px solid #e1e1e1;
-
-  border-radius: 12px;
-
-}
-
-
-.help-icon {
-
-  font-size: 24px;
-
-}
-
-
-.settings-help h3 {
-
-  margin: 0 0 5px;
-
-  font-size: 15px;
-
-  font-weight: 500;
-
-  color: #444;
-
-}
-
-
-.settings-help p {
-
-  margin: 0;
+  line-height: 1.6;
 
   color: #888;
-
-  font-size: 13px;
-
-  line-height: 1.5;
 
 }
 
@@ -1285,7 +973,7 @@ export default {
 
 .contact-title {
 
-  margin: 0 0 15px;
+  margin: 0 0 18px;
 
   color: #777;
 
@@ -1311,17 +999,6 @@ export default {
 }
 
 
-.copyright {
-
-  margin: 15px 0 0;
-
-  color: #aaa;
-
-  font-size: 12px;
-
-}
-
-
 /* =========================================
    TABLET
 ========================================= */
@@ -1337,16 +1014,16 @@ export default {
   }
 
 
-  .settings-content {
+  .reports-content {
 
     padding: 35px 25px 0;
 
   }
 
 
-  .setting-row {
+  .report-card {
 
-    padding: 22px;
+    padding: 25px;
 
   }
 
@@ -1354,12 +1031,12 @@ export default {
 
 
 /* =========================================
-   CELULAR
+   CELULARES
 ========================================= */
 
 @media (max-width: 600px) {
 
-  .settings-page {
+  .reports-page {
 
     flex-direction: column;
 
@@ -1423,7 +1100,7 @@ export default {
   }
 
 
-  .settings-content {
+  .reports-content {
 
     padding: 25px 15px 0;
 
@@ -1437,59 +1114,34 @@ export default {
   }
 
 
-  .setting-row {
+  .profile {
 
-    flex-wrap: wrap;
-
-    padding: 22px;
+    margin-bottom: 25px;
 
   }
 
 
-  .setting-icon {
+  .report-card {
 
-    width: 38px;
-
-    height: 38px;
-
-    min-width: 38px;
-
-  }
-
-
-  .setting-info {
-
-    min-width: calc(100% - 58px);
-
-  }
-
-
-  .action-button,
-  .logout-button {
-
-    width: 100%;
-
-    margin-top: 5px;
-
-  }
-
-
-  .privacy-options {
-
-    width: 100%;
-
-    flex-direction: row;
-
-    padding-left: 58px;
-
-  }
-
-
-  .settings-help {
+    flex-direction: column;
 
     align-items: flex-start;
 
-    padding: 20px;
+    padding: 25px;
+
+  }
+
+
+  .contact-button {
+
+    width: 100%;
+
+  }
+
+
+  .information-card {
+
+    padding: 22px;
 
   }
 

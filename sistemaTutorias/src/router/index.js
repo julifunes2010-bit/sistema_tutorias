@@ -4,6 +4,7 @@ import Setting from "../Setting.vue"
 import Login from "../login.vue"
 import Home from "../home.vue"
 import register from "../register.vue"
+import reports from "../reports.vue"
 
 
 
@@ -33,6 +34,11 @@ const router = createRouter({
       path: "/register",
       name: "Register",
       component: register
+    },
+    {
+      path: "/reportes",
+      name: "Reports",
+      component: reports
     }
 
   ]
