@@ -63,9 +63,11 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { ref } from "vue"
-
+export default {
+  name: "Recuperar"
+}
 const correo = ref("")
 const mostrarCodigo = ref(false)
 

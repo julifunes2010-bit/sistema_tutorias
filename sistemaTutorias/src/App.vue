@@ -5,13 +5,14 @@
 <script>
 import Login from "./login.vue"
 import Home from "./home.vue"
-import RECUPERAR from "./RecuperarContraseña.vue"
+import recuperar from "./recuperar.vue"
+
 
 export default {
   components: {
     Login,
     Home,
-    RECUPERAR
+    recuperar
   }
 }
 </script>

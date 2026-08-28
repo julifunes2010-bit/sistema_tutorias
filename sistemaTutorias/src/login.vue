@@ -184,12 +184,9 @@
 
 
           <!-- Recuperar contraseña -->
-          <a
-            href="#"
-            @click="RecuperarContraseña"
-          >
-            ¿Olvidaste tu contraseña?
-          </a>
+         <router-link to="/recuperar">
+         ¿Olvidaste tu contraseña?
+         </router-link>
 
         </div>
 
@@ -288,7 +285,9 @@
 <script>
 
 import { useRouter } from 'vue-router'
-import RecuperarContraseña from './RecuperarContraseña.vue';
+
+import iraregister from './register.vue';
+import Recuperar from './recuperar.vue';
 
 
 export default {
@@ -302,11 +301,13 @@ export default {
     const router = useRouter()
     const iraregister = () => {
       router.push("/register")
+      router.push("/recuperar")
     }
 
     return {
       router,
-      iraregister
+      iraregister,
+      Recuperar
     }
 
   },

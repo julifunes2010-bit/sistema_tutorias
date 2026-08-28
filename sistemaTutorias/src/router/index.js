@@ -5,7 +5,7 @@ import Login from "../login.vue"
 import Home from "../home.vue"
 import register from "../register.vue"
 import reports from "../reports.vue"
-import RecuperarContraseña from "..RecuperarContraseña.vue"
+import recuperar from "../recuperar.vue"
 
 
 
@@ -44,9 +44,9 @@ const router = createRouter({
       component: reports
     },
     {
-      path: "/RecuperarContraseña",
-      name: "RecuperarContraseña",
-      component: RECUPERAR
+      path: "/recuperar",
+      name: "Recuperar",
+      component: recuperar
     }
 
   ]
