@@ -58,8 +58,32 @@
           required
         />
 
+        <!-- ROL -->
+        <label for="rol">
+          Seleccioná tu rol
+        </label>
 
+        <select id="rol" v-model="rol" required>
+
+          <option value="director">
+            Director
+          </option>
+
+          <option value="preceptor">
+            Preceptor
+          </option>
+          <option value="coordinador">
+             Coordinador 
+          </option> 
+          <option value="secretario">
+             Secretario 
+          </option>
+          <option value="profesor"> 
+            Profesor 
+          </option>
+     </select>
         <!-- ERROR -->
+
         <p v-if="error" class="error">
           {{ error }}
         </p>
@@ -198,7 +222,7 @@ const registrarse = () => {
 
 h1 {
   text-align: center;
-
+  color: #110e0e;
   margin-bottom: 10px;
 }
 
@@ -206,7 +230,7 @@ h1 {
 .register-box > p {
   text-align: center;
 
-  color: #666;
+  color: #110e0e;
 
   margin-bottom: 25px;
 }
@@ -220,11 +244,15 @@ form {
 
 
 label {
+  
+  color: #110e0e;
   margin-top: 15px;
 
   margin-bottom: 6px;
 
   font-weight: bold;
+
+  
 }
 
 
