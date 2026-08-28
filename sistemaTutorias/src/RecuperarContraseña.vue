@@ -74,7 +74,6 @@ const codigo = ref(["", "", "", "", "", ""])
 const mensaje = ref("")
 const tipoMensaje = ref("")
 
-
 function enviarCodigo() {
 
   if (correo.value === "") {

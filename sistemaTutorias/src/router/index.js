@@ -5,6 +5,7 @@ import Login from "../login.vue"
 import Home from "../home.vue"
 import register from "../register.vue"
 import reports from "../reports.vue"
+import RecuperarContraseña from "..RecuperarContraseña.vue"
 
 
 
@@ -13,6 +14,8 @@ const router = createRouter({
   history: createWebHistory(),
 
   routes: [
+
+
 
     {
       path: "/setting",
@@ -39,6 +42,11 @@ const router = createRouter({
       path: "/reportes",
       name: "Reports",
       component: reports
+    },
+    {
+      path: "/RecuperarContraseña",
+      name: "RecuperarContraseña",
+      component: RECUPERAR
     }
 
   ]

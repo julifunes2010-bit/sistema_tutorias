@@ -186,7 +186,7 @@
           <!-- Recuperar contraseña -->
           <a
             href="#"
-            @click.prevent="recuperarPassword"
+            @click="RecuperarContraseña"
           >
             ¿Olvidaste tu contraseña?
           </a>
@@ -288,6 +288,7 @@
 <script>
 
 import { useRouter } from 'vue-router'
+import RecuperarContraseña from './RecuperarContraseña.vue';
 
 
 export default {
@@ -425,13 +426,6 @@ export default {
        RECUPERAR CONTRASEÑA
     ========================== */
 
-    recuperarPassword() {
-
-      alert(
-        "Función para recuperar contraseña"
-      )
-
-    }
 
   }
 
