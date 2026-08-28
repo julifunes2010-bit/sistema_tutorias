@@ -3,43 +3,42 @@
 
     <div class="contenedor">
 
-      <h1>RECUPERAR<br />CONTRASEÑA</h1>
+      <h1>RECUPERAR<br>CONTRASEÑA</h1>
 
-      <p class="descripcion">
-        Ingresá tu correo electrónico y te enviaremos un código
-        para recuperar tu contraseña.
-      </p>
+      <!-- INGRESAR CORREO -->
+      <div v-if="!mostrarCodigo">
 
-      <!-- CORREO -->
-      <div class="campo">
-        <label for="correo">Correo electrónico</label>
+        <p class="descripcion">
+          Ingresá tu correo electrónico para recuperar tu contraseña.
+        </p>
 
-        <input
-          id="correo"
-          v-model="correo"
-          type="email"
-          placeholder="Ingresá tu correo"
-        />
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+
+          <input
+            id="correo"
+            v-model="correo"
+            type="email"
+            placeholder="Ingresá tu correo"
+          >
+        </div>
+
+        <button class="boton" @click="enviarCodigo">
+          Continuar
+        </button>
+
       </div>
 
-      <!-- BOTÓN ENVIAR -->
-      <button class="boton" @click="enviarCodigo">
-        Enviar código
-      </button>
 
-      <!-- MENSAJE -->
-      <p v-if="mensaje" :class="tipoMensaje">
-        {{ mensaje }}
-      </p>
-
-      <!-- CÓDIGO DE VERIFICACIÓN -->
-      <div v-if="mostrarCodigo" class="verificacion">
+      <!-- INGRESAR CÓDIGO -->
+      <div v-else>
 
         <p class="descripcion">
           Ingresá el código de 6 dígitos que recibiste en tu correo.
         </p>
 
         <div class="codigo">
+
           <input
             v-for="(numero, index) in codigo"
             :key="index"
@@ -49,84 +48,156 @@
             inputmode="numeric"
             class="numero"
             @input="siguienteCasillero(index)"
-          />
+          >
+
         </div>
 
         <button class="boton" @click="verificarCodigo">
           Verificar código
         </button>
 
+        <button class="boton volver" @click="volver">
+          Volver
+        </button>
+
       </div>
+
+
+      <!-- MENSAJES -->
+      <p
+        v-if="mensaje"
+        :class="tipoMensaje"
+      >
+        {{ mensaje }}
+      </p>
 
     </div>
 
   </div>
 </template>
 
-<script>
+
+<script setup>
+
 import { ref } from "vue"
-export default {
-  name: "Recuperar"
-}
+
 const correo = ref("")
+
 const mostrarCodigo = ref(false)
 
-const codigo = ref(["", "", "", "", "", ""])
+const codigo = ref([
+  "",
+  "",
+  "",
+  "",
+  "",
+  ""
+])
 
 const mensaje = ref("")
+
 const tipoMensaje = ref("")
+
 
 function enviarCodigo() {
 
   if (correo.value === "") {
-    mensaje.value = "Por favor, ingresá tu correo electrónico."
+
+    mensaje.value =
+      "Por favor, ingresá tu correo electrónico."
+
     tipoMensaje.value = "error"
+
     return
   }
 
   if (!correo.value.includes("@")) {
-    mensaje.value = "Ingresá un correo electrónico válido."
+
+    mensaje.value =
+      "Ingresá un correo electrónico válido."
+
     tipoMensaje.value = "error"
+
     return
   }
 
+  // Por ahora solamente pasa a la pantalla del código
   mostrarCodigo.value = true
 
-  mensaje.value = "Te enviamos un código de verificación."
-  tipoMensaje.value = "correcto"
+  mensaje.value = ""
+
 }
 
 
 function siguienteCasillero(index) {
 
-  // Permite solamente números
-  codigo.value[index] = codigo.value[index].replace(/\D/g, "")
+  // Solo permite números
+  codigo.value[index] =
+    codigo.value[index].replace(/\D/g, "")
 
-  if (codigo.value[index] !== "" && index < 5) {
 
-    const casilleros = document.querySelectorAll(".numero")
+  // Pasa automáticamente al siguiente casillero
+  if (
+    codigo.value[index] !== "" &&
+    index < 5
+  ) {
+
+    const casilleros =
+      document.querySelectorAll(".numero")
 
     casilleros[index + 1].focus()
+
   }
+
 }
 
 
 function verificarCodigo() {
 
-  const codigoCompleto = codigo.value.join("")
+  const codigoCompleto =
+    codigo.value.join("")
+
 
   if (codigoCompleto.length !== 6) {
 
-    mensaje.value = "Ingresá los 6 números del código."
+    mensaje.value =
+      "Ingresá los 6 números del código."
+
     tipoMensaje.value = "error"
 
     return
+
   }
 
-  mensaje.value = "Código verificado correctamente."
+
+  // Por ahora no se comprueba el código
+  mensaje.value =
+    "Código ingresado correctamente."
+
   tipoMensaje.value = "correcto"
+
 }
+
+
+function volver() {
+
+  mostrarCodigo.value = false
+
+  codigo.value = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ]
+
+  mensaje.value = ""
+
+}
+
 </script>
+
 
 <style scoped>
 
@@ -135,18 +206,23 @@ function verificarCodigo() {
 }
 
 .pagina {
+
   min-height: 100vh;
 
   display: flex;
+
   justify-content: center;
+
   align-items: center;
 
   background-color: #f4f6f8;
 
   padding: 20px;
+
 }
 
 .contenedor {
+
   width: 420px;
 
   background-color: white;
@@ -157,10 +233,13 @@ function verificarCodigo() {
 
   text-align: center;
 
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.12);
+
 }
 
 h1 {
+
   margin: 0 0 25px;
 
   font-size: 30px;
@@ -168,9 +247,11 @@ h1 {
   color: #333;
 
   letter-spacing: 1px;
+
 }
 
 .descripcion {
+
   color: #666;
 
   font-size: 15px;
@@ -178,15 +259,19 @@ h1 {
   line-height: 1.5;
 
   margin-bottom: 25px;
+
 }
 
 .campo {
+
   text-align: left;
 
   margin-bottom: 18px;
+
 }
 
 .campo label {
+
   display: block;
 
   margin-bottom: 7px;
@@ -194,9 +279,11 @@ h1 {
   font-size: 14px;
 
   color: #444;
+
 }
 
 .campo input {
+
   width: 100%;
 
   height: 45px;
@@ -210,13 +297,17 @@ h1 {
   font-size: 15px;
 
   outline: none;
+
 }
 
 .campo input:focus {
+
   border-color: #4a90e2;
+
 }
 
 .boton {
+
   width: 100%;
 
   height: 45px;
@@ -233,48 +324,36 @@ h1 {
 
   cursor: pointer;
 
-  transition: 0.2s;
+  margin-top: 10px;
+
 }
 
 .boton:hover {
+
   background-color: #357abd;
+
 }
 
-.error {
-  color: #d93025;
+.volver {
 
-  font-size: 14px;
+  background-color: #777;
 
-  margin-top: 15px;
-}
-
-.correcto {
-  color: #188038;
-
-  font-size: 14px;
-
-  margin-top: 15px;
-}
-
-.verificacion {
-  margin-top: 25px;
-
-  padding-top: 20px;
-
-  border-top: 1px solid #eee;
 }
 
 .codigo {
+
   display: flex;
 
   justify-content: center;
 
   gap: 8px;
 
-  margin: 20px 0;
+  margin: 25px 0;
+
 }
 
 .numero {
+
   width: 45px;
 
   height: 50px;
@@ -288,10 +367,33 @@ h1 {
   font-size: 22px;
 
   outline: none;
+
 }
 
 .numero:focus {
+
   border-color: #4a90e2;
+
+}
+
+.error {
+
+  color: #d93025;
+
+  font-size: 14px;
+
+  margin-top: 15px;
+
+}
+
+.correcto {
+
+  color: #188038;
+
+  font-size: 14px;
+
+  margin-top: 15px;
+
 }
 
 </style>
