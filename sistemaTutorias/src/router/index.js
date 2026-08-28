@@ -6,7 +6,7 @@ import Home from "../home.vue"
 import register from "../register.vue"
 import reports from "../reports.vue"
 import recuperar from "../recuperar.vue"
-
+import cursos from "../cursos.vue"
 
 
 const router = createRouter({
@@ -47,6 +47,11 @@ const router = createRouter({
       path: "/recuperar",
       name: "Recuperar",
       component: recuperar
+    },
+    {
+      path: "/cursos",
+      name: "Cursos",
+      component: cursos
     }
 
   ]
