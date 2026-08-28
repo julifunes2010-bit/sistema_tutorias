@@ -57,11 +57,40 @@
           placeholder="Repetí tu contraseña"
           required
         />
+        <!-- ROL --> 
+        <label for="rol">
+          Seleccioná tu rol 
+        </label>
+        <select id="rol" v-model="rol" required >
 
+          
         <!-- ROL -->
         <label for="rol">
           Seleccioná tu rol
         </label>
+
+            <option value="director"> 
+              Director 
+            </option>
+
+            <option value="preceptor"> 
+              Preceptor
+             </option>
+
+            <option value="coordinador">
+              Coordinador 
+            </option> 
+
+            <option value="secretario">
+              Secretario 
+            </option> 
+
+            <option value="profesor"> 
+              Profesor 
+            </option>
+
+        </select>
+>>>>>>> registers
 
         <select id="rol" v-model="rol" required>
 
@@ -221,6 +250,9 @@ const registrarse = () => {
 
 
 h1 {
+
+  color : #333;
+
   text-align: center;
   color: #110e0e;
   margin-bottom: 10px;
@@ -244,8 +276,9 @@ form {
 
 
 label {
+
+  color: #333;
   
-  color: #110e0e;
   margin-top: 15px;
 
   margin-bottom: 6px;
@@ -259,7 +292,7 @@ label {
 input {
   padding: 12px;
 
-  border: 1px solid #ccc;
+  border: 1px solid #3ca2dd;
 
   border-radius: 6px;
 
