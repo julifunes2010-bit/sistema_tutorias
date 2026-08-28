@@ -384,14 +384,12 @@
           </div>
 
 
-          <button
+          <router-link
+            to="/reportes"
             class="action-button"
-            @click="mostrarAyuda"
           >
-
             Ver ayuda
-
-          </button>
+          </router-link>
 
         </div>
 
