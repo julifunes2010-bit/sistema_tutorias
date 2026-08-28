@@ -63,12 +63,6 @@
         </label>
         <select id="rol" v-model="rol" required >
 
-          
-        <!-- ROL -->
-        <label for="rol">
-          Seleccioná tu rol
-        </label>
-
             <option value="director"> 
               Director 
             </option>
@@ -90,27 +84,7 @@
             </option>
 
         </select>
->>>>>>> registers
 
-        <select id="rol" v-model="rol" required>
-
-          <option value="director">
-            Director
-          </option>
-
-          <option value="preceptor">
-            Preceptor
-          </option>
-          <option value="coordinador">
-             Coordinador 
-          </option> 
-          <option value="secretario">
-             Secretario 
-          </option>
-          <option value="profesor"> 
-            Profesor 
-          </option>
-     </select>
         <!-- ERROR -->
 
         <p v-if="error" class="error">
@@ -120,9 +94,15 @@
 
         <!-- REGISTRARSE -->
         <button type="submit">
+          <router-link
+            to="/home"
+            class="boton"
+            @click="registrarse"
+          > 
           Registrarse
-        </button>
+          </router-link>
 
+        </button> 
       </form>
 
 
