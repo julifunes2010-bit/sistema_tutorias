@@ -21,8 +21,6 @@
   <img src="https://img.shields.io/badge/VERSION-1.0-A5B4FC?style=for-the-badge">
 </p>
 
-
-
 #  Objetivo
 
 El objetivo de **Sistema de Tutorías ProA** es desarrollar una plataforma web que facilite la organización y gestión de tutorías dentro de una institución educativa.
@@ -52,5 +50,41 @@ admin@proa.com
 Contraseña:
 123456
 ```
+## Personas desarrolladoras del proyecto
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/meteoro-sys">
+        <img src="https://github.com/meteoro-sys.png" width="115px;" alt="Perfil"/><br>
+        <sub><b>Maximo Sandoval</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/julifunes2010-bit">
+        <img src="https://github.com/julifunes2010-bit.png" width="115px;" alt="Perfil"/><br>
+        <sub><b>Julian Funes</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/yairLozano">
+        <img src="https://github.com/yairLozano.png" width="115px;" alt="Perfil"/><br>
+        <sub><b>Yair Lozano</b></sub>
+      </a>
+  </tr>
+</table>
+
+## Profesor
+
+<table>
+<td align="center">
+      <a href="https://github.com/luis-siccardi">
+        <img src="https://github.com/Luis-Siccardi.png" width="115px;" alt="Perfil"/><br>
+        <sub><b>Luis Siccardi</b></sub>
+      </a>
+  </tr>
+</table>
+
+
 ![🎓 TUTORÍAS PROA](https://capsule-render.vercel.app/api?type=waving&color=0:111827,35:312E81,65:6366F1,100:A5B4FC&height=230&section=header&text=%20EN%20PROCESO%20&fontSize=55&fontColor=FFFFFF&fontAlignY=40&animation=fadeIn)
 
