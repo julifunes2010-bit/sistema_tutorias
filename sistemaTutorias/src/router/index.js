@@ -8,7 +8,7 @@ import reports from "../reports.vue"
 import recuperar from "../recuperar.vue"
 import cursos from "../cursos.vue"
 
-
+// para usar router pega este codigo en la terminal: npm install vue-router
 const router = createRouter({
 
   history: createWebHistory(),
