@@ -15,8 +15,6 @@ const router = createRouter({
 
   routes: [
 
-
-
     {
       path: "/setting",
       name: "Setting",

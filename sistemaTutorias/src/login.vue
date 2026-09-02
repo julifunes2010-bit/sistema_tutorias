@@ -206,9 +206,12 @@
       <p class="register">
         ¿No tenés una cuenta?
 
-        <a href="#" @click="iraregister">
-          Registrate
-        </a>
+        <router-link to="/register">
+          <a href="./register.vue">
+            Registrate
+
+          </a>
+        </router-link>
 
       </p>
 
