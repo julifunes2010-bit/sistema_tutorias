@@ -94,15 +94,8 @@
 
         <!-- REGISTRARSE -->
         <button type="submit">
-          <router-link
-            to="/home"
-            class="boton"
-            @click="registrarse"
-          > 
-          Registrarse
-          </router-link>
-
-        </button> 
+  Registrarse
+</button>
       </form>
 
 
@@ -126,54 +119,45 @@
 </template>
 
 
-<script >
+<script setup>
 
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed } from "vue"
+import { useRouter } from "vue-router"
 
-
-// Router
-const router = useRouter();
+const router = useRouter()
 
 // Datos del formulario
-const email = ref("");
-const password = ref("");
-const confirmPassword = ref("");
+const email = ref("")
+const password = ref("")
+const confirmPassword = ref("")
+const rol = ref("profesor")
 
-const error = ref("");
-
+// Mensaje de error
+const error = ref("")
 
 // Verificar correo institucional
 const esCorreoInstitucional = computed(() => {
 
   const regex =
-    /^[a-zA-Z0-9._%+-]+@escuelasproa\.edu\.ar$/;
+    /^[a-zA-Z0-9._%+-]+@escuelasproa\.edu\.ar$/
 
-  return regex.test(email.value);
+  return regex.test(email.value)
 
-});
-
-
-// Ir al Login
-  const iralogin = () => {
-  router.push("/login");
-
-};
+})
 
 
-// Registrar usuario
-const registrarse = () => {
+// REGISTRARSE
+function registrarse() {
 
-  error.value = "";
+  error.value = ""
 
-
-  // Verificar correo institucional
+  // Verificar correo
   if (!esCorreoInstitucional.value) {
 
     error.value =
-      "El correo ingresado no es institucional.";
+      "El correo ingresado no es institucional."
 
-    return;
+    return
   }
 
 
@@ -181,23 +165,32 @@ const registrarse = () => {
   if (password.value !== confirmPassword.value) {
 
     error.value =
-      "Las contraseñas no coinciden.";
+      "Las contraseñas no coinciden."
 
-    return;
+    return
+  }
+
+
+  // Verificar contraseña vacía
+  if (password.value.length < 6) {
+
+    error.value =
+      "La contraseña debe tener al menos 6 caracteres."
+
+    return
   }
 
 
   // Registro correcto
-  console.log("Correo:", email.value);
-  console.log("Contraseña:", password.value);
+  console.log("Correo:", email.value)
+  console.log("Rol:", rol.value)
 
-  alert("Cuenta creada correctamente");
+  alert("Cuenta creada correctamente.")
 
+  // Volver al login
+  router.push("/")
 
-  // Volver al Login
-  router.push("/login");
-
-};
+}
 
 </script>
 

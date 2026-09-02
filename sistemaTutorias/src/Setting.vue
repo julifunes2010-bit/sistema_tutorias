@@ -163,7 +163,7 @@
             ⚙
           </span>
 
-          <span @click="irAreporte">
+          <span>
             Reportes
           </span>
 

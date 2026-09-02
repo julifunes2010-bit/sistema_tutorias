@@ -152,7 +152,6 @@
 
         <!-- REPORTES -->
         <router-link
-          to="/reports"
           class="menu-item bottom-item active"
         >
 

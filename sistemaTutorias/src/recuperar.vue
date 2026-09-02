@@ -52,14 +52,13 @@
 
         </div>
 
-        <button><router-link
-        
-          to="/home"
-          class="boton"
-          @click="verificarCodigo"
-        >
-          Continuar
-        </router-link></button>
+        <button
+  class="boton"
+  @click="verificarCodigo"
+  
+>
+  Continuar
+</button>
 
         <button class="boton volver" @click="volver">
           Volver
@@ -99,9 +98,13 @@ const codigo = ref([
   ""
 ])
 
+// Código que se genera al presionar "Enviar código"
+const codigoGenerado = ref("")
+
 const mensaje = ref("")
 
 const tipoMensaje = ref("")
+
 
 
 function enviarCodigo() {
@@ -126,12 +129,22 @@ function enviarCodigo() {
     return
   }
 
-  // Por ahora solamente pasa a la pantalla del código
+  // Genera un código aleatorio de 6 números
+  codigoGenerado.value =
+    Math.floor(100000 + Math.random() * 900000).toString()
+
+  // Para el prototipo, mostramos el código en la consola
+  console.log("Código generado:", codigoGenerado.value)
+
+  // Muestra la pantalla para ingresar el código
   mostrarCodigo.value = true
 
-  mensaje.value = ""
+  mensaje.value =
+    "Se generó un código de verificación."
 
+  tipoMensaje.value = "correcto"
 }
+
 
 
 function siguienteCasillero(index) {
@@ -139,7 +152,6 @@ function siguienteCasillero(index) {
   // Solo permite números
   codigo.value[index] =
     codigo.value[index].replace(/\D/g, "")
-
 
   // Pasa automáticamente al siguiente casillero
   if (
@@ -151,18 +163,18 @@ function siguienteCasillero(index) {
       document.querySelectorAll(".numero")
 
     casilleros[index + 1].focus()
-
   }
-
 }
+
 
 
 function verificarCodigo() {
 
+  // Une los 6 casilleros
   const codigoCompleto =
     codigo.value.join("")
 
-
+  // Comprueba que haya 6 números
   if (codigoCompleto.length !== 6) {
 
     mensaje.value =
@@ -171,17 +183,26 @@ function verificarCodigo() {
     tipoMensaje.value = "error"
 
     return
-
   }
 
+  // Comprueba que el código sea correcto
+  if (codigoCompleto !== codigoGenerado.value) {
 
-  // Por ahora no se comprueba el código
+    mensaje.value =
+      "El código ingresado es incorrecto."
+
+    tipoMensaje.value = "error"
+
+    return
+  }
+
+  // Código correcto
   mensaje.value =
-    "Código ingresado correctamente."
+    "Código verificado correctamente."
 
   tipoMensaje.value = "correcto"
-
 }
+
 
 
 function volver() {
@@ -199,6 +220,7 @@ function volver() {
 
   mensaje.value = ""
 
+  tipoMensaje.value = ""
 }
 
 </script>

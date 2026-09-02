@@ -207,11 +207,8 @@
         ¿No tenés una cuenta?
 
         <router-link to="/register">
-          <a href="./register.vue">
-            Registrate
-
-          </a>
-        </router-link>
+  Registrate
+</router-link>
 
       </p>
 
