@@ -91,13 +91,6 @@
 
 
         <!-- HORARIOS -->
-        <router-link
-          to="/horarios"
-          class="menu-item"
-        >
-          <span class="menu-icon">◷</span>
-          <span>Horarios de tutoría</span>
-        </router-link>
 
       </nav>
 

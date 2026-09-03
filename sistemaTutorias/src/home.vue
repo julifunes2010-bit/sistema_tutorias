@@ -39,11 +39,6 @@
           <span>Cursos</span>
         </router-link>
 
-        <a href="#" class="menu-item">
-          <span class="icon">◷</span>
-          <span>Horarios de tutoría</span>
-        </a>
-
         <router-link to="/reportes" class="menu-item">
           <span class="icon">📊</span>
           <span>Reportes</span>
