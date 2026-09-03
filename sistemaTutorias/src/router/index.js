@@ -7,6 +7,7 @@ import register from "../register.vue"
 import reports from "../reports.vue"
 import recuperar from "../recuperar.vue"
 import cursos from "../cursos.vue"
+import NuevaCitacion from "../nueva-citacion.vue"
 
 // para usar router pega este codigo en la terminal: npm install vue-router
 const router = createRouter({
@@ -50,6 +51,11 @@ const router = createRouter({
       path: "/cursos",
       name: "Cursos",
       component: cursos
+    },
+    {
+      path: "/nueva-citacion",
+      name: "NuevaCitacion",
+      component: NuevaCitacion
     }
 
   ]
