@@ -240,14 +240,7 @@
 
         <!-- Redes -->
         <div class="footer-links">
-
-          <a
-            href="#"
-            @click.prevent
-          >
-            📷 Instagram
-          </a>
-
+          
 
           <a
             href="#"
