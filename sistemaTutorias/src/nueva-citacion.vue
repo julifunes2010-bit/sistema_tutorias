@@ -22,10 +22,10 @@
           <span>Nueva citación</span>
         </router-link>
 
-        <a href="#" class="menu-item">
+        <router-link to="/mis-citaciones" class="menu-item">
           <span class="icon">▣</span>
           <span>Mis citaciones</span>
-        </a>
+        </router-link>
 
         <router-link to="/cursos" class="menu-item">
           <span class="icon">▤</span>
@@ -151,11 +151,21 @@ const hora = ref("")
 const mensaje = ref("")
 
 function crearCitacion() {
-  mensaje.value = "Citación creada correctamente."
+  const nuevaCitacion = {
+    ano: ano.value,
+    materia: materia.value,
+    docente: "Luis S. Scoccia",
+    fecha: fecha.value,
+    hora: hora.value
+  }
 
-  setTimeout(() => {
-    router.push("/home")
-  }, 700)
+  const guardadas = localStorage.getItem("citaciones")
+  const citaciones = guardadas ? JSON.parse(guardadas) : []
+
+  citaciones.push(nuevaCitacion)
+  localStorage.setItem("citaciones", JSON.stringify(citaciones))
+
+  router.push("/mis-citaciones")
 }
 
 function cancelar() {
