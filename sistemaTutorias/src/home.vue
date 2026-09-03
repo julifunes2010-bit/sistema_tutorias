@@ -28,10 +28,11 @@
           <span>Nueva citación</span>
         </router-link>
 
-        <a href="#" class="menu-item">
+        <!-- Mis citaciones -->
+        <router-link to="/mis-citaciones" class="menu-item">
           <span class="icon">▣</span>
           <span>Mis citaciones</span>
-        </a>
+        </router-link>
 
         <router-link to="/cursos" class="menu-item">
           <span class="icon">▤</span>
