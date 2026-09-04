@@ -40,7 +40,7 @@ La aplicación busca centralizar diferentes herramientas en una misma plataforma
 -  Crear una interfaz adaptable a diferentes dispositivos.
 -  Aplicar conocimientos de desarrollo web y Vue.js.
 
----
+
 
 ###  Credenciales de prueba
 
