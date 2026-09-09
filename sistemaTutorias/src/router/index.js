@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Setting from "../Setting.vue"
+import SettingsRole from "../SettingsRole.vue"
 import Login from "../login.vue"
 import register from "../register.vue"
 import reports from "../reports.vue"
@@ -15,13 +15,9 @@ const router = createRouter({
     { path: "/", name: "Login", component: Login },
     { path: "/register", name: "Register", component: register },
     { path: "/recuperar", name: "Recuperar", component: recuperar },
-
-    // El Home vuelve a ser la pantalla principal original.
     { path: "/home", name: "Home", component: Home, meta: { requiereLogin: true } },
-    // Compatibilidad con el panel anterior: siempre lleva al Home original.
     { path: "/panel", redirect: "/home" },
-
-    { path: "/setting", name: "Setting", component: Setting, meta: { requiereLogin: true } },
+    { path: "/setting", name: "Setting", component: SettingsRole, meta: { requiereLogin: true } },
     {
       path: "/reportes",
       name: "Reports",
@@ -52,18 +48,13 @@ const router = createRouter({
 router.beforeEach((to) => {
   const usuario = JSON.parse(localStorage.getItem("usuarioActual") || "null")
 
-  if (to.meta.requiereLogin && !usuario) {
-    return "/"
-  }
+  if (to.meta.requiereLogin && !usuario) return "/"
 
   if (to.meta.roles && (!usuario || !to.meta.roles.includes(usuario.rol))) {
-    // La opción puede mostrarse bloqueada en el menú, pero la ruta también queda protegida.
     return "/home"
   }
 
-  if (to.path === "/" && usuario) {
-    return "/home"
-  }
+  if (to.path === "/" && usuario) return "/home"
 })
 
 export default router
