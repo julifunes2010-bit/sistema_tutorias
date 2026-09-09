@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"
 import Setting from "../Setting.vue"
 import Login from "../login.vue"
-import Home from "../home.vue"
 import register from "../register.vue"
 import reports from "../reports.vue"
 import recuperar from "../recuperar.vue"
@@ -18,12 +17,48 @@ const router = createRouter({
     { path: "/register", name: "Register", component: register },
     { path: "/recuperar", name: "Recuperar", component: recuperar },
     { path: "/panel", name: "Panel", component: Panel, meta: { requiereLogin: true } },
-    { path: "/home", name: "Home", component: Home, meta: { requiereLogin: true } },
+
+    // El Home antiguo ya no se muestra después de iniciar sesión.
+    // Cualquier acceso a /home lleva al panel correspondiente al rol.
+    { path: "/home", redirect: "/panel" },
+
     { path: "/setting", name: "Setting", component: Setting, meta: { requiereLogin: true } },
-    { path: "/reportes", name: "Reports", component: reports, meta: { requiereLogin: true, roles: ["director", "coordinador", "preceptor", "secretario"] } },
-    { path: "/cursos", name: "Cursos", component: cursos, meta: { requiereLogin: true, roles: ["director", "profesor", "coordinador"] } },
-    { path: "/nueva-citacion", name: "NuevaCitacion", component: NuevaCitacion, meta: { requiereLogin: true, roles: ["director", "profesor", "preceptor"] } },
-    { path: "/mis-citaciones", name: "MisCitaciones", component: MisCitaciones, meta: { requiereLogin: true, roles: ["director", "profesor", "preceptor"] } }
+    {
+      path: "/reportes",
+      name: "Reports",
+      component: reports,
+      meta: {
+        requiereLogin: true,
+        roles: ["director", "coordinador", "preceptor", "secretario"]
+      }
+    },
+    {
+      path: "/cursos",
+      name: "Cursos",
+      component: cursos,
+      meta: {
+        requiereLogin: true,
+        roles: ["director", "profesor", "coordinador"]
+      }
+    },
+    {
+      path: "/nueva-citacion",
+      name: "NuevaCitacion",
+      component: NuevaCitacion,
+      meta: {
+        requiereLogin: true,
+        roles: ["director", "profesor", "preceptor"]
+      }
+    },
+    {
+      path: "/mis-citaciones",
+      name: "MisCitaciones",
+      component: MisCitaciones,
+      meta: {
+        requiereLogin: true,
+        roles: ["director", "profesor", "preceptor"]
+      }
+    }
   ]
 })
 
