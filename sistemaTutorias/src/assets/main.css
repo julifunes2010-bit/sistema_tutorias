@@ -1,15 +1,21 @@
 @import './base.css';
 
-#app {
-  width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
+:root {
+  --ui-primary: #4f46e5;
+  --ui-primary-dark: #3730a3;
+  --ui-primary-soft: #eef2ff;
+  --ui-accent: #0ea5e9;
+  --ui-ink: #172033;
+  --ui-muted: #64748b;
+  --ui-surface: rgba(255, 255, 255, 0.88);
+  --ui-border: #e2e8f0;
+  --ui-shadow: 0 18px 45px rgba(30, 41, 59, 0.10);
+  --ui-radius: 18px;
 }
 
-html,
-body {
+* { box-sizing: border-box; }
+
+html, body, #app {
   width: 100%;
   min-height: 100%;
   margin: 0;
@@ -18,102 +24,148 @@ body {
 
 body {
   min-height: 100vh;
-  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+  color: var(--ui-ink);
+  background: #f8fafc;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-a { text-decoration: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
 
-:root {
-  --ui-primary: #5159d8;
-  --ui-primary-dark: #4352c7;
-  --ui-primary-soft: #eef0ff;
-  --ui-border: #e5e7eb;
-  --ui-shadow: 0 14px 35px rgba(36, 43, 76, 0.08);
+/* Base visual language shared by every view. */
+#app {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(99, 102, 241, .12), transparent 30%),
+    radial-gradient(circle at 100% 12%, rgba(14, 165, 233, .10), transparent 28%),
+    #f8fafc;
 }
 
-/* Mejora estética de páginas internas sin alterar Home. */
-.pagina.pagina {
-  background: radial-gradient(circle at 90% 5%, rgba(81, 89, 216, .08), transparent 28%), linear-gradient(135deg, #f7f8fc 0%, #f3f5fb 100%) !important;
+.sidebar {
+  background: rgba(255, 255, 255, .92) !important;
+  border-right: 1px solid var(--ui-border) !important;
+  box-shadow: 12px 0 35px rgba(15, 23, 42, .06) !important;
+  backdrop-filter: blur(16px);
 }
 
-.pagina.pagina .sidebar,
-.reports-page.reports-page .sidebar,
-.settings-page.settings-page .sidebar {
-  box-shadow: 8px 0 30px rgba(36, 43, 76, .04) !important;
-  border-right-color: #e4e6ef !important;
+.sidebar-header {
+  padding-bottom: 22px !important;
+  border-bottom: 1px solid #eef2f7 !important;
 }
 
-.pagina.pagina .menu-item { transition: background-color .2s ease, color .2s ease, transform .2s ease !important; }
-.pagina.pagina .menu-item:hover { transform: translateX(2px); }
-.pagina.pagina .header h1 { letter-spacing: -.4px; font-weight: 650; }
-.pagina.pagina .header p { color: #7a8190 !important; }
+.sidebar-header h2, .sidebar-header h3 {
+  color: var(--ui-ink) !important;
+  letter-spacing: -.3px;
+}
 
-.pagina.pagina .form-card,
-.pagina.pagina .citacion-card,
-.reports-page.reports-page .report-card,
-.reports-page.reports-page .information-card,
-.settings-page.settings-page .settings-card,
-.settings-page.settings-page .settings-help {
-  border-color: #e2e5ef !important;
+.menu { gap: 6px !important; }
+.menu-item, .bottom-menu .menu-item {
+  min-height: 44px !important;
+  border-radius: 12px !important;
+  color: #64748b !important;
+  transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease !important;
+}
+
+.menu-item:hover {
+  color: var(--ui-primary) !important;
+  background: var(--ui-primary-soft) !important;
+  transform: translateX(3px);
+}
+
+.menu-item.active, .menu-item.router-link-active {
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--ui-primary), #6366f1) !important;
+  box-shadow: 0 8px 18px rgba(79, 70, 229, .22) !important;
+}
+
+.header, .page-header {
+  border-bottom: 1px solid rgba(226, 232, 240, .85) !important;
+  margin-bottom: 28px !important;
+}
+
+.header h1, .page-header h1 {
+  color: var(--ui-ink) !important;
+  font-weight: 750 !important;
+  letter-spacing: -.8px;
+}
+
+.header p, .page-header p { color: var(--ui-muted) !important; }
+
+.form-card, .citacion-card, .report-card, .information-card, .settings-card, .settings-help, .card {
+  border: 1px solid rgba(226, 232, 240, .92) !important;
+  border-radius: var(--ui-radius) !important;
+  background: var(--ui-surface) !important;
   box-shadow: var(--ui-shadow) !important;
+  backdrop-filter: blur(14px);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease !important;
 }
 
-.pagina.pagina .form-card:hover,
-.pagina.pagina .citacion-card:hover,
-.reports-page.reports-page .report-card:hover {
-  box-shadow: 0 18px 40px rgba(36, 43, 76, .11) !important;
-  transform: translateY(-1px);
+.form-card:hover, .citacion-card:hover, .report-card:hover, .information-card:hover, .settings-card:hover, .card:hover {
+  border-color: #c7d2fe !important;
+  box-shadow: 0 22px 50px rgba(30, 41, 59, .14) !important;
+  transform: translateY(-3px);
 }
 
-.pagina.pagina .form-icon,
-.pagina.pagina .card-icon { background: linear-gradient(135deg, #eef0ff, #e7eaff) !important; }
-
-.pagina.pagina .btn-crear,
-.pagina.pagina .boton {
-  background: linear-gradient(135deg, #5159d8, #4352c7) !important;
-  box-shadow: 0 8px 18px rgba(81, 89, 216, .20) !important;
+.form-icon, .card-icon {
+  color: var(--ui-primary) !important;
+  background: linear-gradient(135deg, #eef2ff, #e0f2fe) !important;
+  border-radius: 14px !important;
 }
 
-.reports-page.reports-page,
-.settings-page.settings-page {
-  background: radial-gradient(circle at 90% 0%, rgba(81, 89, 216, .08), transparent 27%), #f5f6fa !important;
+input, select, textarea {
+  color: var(--ui-ink) !important;
+  background: rgba(255, 255, 255, .9) !important;
+  border: 1px solid #dbe3ef !important;
+  border-radius: 11px !important;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease !important;
 }
 
-.reports-page.reports-page .page-header h1,
-.settings-page.settings-page .page-header h1 { font-weight: 650; letter-spacing: .5px; }
-.settings-page.settings-page .setting-row:hover { background: #fbfbff !important; }
-
-/* Quitar Materias del menú en todas las páginas que todavía la tenían. */
-.pagina.pagina .menu > .menu-item:nth-child(5),
-.reports-page.reports-page .menu > .menu-item:nth-child(5),
-.settings-page.settings-page .menu > .menu-item:nth-child(5) {
-  display: none !important;
+input:focus, select:focus, textarea:focus {
+  border-color: #818cf8 !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, .13) !important;
 }
 
-/* Cursos conserva filtros, tabla y datos; solo mantiene el panel lateral coherente con Home. */
-.courses-page.courses-page .sidebar {
-  width: 250px !important;
-  min-width: 250px !important;
-  padding: 20px 15px !important;
-  box-shadow: none !important;
+.btn-crear, .boton, button[type="submit"], .primary-button {
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 11px !important;
+  background: linear-gradient(135deg, var(--ui-primary), #6366f1) !important;
+  box-shadow: 0 9px 20px rgba(79, 70, 229, .24) !important;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important;
 }
 
-.courses-page.courses-page .sidebar-header {
-  padding: 5px 10px 22px !important;
-  margin-bottom: 0 !important;
-  border-bottom: 1px solid #eeeeee !important;
+.btn-crear:hover, .boton:hover, button[type="submit"]:hover, .primary-button:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 13px 25px rgba(79, 70, 229, .30) !important;
+  transform: translateY(-2px);
 }
 
-.courses-page.courses-page .separator { display: none !important; }
-.courses-page.courses-page .menu { margin-top: 20px !important; }
-.courses-page.courses-page .bottom-menu { margin-top: 0 !important; }
-.courses-page.courses-page .menu-item { height: 44px !important; min-height: 44px !important; margin-bottom: 5px !important; border-radius: 8px !important; }
+button:not(.menu-item):not(.icon-button) { border-radius: 10px; }
+
+table { border-collapse: separate !important; border-spacing: 0 8px !important; }
+thead th { color: #475569 !important; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+tbody tr { background: rgba(255, 255, 255, .86) !important; }
+tbody td { border-top: 1px solid #edf2f7 !important; border-bottom: 1px solid #edf2f7 !important; }
+tbody td:first-child { border-left: 1px solid #edf2f7 !important; border-radius: 12px 0 0 12px; }
+tbody td:last-child { border-right: 1px solid #edf2f7 !important; border-radius: 0 12px 12px 0; }
+
+.badge, .status, .tag { border-radius: 999px !important; font-weight: 650; }
+
+.reports-page, .settings-page, .courses-page, .pagina {
+  background: transparent !important;
+}
+
+.separator { background: #eef2f7 !important; }
+
+@media (max-width: 900px) {
+  .sidebar { box-shadow: 0 8px 28px rgba(15, 23, 42, .10) !important; }
+  .header, .page-header { margin-bottom: 20px !important; }
+  .form-card, .citacion-card, .report-card, .information-card, .settings-card, .settings-help, .card { border-radius: 15px !important; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .pagina.pagina *, .reports-page.reports-page *, .settings-page.settings-page * {
-    transition: none !important;
-    animation: none !important;
-  }
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
