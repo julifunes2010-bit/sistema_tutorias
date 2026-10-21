@@ -134,6 +134,16 @@ const rol = ref("profesor")
 
 // Mensaje de error
 const error = ref("")
+const USERS_STORAGE_KEY = "sistemaTutoriasUsers"
+
+function leerUsuarios() {
+  try {
+    const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || "[]")
+    return Array.isArray(usuarios) ? usuarios : []
+  } catch {
+    return []
+  }
+}
 
 // Verificar correo institucional
 const esCorreoInstitucional = computed(() => {
@@ -180,9 +190,29 @@ function registrarse() {
     return
   }
 
+  const correoRegistrado = email.value.trim().toLowerCase()
+  const usuarios = leerUsuarios()
+
+  if (usuarios.some(usuario => usuario.email === correoRegistrado)) {
+    error.value = "Ya existe una cuenta con ese correo."
+    return
+  }
+
+  usuarios.push({
+    email: correoRegistrado,
+    password: password.value,
+    rol: rol.value
+  })
+
+  try {
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(usuarios))
+  } catch {
+    error.value = "No se pudo guardar la cuenta en este navegador."
+    return
+  }
 
   // Registro correcto
-  console.log("Correo:", email.value)
+  console.log("Correo:", correoRegistrado)
   console.log("Rol:", rol.value)
 
   alert("Cuenta creada correctamente.")

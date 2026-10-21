@@ -282,6 +282,30 @@ import { useRouter } from 'vue-router'
 import iraregister from './register.vue';
 import Recuperar from './recuperar.vue';
 
+const USERS_STORAGE_KEY = "sistemaTutoriasUsers"
+const REMEMBERED_EMAIL_KEY = "sistemaTutoriasRememberedEmail"
+
+function leerUsuarios() {
+  try {
+    const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || "[]")
+    return Array.isArray(usuarios) ? usuarios : []
+  } catch {
+    return []
+  }
+}
+
+function correoNormalizado(correo) {
+  return correo.trim().toLowerCase()
+}
+
+function correoRecordado() {
+  try {
+    return localStorage.getItem(REMEMBERED_EMAIL_KEY) || ""
+  } catch {
+    return ""
+  }
+}
+
 
 export default {
 
@@ -311,7 +335,7 @@ export default {
 
       // Datos del formulario
 
-      email: "",
+      email: correoRecordado(),
 
       password: "",
 
@@ -349,19 +373,20 @@ export default {
       this.errorTipo = ""
 
 
-      // Credenciales de prueba
-
+      const correoIngresado = correoNormalizado(this.email)
       const correoCorrecto = "admin@proa.com"
-
       const passwordCorrecta = "123456"
+      const usuarioRegistrado = leerUsuarios().find(
+        usuario => correoNormalizado(usuario.email) === correoIngresado
+      )
+      const correoValido = correoIngresado === correoCorrecto || Boolean(usuarioRegistrado)
+      const passwordValida = (
+        correoIngresado === correoCorrecto && this.password === passwordCorrecta
+      ) || (
+        Boolean(usuarioRegistrado) && usuarioRegistrado.password === this.password
+      )
 
-
-      // Ambos están mal
-
-      if (
-        this.email !== correoCorrecto &&
-        this.password !== passwordCorrecta
-      ) {
+      if (!correoValido && !passwordValida) {
 
         this.errorTipo = "ambos"
 
@@ -372,9 +397,7 @@ export default {
 
       // Correo incorrecto
 
-      if (
-        this.email !== correoCorrecto
-      ) {
+      if (!correoValido) {
 
         this.errorTipo = "email"
 
@@ -385,9 +408,7 @@ export default {
 
       // Contraseña incorrecta
 
-      if (
-        this.password !== passwordCorrecta
-      ) {
+      if (!passwordValida) {
 
         this.errorTipo = "password"
 
@@ -399,6 +420,16 @@ export default {
       // =========================
       // LOGIN CORRECTO
       // =========================
+
+      try {
+        if (this.recordar) {
+          localStorage.setItem(REMEMBERED_EMAIL_KEY, correoIngresado)
+        } else {
+          localStorage.removeItem(REMEMBERED_EMAIL_KEY)
+        }
+      } catch {
+        // El inicio de sesión no debe fallar si el navegador bloquea el almacenamiento.
+      }
 
       this.router.push("/home")
 
