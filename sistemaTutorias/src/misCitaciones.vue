@@ -98,14 +98,13 @@
 
             <div class="card-actions">
               <button
-                v-if="citacion.estado !== 'realizada'"
                 type="button"
                 class="btn-realizada"
-                @click="marcarRealizada(index)"
+                :class="{ 'btn-pendiente': citacion.estado === 'realizada' }"
+                @click="alternarEstado(index)"
               >
-                ✓ Marcar como realizada
+                {{ citacion.estado === "realizada" ? "↶ Volver a pendiente" : "✓ Marcar como realizada" }}
               </button>
-              <span v-else class="realizada-confirmacion">✓ Tutoría completada</span>
             </div>
           </div>
         </article>
@@ -130,8 +129,10 @@ function cargarCitaciones() {
   }
 }
 
-function marcarRealizada(index) {
-  citaciones.value[index].estado = "realizada"
+function alternarEstado(index) {
+  citaciones.value[index].estado = citaciones.value[index].estado === "realizada"
+    ? "pendiente"
+    : "realizada"
   localStorage.setItem("citaciones", JSON.stringify(citaciones.value))
 }
 
@@ -425,10 +426,14 @@ onMounted(() => {
   transform: translateY(-1px);
 }
 
-.realizada-confirmacion {
-  color: #237344;
-  font-size: 13px;
-  font-weight: bold;
+.btn-realizada.btn-pendiente {
+  border-color: #d3a83f;
+  background: #fffaf0;
+  color: #9a6a00;
+}
+
+.btn-realizada.btn-pendiente:hover {
+  background: #fff1c7;
 }
 
 @media (max-width: 900px) {
