@@ -67,13 +67,16 @@
 
       <!-- Las citaciones aparecen solamente cuando existen -->
       <section v-if="citaciones.length > 0" class="citaciones">
-        <article v-for="(citacion, index) in citaciones" :key="index" class="citacion-card">
+        <article v-for="(citacion, index) in citaciones" :key="index" class="citacion-card" :class="{ realizada: citacion.estado === 'realizada' }">
           <div class="card-icon">📅</div>
 
           <div class="datos">
             <div class="dato-principal">
               <h2>{{ citacion.materia }}</h2>
               <span>{{ citacion.ano }}</span>
+              <span class="estado" :class="citacion.estado === 'realizada' ? 'estado-realizada' : 'estado-pendiente'">
+                {{ citacion.estado === "realizada" ? "Realizada" : "Pendiente" }}
+              </span>
             </div>
 
             <div class="detalle">
@@ -92,6 +95,18 @@
                 <strong>{{ citacion.hora }} hs</strong>
               </div>
             </div>
+
+            <div class="card-actions">
+              <button
+                v-if="citacion.estado !== 'realizada'"
+                type="button"
+                class="btn-realizada"
+                @click="marcarRealizada(index)"
+              >
+                ✓ Marcar como realizada
+              </button>
+              <span v-else class="realizada-confirmacion">✓ Tutoría completada</span>
+            </div>
           </div>
         </article>
       </section>
@@ -108,8 +123,16 @@ function cargarCitaciones() {
   const guardadas = localStorage.getItem("citaciones")
 
   if (guardadas) {
-    citaciones.value = JSON.parse(guardadas)
+    citaciones.value = JSON.parse(guardadas).map(citacion => ({
+      ...citacion,
+      estado: citacion.estado || "pendiente"
+    }))
   }
+}
+
+function marcarRealizada(index) {
+  citaciones.value[index].estado = "realizada"
+  localStorage.setItem("citaciones", JSON.stringify(citaciones.value))
 }
 
 function formatearFecha(fecha) {
@@ -293,6 +316,12 @@ onMounted(() => {
   background: white;
   border: 1px solid #e4e6eb;
   border-radius: 12px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.citacion-card.realizada {
+  border-color: #cde8d8;
+  background: #fcfffd;
 }
 
 .card-icon {
@@ -333,6 +362,21 @@ onMounted(() => {
   font-weight: bold;
 }
 
+.dato-principal .estado {
+  margin-left: auto;
+  border-radius: 999px;
+}
+
+.estado-pendiente {
+  background: #fff5db !important;
+  color: #9a6a00 !important;
+}
+
+.estado-realizada {
+  background: #def5e7 !important;
+  color: #237344 !important;
+}
+
 .detalle {
   display: grid;
   grid-template-columns: 1.3fr 1fr 1fr;
@@ -353,6 +397,38 @@ onMounted(() => {
 
 .detalle strong {
   font-size: 14px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid #eeeeee;
+}
+
+.btn-realizada {
+  padding: 9px 14px;
+  border: 1px solid #4aaf70;
+  border-radius: 8px;
+  background: #f1fff5;
+  color: #237344;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.btn-realizada:hover {
+  background: #def5e7;
+  transform: translateY(-1px);
+}
+
+.realizada-confirmacion {
+  color: #237344;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 @media (max-width: 900px) {
@@ -403,6 +479,10 @@ onMounted(() => {
     align-items: flex-start;
     flex-direction: column;
     gap: 7px;
+  }
+
+  .dato-principal .estado {
+    margin-left: 0;
   }
 }
 </style>
