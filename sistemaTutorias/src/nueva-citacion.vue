@@ -108,13 +108,35 @@
 
             <div class="campo">
               <label for="fecha">Día de la tutoría</label>
-              <input id="fecha" v-model="fecha" type="date" required>
+              <input id="fecha" v-model="fecha" :min="fechaMinima" type="date" required>
             </div>
 
-            <div class="campo">
+            <div class="campo horario-campo">
               <label for="hora">Horario</label>
-              <input id="hora" v-model="hora" type="time" required>
+              <div class="hora-input-wrap">
+                <span class="hora-icon" aria-hidden="true">◷</span>
+                <input
+                  id="hora"
+                  v-model="hora"
+                  type="time"
+                  min="08:00"
+                  max="18:00"
+                  step="1800"
+                  list="horarios-disponibles"
+                  required
+                  @input="mensaje = ''"
+                >
+              </div>
+              <datalist id="horarios-disponibles">
+                <option v-for="horario in horariosDisponibles" :key="horario" :value="horario" />
+              </datalist>
+              <small class="campo-ayuda">Elegí un horario entre las 08:00 y las 18:00, en intervalos de 30 minutos.</small>
             </div>
+          </div>
+
+          <div v-if="hora && fecha" class="horario-resumen" aria-live="polite">
+            <span class="resumen-icon">✓</span>
+            <span>Tutoría programada para el <strong>{{ fechaFormateada }}</strong> a las <strong>{{ hora }}</strong>.</span>
           </div>
 
           <p v-if="mensaje" class="mensaje">{{ mensaje }}</p>
@@ -134,7 +156,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
@@ -144,8 +166,25 @@ const materia = ref("")
 const fecha = ref("")
 const hora = ref("")
 const mensaje = ref("")
+const horariosDisponibles = [
+  "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+  "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+  "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+  "17:00", "17:30", "18:00"
+]
+const fechaMinima = new Date().toISOString().split("T")[0]
+const fechaFormateada = computed(() => {
+  if (!fecha.value) return ""
+  return new Intl.DateTimeFormat("es-AR", { day: "2-digit", month: "long", year: "numeric" })
+    .format(new Date(`${fecha.value}T00:00:00`))
+})
 
 function crearCitacion() {
+  if (!horariosDisponibles.includes(hora.value)) {
+    mensaje.value = "Seleccioná un horario válido, disponible entre las 08:00 y las 18:00."
+    return
+  }
+
   const nuevaCitacion = {
     ano: ano.value,
     materia: materia.value,
@@ -156,6 +195,12 @@ function crearCitacion() {
 
   const guardadas = localStorage.getItem("citaciones")
   const citaciones = guardadas ? JSON.parse(guardadas) : []
+
+  const horarioOcupado = citaciones.some(citacion => citacion.fecha === fecha.value && citacion.hora === hora.value)
+  if (horarioOcupado) {
+    mensaje.value = "Ya existe una tutoría agendada para esa fecha y horario. Elegí otro momento."
+    return
+  }
 
   citaciones.push(nuevaCitacion)
   localStorage.setItem("citaciones", JSON.stringify(citaciones))
@@ -398,6 +443,66 @@ input {
 select:focus,
 input:focus {
   border-color: #4f5bd5;
+  box-shadow: 0 0 0 3px rgba(79, 91, 213, .12);
+}
+
+.horario-campo {
+  position: relative;
+}
+
+.hora-input-wrap {
+  position: relative;
+}
+
+.hora-input-wrap input {
+  padding-left: 42px;
+}
+
+.hora-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  z-index: 1;
+  color: #4f5bd5;
+  font-size: 20px;
+  line-height: 1;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.campo-ayuda {
+  color: #7b8190;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.horario-resumen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 13px 15px;
+  border: 1px solid #dfe3ff;
+  border-radius: 9px;
+  background: #f5f6ff;
+  color: #4b5275;
+  font-size: 13px;
+}
+
+.resumen-icon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #4f5bd5;
+  color: #fff;
+  font-weight: bold;
+}
+
+.horario-resumen strong {
+  color: #3f48b4;
 }
 
 input:disabled {
