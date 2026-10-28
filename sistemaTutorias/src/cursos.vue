@@ -59,27 +59,54 @@
 
       <!-- FILTROS -->
       <section class="filters-card">
+        <div class="filter search-filter">
+          <label for="buscar-curso">Buscar</label>
+          <div class="search-control">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="buscar-curso"
+              v-model.trim="busqueda"
+              type="search"
+              placeholder="Curso, docente o turno"
+              autocomplete="off"
+            >
+          </div>
+        </div>
+
         <div class="filter">
-          <label>Curso</label>
-          <select v-model="cursoSeleccionado">
+          <label for="filtro-curso">Curso</label>
+          <select id="filtro-curso" v-model="cursoSeleccionado">
             <option value="Todos">Todos</option>
-            <option value="5to">5to año</option>
-            <option value="4to">4to año</option>
-            <option value="3ro">3er año</option>
-            <option value="2do">2do año</option>
-            <option value="1ro">1er año</option>
+            <option v-for="curso in cursosDisponibles" :key="curso.valor" :value="curso.valor">
+              {{ curso.etiqueta }}
+            </option>
           </select>
         </div>
 
         <div class="filter">
-          <label>Año</label>
-          <select v-model="anoSeleccionado">
+          <label for="filtro-ano">Año</label>
+          <select id="filtro-ano" v-model="anoSeleccionado">
             <option value="Todos">Todos</option>
-            <option value="2026">2026</option>
-            <option value="2025">2025</option>
+            <option v-for="ano in anosDisponibles" :key="ano" :value="ano">{{ ano }}</option>
           </select>
         </div>
+
+        <button class="clear-filters" type="button" :disabled="!hayFiltrosActivos" @click="limpiarFiltros">
+          Limpiar filtros
+        </button>
       </section>
+
+      <div class="results-summary" aria-live="polite">
+        <span><strong>{{ cursosFiltrados.length }}</strong> {{ cursosFiltrados.length === 1 ? 'curso encontrado' : 'cursos encontrados' }}</span>
+        <label class="sort-control" for="orden-cursos">
+          Ordenar por
+          <select id="orden-cursos" v-model="ordenSeleccionado">
+            <option value="curso">Curso</option>
+            <option value="ano">Año</option>
+            <option value="docente">Docente</option>
+          </select>
+        </label>
+      </div>
 
       <!-- TABLA -->
       <section class="courses-card">
@@ -104,7 +131,9 @@
                 <td>{{ curso.ano }}</td>
                 <td><span class="turno">{{ curso.turno }}</span></td>
                 <td>{{ curso.docente }}</td>
-                <td class="contact">{{ curso.contacto }}</td>
+                <td class="contact">
+                  <a :href="`tel:${curso.contacto.replace(/\\s/g, '')}`">{{ curso.contacto }}</a>
+                </td>
               </tr>
 
               <tr v-if="cursosFiltrados.length === 0">
@@ -136,6 +165,8 @@ export default {
     return {
       cursoSeleccionado: "Todos",
       anoSeleccionado: "Todos",
+      busqueda: "",
+      ordenSeleccionado: "curso",
       cursos: [
         { id: 1, nombre: "5to Programación", ano: "2026", turno: "Mañana", docente: "Docente 1", contacto: "3548 32-0643" },
         { id: 2, nombre: "5to Programación", ano: "2026", turno: "Tarde", docente: "Docente 2", contacto: "3548 32-0643" },
@@ -146,12 +177,49 @@ export default {
   },
 
   computed: {
-    cursosFiltrados() {
-      return this.cursos.filter(curso => {
-        const coincideCurso = this.cursoSeleccionado === "Todos" || curso.nombre.toLowerCase().includes(this.cursoSeleccionado.toLowerCase())
-        const coincideAno = this.anoSeleccionado === "Todos" || curso.ano === this.anoSeleccionado
-        return coincideCurso && coincideAno
+    cursosDisponibles() {
+      const cursos = new Map()
+      this.cursos.forEach(curso => {
+        const valor = curso.nombre.split(" ")[0]
+        if (!cursos.has(valor)) {
+          cursos.set(valor, { valor, etiqueta: `${valor} año` })
+        }
       })
+      return Array.from(cursos.values())
+    },
+
+    anosDisponibles() {
+      return [...new Set(this.cursos.map(curso => curso.ano))].sort((a, b) => b.localeCompare(a))
+    },
+
+    hayFiltrosActivos() {
+      return Boolean(this.busqueda || this.cursoSeleccionado !== "Todos" || this.anoSeleccionado !== "Todos")
+    },
+
+    cursosFiltrados() {
+      const texto = this.busqueda.toLowerCase()
+      return this.cursos
+        .filter(curso => {
+        const coincideBusqueda = !texto || [curso.nombre, curso.docente, curso.turno, curso.ano]
+          .join(" ")
+          .toLowerCase()
+          .includes(texto)
+        const coincideCurso = this.cursoSeleccionado === "Todos" || curso.nombre.toLowerCase().startsWith(this.cursoSeleccionado.toLowerCase())
+        const coincideAno = this.anoSeleccionado === "Todos" || curso.ano === this.anoSeleccionado
+        return coincideBusqueda && coincideCurso && coincideAno
+      })
+        .sort((a, b) => {
+          const campo = this.ordenSeleccionado === "curso" ? "nombre" : this.ordenSeleccionado
+          return a[campo].localeCompare(b[campo], "es", { numeric: true })
+        })
+    }
+  },
+
+  methods: {
+    limpiarFiltros() {
+      this.busqueda = ""
+      this.cursoSeleccionado = "Todos"
+      this.anoSeleccionado = "Todos"
     }
   }
 }
@@ -259,8 +327,10 @@ export default {
 }
 
 .filter { display: flex; flex-direction: column; gap: 7px; min-width: 180px; }
+.search-filter { flex: 1; min-width: 240px; }
 .filter label { font-size: 13px; color: #555; font-weight: 500; }
-.filter select {
+.filter select,
+.search-control input {
   height: 38px;
   padding: 0 12px;
   border: 1px solid #d6d9df;
@@ -270,7 +340,20 @@ export default {
   outline: none;
   cursor: pointer;
 }
-.filter select:focus { border-color: #5159d8; }
+.search-control { position: relative; display: flex; align-items: center; }
+.search-control span { position: absolute; left: 12px; color: #7c83a8; font-size: 20px; pointer-events: none; }
+.search-control input { width: 100%; padding-left: 36px; cursor: text; }
+.filter select:focus,
+.search-control input:focus,
+.sort-control select:focus { border-color: #5159d8; box-shadow: 0 0 0 3px rgba(81, 89, 216, .12); outline: none; }
+.clear-filters { align-self: end; height: 38px; padding: 0 16px; border: 1px solid #d6d9df; border-radius: 7px; background: #fff; color: #5159d8; cursor: pointer; transition: .2s ease; }
+.clear-filters:hover:not(:disabled) { background: #f1f3ff; border-color: #5159d8; }
+.clear-filters:disabled { color: #aeb2bd; cursor: not-allowed; opacity: .7; }
+
+.results-summary { display: flex; justify-content: space-between; align-items: center; margin: 0 2px 12px; color: #777; font-size: 13px; }
+.results-summary strong { color: #5159d8; font-size: 15px; }
+.sort-control { display: flex; align-items: center; gap: 8px; }
+.sort-control select { border: 0; background: transparent; color: #5159d8; font-weight: 600; cursor: pointer; outline: none; }
 
 .courses-card {
   width: 100%;
@@ -293,6 +376,8 @@ tbody tr:hover { background: #fafbff; }
 .course-icon { width: 34px; height: 34px; border-radius: 7px; background: #eef0ff; display: flex; align-items: center; justify-content: center; font-size: 16px; }
 .turno { display: inline-block; padding: 5px 10px; border-radius: 20px; background: #f0f2ff; color: #5159d8; font-size: 12px; }
 .contact { color: #777; }
+.contact a { color: inherit; text-decoration: none; }
+.contact a:hover { color: #5159d8; text-decoration: underline; }
 .empty { text-align: center; padding: 40px; color: #999; }
 
 .footer { margin-top: auto; border-top: 1px solid #dcdcdc; padding: 25px 0 20px; text-align: center; }
@@ -304,6 +389,7 @@ tbody tr:hover { background: #fafbff; }
   .sidebar { width: 210px; min-width: 210px; }
   .courses-content { padding: 35px 25px 0; }
   .filters-card { gap: 15px; }
+  .search-filter { min-width: 200px; }
 }
 
 @media (max-width: 600px) {
@@ -315,6 +401,8 @@ tbody tr:hover { background: #fafbff; }
   .page-header h1 { font-size: 27px; }
   .filters-card { flex-direction: column; gap: 15px; }
   .filter { width: 100%; }
+  .clear-filters { align-self: stretch; }
+  .results-summary { align-items: flex-start; flex-direction: column; gap: 10px; }
   .contact-info { flex-direction: column; gap: 10px; }
 }
 </style>
