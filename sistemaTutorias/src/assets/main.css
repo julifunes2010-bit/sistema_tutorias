@@ -160,6 +160,89 @@ tbody td:last-child { border-right: 1px solid #edf2f7 !important; border-radius:
 
 .separator { background: #eef2f7 !important; }
 
+/* Pantallas de acceso: identidad visual consistente con el resto del sistema. */
+.login-page,
+.register-container {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh !important;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(129, 140, 248, .28), transparent 30%),
+    radial-gradient(circle at 88% 85%, rgba(14, 165, 233, .20), transparent 32%),
+    linear-gradient(135deg, #eef2ff 0%, #f8fafc 48%, #ecfeff 100%) !important;
+}
+
+.login-page::before,
+.register-container::before {
+  position: absolute;
+  z-index: -1;
+  width: 360px;
+  height: 360px;
+  border: 1px solid rgba(99, 102, 241, .12);
+  border-radius: 50%;
+  content: '';
+  transform: translate(-26%, -26%);
+}
+
+.login-container,
+.register-box {
+  border: 1px solid rgba(255, 255, 255, .78) !important;
+  border-radius: 24px !important;
+  background: rgba(255, 255, 255, .78) !important;
+  box-shadow: 0 26px 70px rgba(30, 41, 59, .16) !important;
+  backdrop-filter: blur(22px);
+}
+
+.login-container { width: min(440px, calc(100% - 32px)) !important; }
+.register-box { width: min(430px, calc(100% - 32px)) !important; }
+
+.logo-container { justify-content: center; }
+.logo-image { filter: drop-shadow(0 8px 12px rgba(79, 70, 229, .16)); }
+.logo-container span { color: var(--ui-primary) !important; letter-spacing: .12em; }
+
+.login-container h1,
+.register-box h1 {
+  color: var(--ui-ink) !important;
+  font-weight: 800 !important;
+  letter-spacing: -.8px;
+}
+
+.subtitle,
+.register-box > p { color: var(--ui-muted) !important; }
+
+.login-container input,
+.register-box input,
+.register-box select {
+  min-height: 48px;
+  border-color: rgba(148, 163, 184, .45) !important;
+  background: rgba(255, 255, 255, .72) !important;
+}
+
+.login-button,
+.register-box button {
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #4f46e5, #0ea5e9) !important;
+  box-shadow: 0 12px 24px rgba(79, 70, 229, .24) !important;
+}
+
+.login-button:hover,
+.register-box button:hover {
+  background: linear-gradient(135deg, #4338ca, #0284c7) !important;
+  box-shadow: 0 16px 30px rgba(79, 70, 229, .30) !important;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, .62) !important;
+  border-top-color: rgba(226, 232, 240, .8) !important;
+  backdrop-filter: blur(14px);
+}
+
+.footer-brand strong { color: var(--ui-primary) !important; }
+.footer-brand span, .footer-bottom { color: var(--ui-muted) !important; }
+
 @media (max-width: 900px) {
   .sidebar { box-shadow: 0 8px 28px rgba(15, 23, 42, .10) !important; }
   .header, .page-header { margin-bottom: 20px !important; }
