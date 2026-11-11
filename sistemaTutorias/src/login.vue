@@ -162,6 +162,10 @@
             La contraseña no coincide.
           </p>
 
+          <p v-if="errorTipo === 'auth'" class="error-message" role="alert">
+            {{ mensajeAuth }}
+          </p>
+
         </div>
 
 
@@ -278,6 +282,7 @@
 <script>
 
 import { useRouter } from 'vue-router'
+import { supabase, supabaseConfigured } from "./lib/supabase.js"
 
 import iraregister from './register.vue';
 import Recuperar from './recuperar.vue';
@@ -352,7 +357,9 @@ export default {
 
       // Tipo de error
 
-      errorTipo: ""
+      errorTipo: "",
+
+      mensajeAuth: ""
 
     }
 
@@ -366,7 +373,7 @@ export default {
        INICIAR SESIÓN
     ========================== */
 
-    iniciarSesion() {
+    async iniciarSesion() {
 
       // Eliminamos errores anteriores
 
@@ -374,6 +381,38 @@ export default {
 
 
       const correoIngresado = correoNormalizado(this.email)
+
+      if (supabaseConfigured) {
+        try {
+          const { error } = await supabase.auth.signInWithPassword({
+            email: correoIngresado,
+            password: this.password
+          })
+
+          if (error) {
+            this.errorTipo = "auth"
+            this.mensajeAuth = "No se pudo iniciar sesión. Verificá tus credenciales y que tu cuenta esté habilitada en Supabase."
+            return
+          }
+
+          try {
+            if (this.recordar) {
+              localStorage.setItem(REMEMBERED_EMAIL_KEY, correoIngresado)
+            } else {
+              localStorage.removeItem(REMEMBERED_EMAIL_KEY)
+            }
+          } catch {
+            // La sesión de Supabase no depende del almacenamiento del correo.
+          }
+
+          this.router.push("/horarios")
+        } catch {
+          this.errorTipo = "auth"
+          this.mensajeAuth = "No se pudo conectar con Supabase. Revisá tu conexión e intentá nuevamente."
+        }
+        return
+      }
+
       const correoCorrecto = "admin@proa.com"
       const passwordCorrecta = "123456"
       const usuarioRegistrado = leerUsuarios().find(

@@ -9,6 +9,7 @@ import recuperar from "../recuperar.vue"
 import cursos from "../cursos.vue"
 import NuevaCitacion from "../nueva-citacion.vue"
 import MisCitaciones from "../misCitaciones.vue"
+import HorarioTutorias from "../HorarioTutorias.vue"
 
 // para usar router pega este codigo en la terminal: npm install vue-router
 const router = createRouter({
@@ -62,6 +63,11 @@ const router = createRouter({
       path: "/mis-citaciones",
       name: "MisCitaciones",
       component: MisCitaciones
+    },
+    {
+      path: "/horarios",
+      name: "HorarioTutorias",
+      component: HorarioTutorias
     }
 
   ]

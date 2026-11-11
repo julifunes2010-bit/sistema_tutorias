@@ -500,6 +500,7 @@
 
 
 <script>
+import { supabase, supabaseConfigured } from "./lib/supabase.js"
 
 export default {
 
@@ -538,7 +539,10 @@ export default {
     },
 
 
-    cerrarSesion() {
+    async cerrarSesion() {
+      if (supabaseConfigured && supabase) {
+        await supabase.auth.signOut()
+      }
 
       this.$router.push("/")
 
