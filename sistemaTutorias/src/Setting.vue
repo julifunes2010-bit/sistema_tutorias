@@ -205,11 +205,11 @@
         <div>
 
           <h1>
-            CONFIGURACIÓN
+            Configuración
           </h1>
 
           <p>
-            Administrá las opciones generales de tu cuenta.
+            Elegí cómo querés usar el sistema.
           </p>
 
         </div>
@@ -225,62 +225,42 @@
 
 
         <!-- =====================================
-             PRIVACIDAD
+             MODO OSCURO
         ====================================== -->
 
         <div class="setting-row">
 
           <div class="setting-icon">
-            🔒
+            <span aria-hidden="true">☾</span>
           </div>
 
 
           <div class="setting-info">
 
             <h2>
-              Privacidad
+              Modo oscuro
             </h2>
 
             <p>
-              Elegí quién puede ver tu información.
+              Usá una apariencia más cómoda para ambientes con poca luz.
             </p>
 
           </div>
 
 
-          <div class="privacy-options">
-
-            <label>
-
+          <div class="theme-control">
+            <span class="theme-state" aria-live="polite">
+              {{ modoOscuro ? "Activado" : "Desactivado" }}
+            </span>
+            <label class="switch" :aria-label="`Modo oscuro ${modoOscuro ? 'activado' : 'desactivado'}`">
               <input
-                type="radio"
-                name="privacy"
-                value="publico"
-                v-model="privacidad"
+                type="checkbox"
+                v-model="modoOscuro"
+                @change="cambiarTema"
+                aria-label="Activar modo oscuro"
               />
-
-              <span>
-                Público
-              </span>
-
+              <span class="slider"></span>
             </label>
-
-
-            <label>
-
-              <input
-                type="radio"
-                name="privacy"
-                value="privado"
-                v-model="privacidad"
-              />
-
-              <span>
-                Privado
-              </span>
-
-            </label>
-
           </div>
 
         </div>
@@ -509,7 +489,7 @@ export default {
 
     return {
 
-      privacidad: "publico",
+      modoOscuro: document.documentElement.dataset.theme === "dark",
 
       notificaciones: true
 
@@ -519,6 +499,12 @@ export default {
 
 
   methods: {
+
+    cambiarTema() {
+      const theme = this.modoOscuro ? "dark" : "light"
+      document.documentElement.dataset.theme = theme
+      localStorage.setItem("tutorias-theme", theme)
+    },
 
     bloquearCuenta() {
 
@@ -957,7 +943,7 @@ export default {
 
   border-radius: 9px;
 
-  background: #eef0ff;
+  background: #e8eee9;
 
   display: flex;
 
@@ -1003,44 +989,16 @@ export default {
 }
 
 
-/* =========================================
-   PRIVACIDAD
-========================================= */
-
-.privacy-options {
-
+.theme-control {
   display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-
-  min-width: 100px;
-
-}
-
-
-.privacy-options label {
-
-  display: flex;
-
   align-items: center;
-
-  gap: 7px;
-
-  font-size: 13px;
-
-  color: #555;
-
-  cursor: pointer;
-
+  gap: 14px;
 }
 
-
-.privacy-options input {
-
-  accent-color: #5159d8;
-
+.theme-state {
+  min-width: 75px;
+  color: #69717d;
+  font-size: 13px;
 }
 
 
@@ -1071,7 +1029,7 @@ export default {
 
 .action-button:hover {
 
-  background: #5159d8;
+  background: #456b57;
 
   color: #ffffff;
 
@@ -1180,7 +1138,7 @@ export default {
 
 .switch input:checked + .slider {
 
-  background: #5159d8;
+  background: #456b57;
 
 }
 
@@ -1458,14 +1416,9 @@ export default {
   }
 
 
-  .privacy-options {
-
+  .theme-control {
     width: 100%;
-
-    flex-direction: row;
-
-    padding-left: 58px;
-
+    justify-content: flex-end;
   }
 
 
