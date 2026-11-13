@@ -148,12 +148,15 @@ tbody td:last-child { border-right: 1px solid var(--ui-border) !important; borde
 }
 .separator { background: var(--ui-border) !important; }
 .footer {
-  background: transparent !important;
-  border-top-color: var(--ui-border) !important;
+  background: linear-gradient(135deg, #263f33 0%, #345b46 100%) !important;
+  color: #f7f8f4 !important;
+  border-top-color: #b8794b !important;
   backdrop-filter: none !important;
 }
-.footer-brand strong { color: var(--ui-primary) !important; }
-.footer-brand span, .footer-bottom { color: var(--ui-muted) !important; }
+.footer-brand-copy strong { color: #fff !important; }
+.footer-brand-copy span, .footer-bottom { color: rgba(255, 255, 255, .68) !important; }
+.footer-links a { color: #fff !important; }
+.footer-links a:hover { color: #fff !important; }
 
 /* Inicio de sesión y registro mantienen el mismo estilo simple y cercano. */
 .login-page, .register-container {
