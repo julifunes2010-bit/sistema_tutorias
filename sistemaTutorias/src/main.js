@@ -7,7 +7,7 @@ import App from "./App.vue"
 import router from "./router"
 
 const savedTheme = localStorage.getItem("tutorias-theme")
-document.documentElement.dataset.theme = savedTheme === "dark" ? "dark" : "light"
+document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark"
 
 createApp(App)
   .use(router)

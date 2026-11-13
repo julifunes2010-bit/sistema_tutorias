@@ -1,283 +1,207 @@
 @import './base.css';
 
 :root {
+  color-scheme: dark;
+  --page: #313338;
+  --panel: #2b2d31;
+  --panel-raised: #232428;
+  --panel-hover: #383a40;
+  --line: #3f4147;
+  --text: #f2f3f5;
+  --muted: #b5bac1;
+  --subtle: #949ba4;
+  --accent: #5865f2;
+  --accent-hover: #4752c4;
+  --accent-soft: #3d4270;
+  --success: #23a559;
+  --danger: #da373c;
+  --shadow: 0 8px 24px rgba(0, 0, 0, .18);
+}
+
+html[data-theme="light"] {
   color-scheme: light;
-  --ui-primary: #456b57;
-  --ui-primary-dark: #345340;
-  --ui-primary-soft: #e8eee9;
-  --ui-accent: #b8794b;
-  --ui-ink: #293431;
-  --ui-muted: #727c76;
-  --ui-surface: #fffefa;
-  --ui-page: #f4f3ee;
-  --ui-border: #e3e4dc;
-  --ui-shadow: 0 5px 18px rgba(42, 54, 46, .055);
-  --ui-radius: 14px;
+  --page: #f2f3f5;
+  --panel: #fff;
+  --panel-raised: #e3e5e8;
+  --panel-hover: #e8e9ed;
+  --line: #d7d9de;
+  --text: #313338;
+  --muted: #4e5058;
+  --subtle: #6d7079;
+  --accent: #5865f2;
+  --accent-hover: #4752c4;
+  --accent-soft: #e5e8ff;
+  --success: #248046;
+  --danger: #c9363e;
+  --shadow: 0 6px 18px rgba(38, 40, 48, .08);
 }
 
 * { box-sizing: border-box; }
-
-html, body, #app {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
+html, body, #app { width: 100%; min-height: 100%; margin: 0; padding: 0; }
 body {
   min-height: 100vh;
-  color: var(--ui-ink);
-  background: var(--ui-page);
+  color: var(--text);
+  background: var(--page);
   font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: color .2s ease, background-color .2s ease;
 }
-
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
-#app { color: var(--ui-ink); background: var(--ui-page); }
+#app { min-height: 100vh; color: var(--text); background: var(--page); }
 
-/* Una interfaz tranquila y legible, con color usado solo para orientar. */
+/* Discord-inspired layout: charcoal surfaces, clear hierarchy, purple-blue actions. */
 .sidebar {
-  background: var(--ui-surface) !important;
-  border-right: 1px solid var(--ui-border) !important;
+  color: var(--muted) !important;
+  background: var(--panel-raised) !important;
+  border-right: 1px solid var(--line) !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
 }
-.sidebar-header { border-bottom: 1px solid var(--ui-border) !important; }
-.sidebar-header h2, .sidebar-header h3 { color: var(--ui-ink) !important; }
+.sidebar-header { border-bottom: 1px solid var(--line) !important; }
+.sidebar-header h2, .sidebar-header h3, .brand-title { color: var(--text) !important; }
+.brand-subtitle { color: var(--subtle) !important; }
+.separator { background: var(--line) !important; }
 .menu, .bottom-menu { gap: 4px !important; }
 .menu-item, .bottom-menu .menu-item {
-  min-height: 43px !important;
-  border-radius: 9px !important;
-  color: var(--ui-muted) !important;
-  transition: background .18s ease, color .18s ease !important;
+  min-height: 42px !important;
+  border-radius: 7px !important;
+  color: var(--muted) !important;
+  transition: color .15s ease, background .15s ease !important;
 }
 .menu-item:hover {
-  color: var(--ui-primary-dark) !important;
-  background: var(--ui-primary-soft) !important;
+  color: var(--text) !important;
+  background: var(--panel-hover) !important;
   transform: none !important;
 }
 .menu-item.active, .menu-item.router-link-active {
-  color: var(--ui-primary-dark) !important;
-  background: var(--ui-primary-soft) !important;
-  box-shadow: inset 3px 0 var(--ui-primary) !important;
-}
-.header, .page-header {
-  border-bottom: 1px solid var(--ui-border) !important;
-  margin-bottom: 26px !important;
-}
-.header h1, .page-header h1 {
-  color: var(--ui-ink) !important;
-  font-weight: 650 !important;
-  letter-spacing: -.45px !important;
-}
-.header p, .page-header p { color: var(--ui-muted) !important; }
-
-.form-card, .citacion-card, .report-card, .information-card, .settings-card, .settings-help, .card {
-  border: 1px solid var(--ui-border) !important;
-  border-radius: var(--ui-radius) !important;
-  background: var(--ui-surface) !important;
-  box-shadow: var(--ui-shadow) !important;
-  backdrop-filter: none !important;
-  transition: box-shadow .18s ease, border-color .18s ease !important;
-}
-.form-card:hover, .citacion-card:hover, .report-card:hover, .information-card:hover, .settings-card:hover, .card:hover {
-  border-color: #c8d3ca !important;
-  box-shadow: 0 8px 24px rgba(42, 54, 46, .085) !important;
-  transform: none !important;
-}
-.form-icon, .card-icon {
-  color: var(--ui-primary) !important;
-  background: var(--ui-primary-soft) !important;
-  border-radius: 11px !important;
-}
-input, select, textarea {
-  color: var(--ui-ink) !important;
-  background: var(--ui-surface) !important;
-  border: 1px solid #d8ddd6 !important;
-  border-radius: 9px !important;
-  outline: none;
-}
-input:focus, select:focus, textarea:focus {
-  border-color: #71947d !important;
-  box-shadow: 0 0 0 3px rgba(69, 107, 87, .13) !important;
-}
-.btn-crear, .boton, button[type="submit"], .primary-button {
   color: #fff !important;
-  border: 1px solid var(--ui-primary) !important;
-  border-radius: 9px !important;
-  background: var(--ui-primary) !important;
-  box-shadow: none !important;
-  transition: background .18s ease, border-color .18s ease !important;
+  background: #404249 !important;
+  box-shadow: inset 3px 0 var(--accent) !important;
 }
-.btn-crear:hover, .boton:hover, button[type="submit"]:hover, .primary-button:hover {
-  background: var(--ui-primary-dark) !important;
-  border-color: var(--ui-primary-dark) !important;
-  transform: none !important;
-}
-button:not(.menu-item):not(.icon-button) { border-radius: 9px; }
-table { border-collapse: separate !important; border-spacing: 0 5px !important; }
-thead th { color: var(--ui-muted) !important; font-size: .78rem; letter-spacing: .035em; text-transform: uppercase; }
-tbody tr { background: var(--ui-surface) !important; }
-tbody td { border-top: 1px solid var(--ui-border) !important; border-bottom: 1px solid var(--ui-border) !important; }
-tbody td:first-child { border-left: 1px solid var(--ui-border) !important; border-radius: 9px 0 0 9px; }
-tbody td:last-child { border-right: 1px solid var(--ui-border) !important; border-radius: 0 9px 9px 0; }
-.badge, .status, .tag { border-radius: 999px !important; font-weight: 600; }
-.reports-page, .settings-page, .courses-page, .pagina, .home {
-  color: var(--ui-ink) !important;
-  background: transparent !important;
-}
+.menu-icon, .menu-item:hover .menu-icon, .menu-item.active .menu-icon { color: inherit !important; }
 .logo-icon, .courses-page .logo, .sidebar > .logo, .settings-page .sidebar-header .logo {
   color: #fff !important;
-  background: var(--ui-primary) !important;
+  background: var(--accent) !important;
   border-radius: 10px !important;
 }
-.clear-filters, .contact-button {
-  color: var(--ui-primary-dark) !important;
-  border-color: #b9c9bd !important;
-  background: var(--ui-surface) !important;
+.header, .page-header {
+  border-bottom: 1px solid var(--line) !important;
+  margin-bottom: 22px !important;
+}
+.header h1, .page-header h1 {
+  color: var(--text) !important;
+  font-size: 1.7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -.35px !important;
+}
+.header p, .page-header p { color: var(--muted) !important; }
+
+.form-card, .citacion-card, .report-card, .information-card, .settings-card,
+.settings-help, .filters-card, .courses-card, .card {
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 9px !important;
+  background: var(--panel) !important;
+  box-shadow: var(--shadow) !important;
+  backdrop-filter: none !important;
+  transition: border-color .16s ease, background .16s ease !important;
+}
+.form-card:hover, .citacion-card:hover, .report-card:hover, .information-card:hover,
+.settings-card:hover, .filters-card:hover, .courses-card:hover, .card:hover {
+  border-color: #646bdb !important;
+  box-shadow: var(--shadow) !important;
+  transform: none !important;
+}
+.setting-row { border-color: var(--line) !important; }
+.setting-row:hover { background: var(--panel-hover) !important; }
+.setting-icon, .form-icon, .card-icon, .course-icon {
+  color: #d4d7ff !important;
+  background: var(--accent-soft) !important;
+  border-radius: 9px !important;
+}
+.setting-info h2, .settings-help h3, .contact-title, .profile-name,
+.results-summary strong, .course-name { color: var(--text) !important; }
+.setting-info p, .settings-help p, .contact-info, .copyright,
+.results-summary, .empty, .subtitle { color: var(--muted) !important; }
+
+input, select, textarea {
+  color: var(--text) !important;
+  background: var(--panel-raised) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 8px !important;
+  outline: none;
+}
+input::placeholder, textarea::placeholder { color: var(--subtle) !important; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px rgba(88, 101, 242, .28) !important;
+}
+.btn-crear, .boton, button[type="submit"], .primary-button,
+.login-button, .register-box button {
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  background: var(--accent) !important;
+  box-shadow: none !important;
+  transition: background .15s ease !important;
+}
+.btn-crear:hover, .boton:hover, button[type="submit"]:hover,
+.primary-button:hover, .login-button:hover, .register-box button:hover {
+  background: var(--accent-hover) !important;
+  transform: none !important;
+}
+.action-button, .clear-filters, .contact-button {
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 7px !important;
+  background: var(--panel-hover) !important;
   box-shadow: none !important;
 }
-.clear-filters:hover:not(:disabled), .contact-button:hover {
+.action-button:hover, .clear-filters:hover:not(:disabled), .contact-button:hover {
   color: #fff !important;
-  border-color: var(--ui-primary) !important;
-  background: var(--ui-primary) !important;
+  border-color: var(--accent) !important;
+  background: var(--accent) !important;
 }
-.separator { background: var(--ui-border) !important; }
-.footer {
-  background: transparent !important;
-  border-top-color: var(--ui-border) !important;
-  backdrop-filter: none !important;
-}
-.footer-brand strong { color: var(--ui-primary) !important; }
-.footer-brand span, .footer-bottom { color: var(--ui-muted) !important; }
+.logout-button { color: #fff !important; background: var(--danger) !important; }
+.switch input:checked + .slider { background: var(--accent) !important; }
+.switch .slider { background: #72767d !important; }
 
-/* Inicio de sesión y registro mantienen el mismo estilo simple y cercano. */
-.login-page, .register-container {
-  position: relative;
-  isolation: isolate;
-  min-height: 100vh !important;
-  background: var(--ui-page) !important;
+table { border-collapse: separate !important; border-spacing: 0 4px !important; }
+thead, thead th { color: var(--muted) !important; background: var(--panel-raised) !important; }
+tbody tr, tbody tr:hover { background: var(--panel) !important; }
+tbody td { color: var(--muted) !important; border-color: var(--line) !important; }
+tbody td:first-child { border-left: 1px solid var(--line) !important; border-radius: 7px 0 0 7px; }
+tbody td:last-child { border-right: 1px solid var(--line) !important; border-radius: 0 7px 7px 0; }
+.badge, .status, .tag, .turno { border-radius: 999px !important; font-weight: 600; }
+.reports-page, .settings-page, .courses-page, .pagina, .home {
+  color: var(--text) !important;
+  background: transparent !important;
 }
+.footer { background: transparent !important; border-top-color: var(--line) !important; backdrop-filter: none !important; }
+.login-page, .register-container { background: var(--page) !important; }
 .login-page::before, .register-container::before { display: none !important; }
 .login-container, .register-box {
-  border: 1px solid var(--ui-border) !important;
-  border-radius: 16px !important;
-  background: var(--ui-surface) !important;
-  box-shadow: 0 12px 34px rgba(42, 54, 46, .08) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 12px !important;
+  background: var(--panel) !important;
+  box-shadow: var(--shadow) !important;
   backdrop-filter: none !important;
 }
-.login-container { width: min(440px, calc(100% - 32px)) !important; }
-.register-box { width: min(430px, calc(100% - 32px)) !important; }
-.login-container h1, .register-box h1 { color: var(--ui-ink) !important; font-weight: 700 !important; letter-spacing: -.4px; }
-.subtitle, .register-box > p { color: var(--ui-muted) !important; }
-.login-container input, .register-box input, .register-box select {
-  min-height: 46px;
-  border-color: #d8ddd6 !important;
-  background: var(--ui-surface) !important;
-}
-.login-button, .register-box button {
-  border-radius: 9px !important;
-  background: var(--ui-primary) !important;
-  box-shadow: none !important;
-}
-.login-button:hover, .register-box button:hover { background: var(--ui-primary-dark) !important; }
+.login-container h1, .register-box h1 { color: var(--text) !important; }
+.login-container input, .register-box input, .register-box select { min-height: 46px; }
 
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --ui-primary: #8cb69a;
-  --ui-primary-dark: #a4c9ae;
-  --ui-primary-soft: #293a30;
-  --ui-accent: #d19a6d;
-  --ui-ink: #e7ebe7;
-  --ui-muted: #a8b2ab;
-  --ui-surface: #242b27;
-  --ui-page: #1b211e;
-  --ui-border: #39433d;
-  --ui-shadow: 0 5px 18px rgba(0, 0, 0, .16);
-}
-html[data-theme="dark"] body,
-html[data-theme="dark"] #app { color: var(--ui-ink); background: var(--ui-page); }
-html[data-theme="dark"] #app .home,
-html[data-theme="dark"] #app .pagina,
-html[data-theme="dark"] #app .courses-page,
-html[data-theme="dark"] #app .reports-page,
-html[data-theme="dark"] #app .settings-page { color: var(--ui-ink) !important; background: transparent !important; }
-html[data-theme="dark"] #app .sidebar,
-html[data-theme="dark"] #app [class*="card"],
-html[data-theme="dark"] #app .settings-help,
-html[data-theme="dark"] #app .login-container,
-html[data-theme="dark"] #app .register-box {
-  color: var(--ui-ink) !important;
-  background: var(--ui-surface) !important;
-  border-color: var(--ui-border) !important;
-  box-shadow: var(--ui-shadow) !important;
-}
-html[data-theme="dark"] #app .menu-item { color: var(--ui-muted) !important; }
-html[data-theme="dark"] #app .menu-item:hover,
-html[data-theme="dark"] #app .menu-item.active,
-html[data-theme="dark"] #app .menu-item.router-link-active {
-  color: var(--ui-primary-dark) !important;
-  background: var(--ui-primary-soft) !important;
-  box-shadow: inset 3px 0 var(--ui-primary) !important;
-}
-html[data-theme="dark"] #app h1,
-html[data-theme="dark"] #app h2,
-html[data-theme="dark"] #app h3,
-html[data-theme="dark"] #app h4,
-html[data-theme="dark"] #app label,
-html[data-theme="dark"] #app p,
-html[data-theme="dark"] #app span,
-html[data-theme="dark"] #app li,
-html[data-theme="dark"] #app td,
-html[data-theme="dark"] #app th,
-html[data-theme="dark"] #app strong { color: inherit; }
-html[data-theme="dark"] #app .setting-info h2,
-html[data-theme="dark"] #app .page-header h1,
-html[data-theme="dark"] #app .header h1,
-html[data-theme="dark"] #app .login-container h1,
-html[data-theme="dark"] #app .register-box h1 { color: var(--ui-ink) !important; }
-html[data-theme="dark"] #app .setting-info p,
-html[data-theme="dark"] #app .settings-help p,
-html[data-theme="dark"] #app .page-header p,
-html[data-theme="dark"] #app .header p,
-html[data-theme="dark"] #app .theme-state,
-html[data-theme="dark"] #app .subtitle { color: var(--ui-muted) !important; }
-html[data-theme="dark"] #app input,
-html[data-theme="dark"] #app select,
-html[data-theme="dark"] #app textarea {
-  color: var(--ui-ink) !important;
-  background: #1d2420 !important;
-  border-color: var(--ui-border) !important;
-}
-html[data-theme="dark"] #app tbody tr { background: var(--ui-surface) !important; }
-html[data-theme="dark"] #app tbody td,
-html[data-theme="dark"] #app .page-header,
-html[data-theme="dark"] #app .header,
-html[data-theme="dark"] #app .footer { border-color: var(--ui-border) !important; }
-html[data-theme="dark"] #app .setting-row { border-color: var(--ui-border) !important; }
-html[data-theme="dark"] #app .setting-row:hover { background: #28312b !important; }
-html[data-theme="dark"] #app .setting-icon,
-html[data-theme="dark"] #app .form-icon,
-html[data-theme="dark"] #app .card-icon { color: var(--ui-primary) !important; background: var(--ui-primary-soft) !important; }
-html[data-theme="dark"] #app .logo-icon,
-html[data-theme="dark"] #app .courses-page .logo,
-html[data-theme="dark"] #app .sidebar > .logo,
-html[data-theme="dark"] #app .settings-page .sidebar-header .logo { color: #17221b !important; background: var(--ui-primary) !important; }
-html[data-theme="dark"] #app .clear-filters,
-html[data-theme="dark"] #app .contact-button { color: var(--ui-primary-dark) !important; border-color: var(--ui-border) !important; background: var(--ui-surface) !important; }
-html[data-theme="dark"] #app .clear-filters:hover:not(:disabled),
-html[data-theme="dark"] #app .contact-button:hover { color: #17221b !important; background: var(--ui-primary) !important; }
-html[data-theme="dark"] #app .action-button { color: var(--ui-primary-dark) !important; border-color: var(--ui-primary) !important; background: transparent !important; }
-html[data-theme="dark"] #app .action-button:hover { color: #17221b !important; background: var(--ui-primary) !important; }
+html[data-theme="light"] #app .setting-icon,
+html[data-theme="light"] #app .form-icon,
+html[data-theme="light"] #app .card-icon,
+html[data-theme="light"] #app .course-icon { color: #4752c4 !important; }
 
 @media (max-width: 900px) {
-  .sidebar { box-shadow: 0 4px 16px rgba(42, 54, 46, .06) !important; }
-  .header, .page-header { margin-bottom: 20px !important; }
-  .form-card, .citacion-card, .report-card, .information-card, .settings-card, .settings-help, .card { border-radius: 13px !important; }
+  .header, .page-header { margin-bottom: 18px !important; }
+  .form-card, .citacion-card, .report-card, .information-card, .settings-card,
+  .settings-help, .filters-card, .courses-card, .card { border-radius: 8px !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
