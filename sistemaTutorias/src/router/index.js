@@ -68,5 +68,14 @@ const router = createRouter({
 
 })
 
+// Protege las pantallas internas: el acceso se habilita solo tras iniciar sesión en este navegador.
+router.beforeEach((to) => {
+  const rutasPublicas = ["/", "/register", "/recuperar"]
+  const sesionActiva = Boolean(localStorage.getItem("sistemaTutoriasSession"))
+
+  if (!rutasPublicas.includes(to.path) && !sesionActiva) return "/"
+  if (to.path === "/" && sesionActiva) return "/home"
+})
+
 
 export default router

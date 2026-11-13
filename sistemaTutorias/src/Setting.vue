@@ -7,187 +7,41 @@
     ========================================== -->
 
     <aside class="sidebar">
-
-      <!-- LOGO -->
-      <div class="sidebar-header">
-
-        <div class="logo">
-          T
+      <!-- Navegación compartida para mantener el mismo lateral en todas las pantallas. -->
+      <router-link to="/home" class="sidebar-brand sidebar-brand-link">
+        <img class="brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
+        <div>
+          <h2>Tutorías</h2>
+          <span>ProA</span>
         </div>
-
-        <div class="brand">
-
-          <span class="brand-title">
-            Tutorías
-          </span>
-
-          <span class="brand-subtitle">
-            ProA
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <!-- SEPARADOR -->
-      <div class="separator"></div>
-
-
-      <!-- =========================================
-           MENÚ PRINCIPAL
-      ========================================== -->
+      </router-link>
 
       <nav class="menu">
-
-        <!-- INICIO -->
-        <router-link
-          to="/home"
-          class="menu-item"
-        >
-
-          <span class="menu-icon">
-            ♧
-          </span>
-
-          <span>
-            Inicio
-          </span>
-
+        <router-link to="/home" class="menu-item">
+          <span class="icon">⌂</span>
+          <span>Inicio</span>
         </router-link>
-
-
-        <!-- NUEVA CITACIÓN -->
-        <router-link
-          to="/nueva-citacion"
-          class="menu-item"
-        >
-
-          <span class="menu-icon plus">
-            +
-          </span>
-
-          <span>
-            Nueva citación
-          </span>
-
+        <router-link to="/nueva-citacion" class="menu-item">
+          <span class="icon">＋</span>
+          <span>Nueva citación</span>
         </router-link>
-
-
-        <!-- MIS CITACIONES -->
-        <router-link
-          to="/mis-citaciones"
-          class="menu-item"
-        >
-
-          <span class="menu-icon">
-            ▣
-          </span>
-
-          <span>
-            Mis citaciones
-          </span>
-
+        <router-link to="/mis-citaciones" class="menu-item">
+          <span class="icon">▣</span>
+          <span>Mis citaciones</span>
         </router-link>
-
-
-        <!-- CURSOS -->
-        <router-link
-          to="/cursos"
-          class="menu-item"
-        >
-
-          <span class="menu-icon">
-            ▤
-          </span>
-
-          <span>
-            Cursos
-          </span>
-
+        <router-link to="/cursos" class="menu-item">
+          <span class="icon">▤</span>
+          <span>Cursos</span>
         </router-link>
-
-
-        <!-- MATERIAS -->
-        <router-link
-          to="/materias"
-          class="menu-item"
-        >
-
-          <span class="menu-icon">
-            📚
-          </span>
-
-          <span>
-            Materias
-          </span>
-
+        <router-link to="/reportes" class="menu-item">
+          <span class="icon">▥</span>
+          <span>Reportes</span>
         </router-link>
-
-
-        
-
-
-        <!-- HORARIOS -->
-        <router-link
-          to="/horarios"
-          class="menu-item"
-        >
-
-          <span class="menu-icon">
-            ◷
-          </span>
-
-          <span>
-            Horarios de tutoría
-          </span>
-
+        <router-link to="/setting" class="menu-item">
+          <span class="icon">≡</span>
+          <span>Configuración</span>
         </router-link>
-
       </nav>
-
-
-      <!-- =========================================
-           MENÚ INFERIOR
-      ========================================== -->
-
-      <div class="bottom-menu">
-
-        <!-- REPORTES -->
-        <router-link
-          to="/reportes"
-          class="menu-item"
-        >
-
-          <span class="menu-icon">
-            ⚙
-          </span>
-
-          <span>
-            Reportes
-          </span>
-
-        </router-link>
-
-
-        <!-- CONFIGURACIÓN ACTIVA -->
-        <router-link
-          to="/setting"
-          class="menu-item active"
-        >
-
-          <span class="menu-icon">
-            ⚙
-          </span>
-
-          <span>
-            Configuración
-          </span>
-
-        </router-link>
-
-      </div>
-
     </aside>
 
 
@@ -231,7 +85,7 @@
         <div class="setting-row">
 
           <div class="setting-icon">
-            <span aria-hidden="true">☾</span>
+            <span aria-hidden="true">◐</span>
           </div>
 
 
@@ -273,18 +127,18 @@
         <div class="setting-row">
 
           <div class="setting-icon">
-            🔐
+            •
           </div>
 
 
           <div class="setting-info">
 
             <h2>
-              Bloquear cuenta
+              Bloquear sesión en este dispositivo
             </h2>
 
             <p>
-              Bloqueá temporalmente el acceso a tu cuenta.
+              Cerrá la sesión local para bloquear el acceso desde este dispositivo.
             </p>
 
           </div>
@@ -295,7 +149,7 @@
             @click="bloquearCuenta"
           >
 
-            Bloquear
+            Bloquear sesión
 
           </button>
 
@@ -309,7 +163,7 @@
         <div class="setting-row">
 
           <div class="setting-icon">
-            🔔
+            ·
           </div>
 
 
@@ -347,7 +201,7 @@
         <div class="setting-row">
 
           <div class="setting-icon">
-            ❓
+            ?
           </div>
 
 
@@ -420,7 +274,7 @@
       <div class="settings-help">
 
         <span class="help-icon">
-          💡
+          i
         </span>
 
         <div>
@@ -453,12 +307,12 @@
         <div class="contact-info">
 
           <span>
-            🟢 +54 9 3548 32-0643
+            Tel. +54 9 3548 32-0643
           </span>
 
 
           <span>
-            ✉️ jfqmw@esc.edu.ar
+            Correo jfqmw@esc.edu.ar
           </span>
 
         </div>
@@ -491,27 +345,34 @@ export default {
 
       modoOscuro: document.documentElement.dataset.theme === "dark",
 
-      notificaciones: true
+      // Preferencia persistente para que el interruptor conserve su estado entre visitas.
+      notificaciones: localStorage.getItem("tutorias-notificaciones") !== "false"
 
     }
 
   },
 
 
+  watch: {
+    notificaciones(valor) {
+      // Conserva la preferencia de notificaciones al recargar la página.
+      localStorage.setItem("tutorias-notificaciones", String(valor))
+    }
+  },
+
   methods: {
 
     cambiarTema() {
       const theme = this.modoOscuro ? "dark" : "light"
       document.documentElement.dataset.theme = theme
+      // Se guarda el tema elegido y se aplica a toda la interfaz.
       localStorage.setItem("tutorias-theme", theme)
     },
 
     bloquearCuenta() {
-
-      alert(
-        "La función para bloquear la cuenta estará disponible próximamente."
-      )
-
+      // El prototipo puede cerrar la sesión local; el bloqueo remoto requiere un backend de autenticación.
+      localStorage.removeItem("sistemaTutoriasSession")
+      this.$router.push("/")
     },
 
 
@@ -525,9 +386,9 @@ export default {
 
 
     cerrarSesion() {
-
+      // Cierra la sesión local además de volver a la pantalla de acceso.
+      localStorage.removeItem("sistemaTutoriasSession")
       this.$router.push("/")
-
     }
 
   }

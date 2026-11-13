@@ -1,9 +1,9 @@
-```vue
 <template>
   <div class="register-container">
 
     <div class="register-box">
 
+      <img class="auth-brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
       <h1>Crear cuenta</h1>
 
       <p>Registrate con tu correo institucional</p>
@@ -134,6 +134,7 @@ const rol = ref("profesor")
 
 // Mensaje de error
 const error = ref("")
+// Las cuentas del prototipo se conservan localmente en este navegador.
 const USERS_STORAGE_KEY = "sistemaTutoriasUsers"
 
 function leerUsuarios() {
@@ -373,4 +374,3 @@ button:hover {
 }
 
 </style>
-```

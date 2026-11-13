@@ -240,20 +240,19 @@
 
         <!-- Redes -->
         <div class="footer-links">
-          
 
           <a
             href="#"
             @click.prevent
           >
-            💬 WhatsApp
+            WhatsApp
           </a>
 
 
           <a
             href="mailto:tutorias@proa.com"
           >
-            ✉️ Contacto
+            Contacto
           </a>
 
         </div>
@@ -279,9 +278,6 @@
 
 import { useRouter } from 'vue-router'
 
-import iraregister from './register.vue';
-import Recuperar from './recuperar.vue';
-
 const USERS_STORAGE_KEY = "sistemaTutoriasUsers"
 const REMEMBERED_EMAIL_KEY = "sistemaTutoriasRememberedEmail"
 
@@ -295,7 +291,8 @@ function leerUsuarios() {
 }
 
 function correoNormalizado(correo) {
-  return correo.trim().toLowerCase()
+  // Normaliza también valores incompletos de localStorage para que una entrada dañada no rompa el login.
+  return String(correo || "").trim().toLowerCase()
 }
 
 function correoRecordado() {
@@ -310,22 +307,12 @@ function correoRecordado() {
 export default {
 
   name: "Login",
-  name: "register",
 
 
   setup() {
 
     const router = useRouter()
-    const iraregister = () => {
-      router.push("/register")
-      router.push("/recuperar")
-    }
-
-    return {
-      router,
-      iraregister,
-      Recuperar
-    }
+    return { router }
 
   },
 
@@ -374,17 +361,12 @@ export default {
 
 
       const correoIngresado = correoNormalizado(this.email)
-      const correoCorrecto = "admin@proa.com"
-      const passwordCorrecta = "123456"
       const usuarioRegistrado = leerUsuarios().find(
         usuario => correoNormalizado(usuario.email) === correoIngresado
       )
-      const correoValido = correoIngresado === correoCorrecto || Boolean(usuarioRegistrado)
-      const passwordValida = (
-        correoIngresado === correoCorrecto && this.password === passwordCorrecta
-      ) || (
-        Boolean(usuarioRegistrado) && usuarioRegistrado.password === this.password
-      )
+      // Solo se autentican cuentas registradas en este navegador; se quita la credencial fija de demostración.
+      const correoValido = Boolean(usuarioRegistrado)
+      const passwordValida = Boolean(usuarioRegistrado) && usuarioRegistrado.password === this.password
 
       if (!correoValido && !passwordValida) {
 
@@ -422,6 +404,8 @@ export default {
       // =========================
 
       try {
+        // Esta marca permite al guard del router proteger las pantallas internas.
+        localStorage.setItem("sistemaTutoriasSession", correoIngresado)
         if (this.recordar) {
           localStorage.setItem(REMEMBERED_EMAIL_KEY, correoIngresado)
         } else {

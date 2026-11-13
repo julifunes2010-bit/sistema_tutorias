@@ -2,17 +2,17 @@
 
 :root {
   color-scheme: light;
-  --ui-primary: #456b57;
-  --ui-primary-dark: #345340;
-  --ui-primary-soft: #e8eee9;
-  --ui-accent: #b8794b;
-  --ui-ink: #293431;
-  --ui-muted: #727c76;
-  --ui-surface: #fffefa;
-  --ui-page: #f4f3ee;
-  --ui-border: #e3e4dc;
-  --ui-shadow: 0 5px 18px rgba(42, 54, 46, .055);
-  --ui-radius: 14px;
+  --ui-primary: #214e78;
+  --ui-primary-dark: #173e64;
+  --ui-primary-soft: #dce7f1;
+  --ui-accent: #9f3345;
+  --ui-ink: #24313d;
+  --ui-muted: #596a79;
+  --ui-surface: #ffffff;
+  --ui-page: #edf1f5;
+  --ui-border: #cbd5df;
+  --ui-shadow: 0 3px 12px rgba(34, 55, 76, .075);
+  --ui-radius: 11px;
 }
 
 * { box-sizing: border-box; }
@@ -46,11 +46,59 @@ button { cursor: pointer; }
   box-shadow: none !important;
   backdrop-filter: none !important;
 }
-.sidebar-header { border-bottom: 1px solid var(--ui-border) !important; }
+/* Reportes y Configuración forman parte del flujo flex de su página; no deben quedar fijos sobre el contenido. */
+#app .reports-page > .sidebar,
+#app .settings-page > .sidebar {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  flex: 0 0 250px !important;
+  width: 250px !important;
+  min-width: 250px !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  padding: 20px 15px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.sidebar-header, .sidebar-brand, .sidebar > .logo {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 5px 10px 22px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid var(--ui-border) !important;
+}
+.sidebar-brand-link {
+  width: 100%;
+  color: var(--ui-ink) !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+.sidebar-brand-link:hover { opacity: .88; }
+.sidebar-brand h2, .sidebar > .logo h2 { margin: 0; font-size: 17px; color: var(--ui-ink); }
+.sidebar-brand > div > span, .sidebar > .logo > div > span { color: var(--ui-muted); font-size: 12px; }
 .sidebar-header h2, .sidebar-header h3 { color: var(--ui-ink) !important; }
-.menu, .bottom-menu { gap: 4px !important; }
+.menu, .bottom-menu {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin-top: 20px !important;
+}
+.menu-item .icon, .menu-item .menu-icon {
+  display: flex;
+  flex: 0 0 22px;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  color: inherit;
+}
 .menu-item, .bottom-menu .menu-item {
-  min-height: 43px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 13px !important;
+  gap: 13px !important;
   border-radius: 9px !important;
   color: var(--ui-muted) !important;
   transition: background .18s ease, color .18s ease !important;
@@ -85,8 +133,8 @@ button { cursor: pointer; }
   transition: box-shadow .18s ease, border-color .18s ease !important;
 }
 .form-card:hover, .citacion-card:hover, .report-card:hover, .information-card:hover, .settings-card:hover, .card:hover {
-  border-color: #c8d3ca !important;
-  box-shadow: 0 8px 24px rgba(42, 54, 46, .085) !important;
+  border-color: #aebfce !important;
+  box-shadow: 0 8px 24px rgba(34, 55, 76, .12) !important;
   transform: none !important;
 }
 .form-icon, .card-icon {
@@ -97,13 +145,13 @@ button { cursor: pointer; }
 input, select, textarea {
   color: var(--ui-ink) !important;
   background: var(--ui-surface) !important;
-  border: 1px solid #d8ddd6 !important;
+  border: 1px solid #c5d1dc !important;
   border-radius: 9px !important;
   outline: none;
 }
 input:focus, select:focus, textarea:focus {
-  border-color: #71947d !important;
-  box-shadow: 0 0 0 3px rgba(69, 107, 87, .13) !important;
+  border-color: #52799d !important;
+  box-shadow: 0 0 0 3px rgba(33, 78, 120, .16) !important;
 }
 .btn-crear, .boton, button[type="submit"], .primary-button {
   color: #fff !important;
@@ -130,14 +178,14 @@ tbody td:last-child { border-right: 1px solid var(--ui-border) !important; borde
   color: var(--ui-ink) !important;
   background: transparent !important;
 }
-.logo-icon, .courses-page .logo, .sidebar > .logo, .settings-page .sidebar-header .logo {
+.logo-icon {
   color: #fff !important;
   background: var(--ui-primary) !important;
   border-radius: 10px !important;
 }
 .clear-filters, .contact-button {
   color: var(--ui-primary-dark) !important;
-  border-color: #b9c9bd !important;
+  border-color: #aebfce !important;
   background: var(--ui-surface) !important;
   box-shadow: none !important;
 }
@@ -155,6 +203,44 @@ tbody td:last-child { border-right: 1px solid var(--ui-border) !important; borde
 .footer-brand strong { color: var(--ui-primary) !important; }
 .footer-brand span, .footer-bottom { color: var(--ui-muted) !important; }
 
+/* Símbolos pequeños y tipografía simple para una interfaz más cercana y menos decorativa. */
+.card-icon, .form-icon, .course-icon, .setting-icon {
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-weight: 500 !important;
+}
+.avatar, .student-avatar {
+  font-weight: 600 !important;
+  letter-spacing: .02em;
+}
+/* Repite el logo del acceso en todas las barras laterales y pantallas de cuenta. */
+.brand-logo {
+  display: block;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border: 1px solid var(--ui-border);
+  border-radius: 50%;
+  background: var(--ui-surface);
+}
+.auth-brand-logo {
+  display: block;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 16px;
+  object-fit: contain;
+  border: 1px solid var(--ui-border);
+  border-radius: 50%;
+  background: var(--ui-surface);
+}
+.ver-todas, .sin-tutorias a, .empty-state a {
+  color: var(--ui-primary-dark);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: #b6c8d8;
+  text-underline-offset: 3px;
+}
+
 /* Inicio de sesión y registro mantienen el mismo estilo simple y cercano. */
 .login-page, .register-container {
   position: relative;
@@ -167,7 +253,7 @@ tbody td:last-child { border-right: 1px solid var(--ui-border) !important; borde
   border: 1px solid var(--ui-border) !important;
   border-radius: 16px !important;
   background: var(--ui-surface) !important;
-  box-shadow: 0 12px 34px rgba(42, 54, 46, .08) !important;
+  box-shadow: 0 12px 34px rgba(34, 55, 76, .11) !important;
   backdrop-filter: none !important;
 }
 .login-container { width: min(440px, calc(100% - 32px)) !important; }
@@ -176,7 +262,7 @@ tbody td:last-child { border-right: 1px solid var(--ui-border) !important; borde
 .subtitle, .register-box > p { color: var(--ui-muted) !important; }
 .login-container input, .register-box input, .register-box select {
   min-height: 46px;
-  border-color: #d8ddd6 !important;
+  border-color: #c5d1dc !important;
   background: var(--ui-surface) !important;
 }
 .login-button, .register-box button {
@@ -188,15 +274,15 @@ tbody td:last-child { border-right: 1px solid var(--ui-border) !important; borde
 
 html[data-theme="dark"] {
   color-scheme: dark;
-  --ui-primary: #8cb69a;
-  --ui-primary-dark: #a4c9ae;
-  --ui-primary-soft: #293a30;
-  --ui-accent: #d19a6d;
-  --ui-ink: #e7ebe7;
-  --ui-muted: #a8b2ab;
-  --ui-surface: #242b27;
-  --ui-page: #1b211e;
-  --ui-border: #39433d;
+  --ui-primary: #8eb3d3;
+  --ui-primary-dark: #afcbe2;
+  --ui-primary-soft: #293a49;
+  --ui-accent: #d58b91;
+  --ui-ink: #e8edf1;
+  --ui-muted: #adb7c0;
+  --ui-surface: #242c33;
+  --ui-page: #1a2025;
+  --ui-border: #39434c;
   --ui-shadow: 0 5px 18px rgba(0, 0, 0, .16);
 }
 html[data-theme="dark"] body,
@@ -210,7 +296,10 @@ html[data-theme="dark"] #app .sidebar,
 html[data-theme="dark"] #app [class*="card"],
 html[data-theme="dark"] #app .settings-help,
 html[data-theme="dark"] #app .login-container,
-html[data-theme="dark"] #app .register-box {
+html[data-theme="dark"] #app .register-box,
+html[data-theme="dark"] #app .welcome,
+html[data-theme="dark"] #app .contenedor,
+html[data-theme="dark"] #app .forgot-box {
   color: var(--ui-ink) !important;
   background: var(--ui-surface) !important;
   border-color: var(--ui-border) !important;
@@ -244,13 +333,20 @@ html[data-theme="dark"] #app .setting-info p,
 html[data-theme="dark"] #app .settings-help p,
 html[data-theme="dark"] #app .page-header p,
 html[data-theme="dark"] #app .header p,
+html[data-theme="dark"] #app .welcome p,
+html[data-theme="dark"] #app .user small,
 html[data-theme="dark"] #app .theme-state,
 html[data-theme="dark"] #app .subtitle { color: var(--ui-muted) !important; }
+html[data-theme="dark"] #app .welcome h2 { color: var(--ui-ink) !important; }
+html[data-theme="dark"] #app .avatar {
+  color: #17212b !important;
+  background: var(--ui-primary) !important;
+}
 html[data-theme="dark"] #app input,
 html[data-theme="dark"] #app select,
 html[data-theme="dark"] #app textarea {
   color: var(--ui-ink) !important;
-  background: #1d2420 !important;
+  background: #1d242a !important;
   border-color: var(--ui-border) !important;
 }
 html[data-theme="dark"] #app tbody tr { background: var(--ui-surface) !important; }
@@ -259,25 +355,39 @@ html[data-theme="dark"] #app .page-header,
 html[data-theme="dark"] #app .header,
 html[data-theme="dark"] #app .footer { border-color: var(--ui-border) !important; }
 html[data-theme="dark"] #app .setting-row { border-color: var(--ui-border) !important; }
-html[data-theme="dark"] #app .setting-row:hover { background: #28312b !important; }
+html[data-theme="dark"] #app .setting-row:hover { background: #28323a !important; }
 html[data-theme="dark"] #app .setting-icon,
 html[data-theme="dark"] #app .form-icon,
 html[data-theme="dark"] #app .card-icon { color: var(--ui-primary) !important; background: var(--ui-primary-soft) !important; }
-html[data-theme="dark"] #app .logo-icon,
-html[data-theme="dark"] #app .courses-page .logo,
-html[data-theme="dark"] #app .sidebar > .logo,
-html[data-theme="dark"] #app .settings-page .sidebar-header .logo { color: #17221b !important; background: var(--ui-primary) !important; }
+html[data-theme="dark"] #app .logo-icon { color: #17212b !important; background: var(--ui-primary) !important; }
 html[data-theme="dark"] #app .clear-filters,
 html[data-theme="dark"] #app .contact-button { color: var(--ui-primary-dark) !important; border-color: var(--ui-border) !important; background: var(--ui-surface) !important; }
 html[data-theme="dark"] #app .clear-filters:hover:not(:disabled),
-html[data-theme="dark"] #app .contact-button:hover { color: #17221b !important; background: var(--ui-primary) !important; }
+html[data-theme="dark"] #app .contact-button:hover { color: #17212b !important; background: var(--ui-primary) !important; }
 html[data-theme="dark"] #app .action-button { color: var(--ui-primary-dark) !important; border-color: var(--ui-primary) !important; background: transparent !important; }
-html[data-theme="dark"] #app .action-button:hover { color: #17221b !important; background: var(--ui-primary) !important; }
+html[data-theme="dark"] #app .action-button:hover { color: #17212b !important; background: var(--ui-primary) !important; }
 
 @media (max-width: 900px) {
-  .sidebar { box-shadow: 0 4px 16px rgba(42, 54, 46, .06) !important; }
+  .sidebar { box-shadow: 0 4px 16px rgba(43, 61, 78, .06) !important; }
   .header, .page-header { margin-bottom: 20px !important; }
   .form-card, .citacion-card, .report-card, .information-card, .settings-card, .settings-help, .card { border-radius: 13px !important; }
+}
+@media (max-width: 600px) {
+  #app .reports-page > .sidebar,
+  #app .settings-page > .sidebar {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 15px !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--ui-border) !important;
+  }
+  .reports-page .menu, .settings-page .menu {
+    flex-direction: row !important;
+    overflow-x: auto;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
