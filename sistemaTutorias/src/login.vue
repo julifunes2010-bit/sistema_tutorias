@@ -219,56 +219,32 @@
          FOOTER
     ========================== -->
 
-    <footer class="footer">
-
+        <footer class="footer">
       <div class="footer-content">
-
-
-        <!-- Información -->
         <div class="footer-brand">
-
-          <strong>
-            Tutorías PROA
-          </strong>
-
-          <span>
-            Sistema de tutorías
-          </span>
-
+          <div class="footer-mark" aria-hidden="true">P</div>
+          <div class="footer-brand-copy">
+            <strong>Tutorías PROA</strong>
+            <span>Acompañamiento académico y educativo</span>
+          </div>
         </div>
 
-
-        <!-- Redes -->
-        <div class="footer-links">
-          
-
-          <a
-            href="#"
-            @click.prevent
-          >
-            💬 WhatsApp
+        <nav class="footer-links" aria-label="Información de contacto">
+          <a href="https://wa.me/5493548320643" target="_blank" rel="noopener noreferrer">
+            <span aria-hidden="true">◉</span>
+            WhatsApp · +54 9 3548 32-0643
           </a>
-
-
-          <a
-            href="mailto:tutorias@proa.com"
-          >
-            ✉️ Contacto
+          <a href="mailto:jfqmw@esc.edu.ar">
+            <span aria-hidden="true">✉</span>
+            jfqmw@esc.edu.ar
           </a>
-
-        </div>
-
+        </nav>
       </div>
 
-
-      <!-- Copyright -->
       <div class="footer-bottom">
-
-        © {{ new Date().getFullYear() }}
-        Tutorías PROA · Todos los derechos reservados
-
+        <span>© {{ new Date().getFullYear() }} Tutorías PROA</span>
+        <span>Todos los derechos reservados</span>
       </div>
-
     </footer>
 
   </div>
@@ -889,126 +865,144 @@ h1 {
 }
 
 
-/* ==================================================
-   FOOTER
-================================================== */
+/* =========================================
+   FOOTER INSTITUCIONAL
+========================================= */
 
 .footer {
-
   width: 100%;
-
   margin-top: auto;
-
-  padding:
-
-    25px 30px 15px;
-
-  background: #ffffff;
-
-  border-top:
-
-    1px solid #e5e5e5;
-
+  padding: 32px clamp(20px, 5vw, 64px) 18px;
+  color: #f7f8f4;
+  background: linear-gradient(135deg, #263f33 0%, #345b46 100%);
+  border-top: 3px solid #b8794b;
 }
-
 
 .footer-content {
-
-  max-width: 900px;
-
+  width: 100%;
+  max-width: 1180px;
   margin: 0 auto;
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
-  gap: 30px;
-
+  gap: 28px;
 }
-
 
 .footer-brand {
-
   display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
+.footer-mark {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+
+.footer-brand-copy {
+  display: flex;
   flex-direction: column;
-
   gap: 5px;
-
 }
 
-
-.footer-brand strong {
-
-  color: #333;
-
-  font-size: 15px;
-
+.footer-brand-copy strong {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .2px;
 }
 
-
-.footer-brand span {
-
-  color: #888;
-
+.footer-brand-copy span {
+  color: rgba(255, 255, 255, .72);
   font-size: 12px;
-
+  line-height: 1.5;
 }
-
 
 .footer-links {
-
   display: flex;
-
   align-items: center;
-
-  gap: 20px;
-
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-
 
 .footer-links a {
-
-  color: #666;
-
-  font-size: 13px;
-
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 9px;
+  color: #fff;
+  background: rgba(255, 255, 255, .07);
+  font-size: 12px;
   text-decoration: none;
-
-  transition: 0.2s;
-
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
 }
-
 
 .footer-links a:hover {
-
-  color: #2d7ff9;
-
-  background: transparent;
-
+  color: #fff;
+  background: rgba(255, 255, 255, .16);
+  border-color: rgba(255, 255, 255, .42);
+  transform: translateY(-1px);
 }
 
+.footer-links a span {
+  color: #e4bd91;
+  font-size: 15px;
+}
 
 .footer-bottom {
-
-  margin-top: 20px;
-
-  padding-top: 12px;
-
-  border-top:
-
-    1px solid #eeeeee;
-
-  text-align: center;
-
-  color: #999;
-
+  width: 100%;
+  max-width: 1180px;
+  margin: 24px auto 0;
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .62);
   font-size: 11px;
-
 }
 
+@media (max-width: 640px) {
+  .footer {
+    padding: 27px 20px 17px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
+  .footer-links {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footer-links a {
+    justify-content: flex-start;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 20px;
+  }
+}
 
 /* ==================================================
    RESPONSIVE - TABLET
