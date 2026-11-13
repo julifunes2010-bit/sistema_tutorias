@@ -1,90 +1,78 @@
-![🎓 TUTORÍAS PROA](https://capsule-render.vercel.app/api?type=waving&color=0:111827,35:312E81,65:6366F1,100:A5B4FC&height=230&section=header&text=%20SISTEMA%20TUTORIAS%20&fontSize=55&fontColor=FFFFFF&fontAlignY=40&animation=fadeIn)
+# Sistema de Tutorías ProA
 
-<p align="center">
-  <b> Plataforma web para la gestión de tutorías escolares</b>
-</p>
+Aplicación web para organizar y consultar información relacionada con las tutorías escolares. El proyecto está en desarrollo y usa Vue 3, Vue Router, Vite y Supabase.
 
-<p align="center">
-  Sistema desarrollado con Vue.js para organizar, consultar y gestionar información relacionada con tutorías.
-</p>
+## Funcionalidades disponibles
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Vue.js-3-42b883?style=for-the-badge&logo=vuedotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-</p>
+La aplicación cuenta con pantallas y rutas para:
 
-<p align="center">
-  <img src="https://img.shields.io/badge/STATUS-EN%20DESARROLLO-6366F1?style=for-the-badge">
-  <img src="https://img.shields.io/badge/VERSION-1.0-A5B4FC?style=for-the-badge">
-</p>
+- Inicio de sesión, registro y recuperación de cuenta.
+- Inicio y navegación principal.
+- Consulta de cursos y reportes.
+- Creación y consulta de citaciones.
+- Configuración de la aplicación, incluido el modo oscuro.
 
-#  Objetivo
+El alcance y la conexión de cada pantalla con los servicios de backend pueden seguir evolucionando.
 
-El objetivo de **Sistema de Tutorías ProA** es desarrollar una plataforma web que facilite la organización y gestión de tutorías dentro de una institución educativa.
+## Requisitos
 
-La aplicación busca centralizar diferentes herramientas en una misma plataforma, permitiendo a los usuarios consultar cursos, acceder a reportes, administrar configuraciones y utilizar diferentes funciones relacionadas con las tutorías.
+- Node.js `^22.18.0` o `>=24.12.0`.
+- npm.
+- Un proyecto de Supabase con las variables de entorno configuradas.
 
-###  Objetivos específicos
+## Puesta en marcha
 
--  Crear un sistema de inicio de sesión.
--  Permitir el registro de usuarios.
--  Incorporar recuperación de cuenta.
--  Verificar códigos de recuperación.
--  Consultar cursos y docentes.
--  Mostrar reportes.
--  Administrar configuraciones.
--  Implementar navegación entre páginas.
--  Crear una interfaz adaptable a diferentes dispositivos.
--  Aplicar conocimientos de desarrollo web y Vue.js.
+La aplicación Vue está en `sistemaTutorias/`:
 
+```sh
+cd sistemaTutorias
+npm install
+```
 
+Crea `sistemaTutorias/.env.local` con las credenciales públicas de tu proyecto de Supabase:
 
-###  Credenciales de prueba
+```dotenv
+VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=tu-clave-publicable
+```
+
+No subas claves secretas ni el archivo `.env.local` al repositorio. La aplicación lee estas variables desde `src/lib/supabase.js`.
+
+Inicia el servidor de desarrollo:
+
+```sh
+npm run dev
+```
+
+Genera y previsualiza la versión de producción:
+
+```sh
+npm run build
+npm run preview
+```
+
+## Estructura
 
 ```text
- Correo:
-admin@proa.com
-Contraseña:
-123456
+sistemaTutorias/
+├── src/
+│   ├── components/   # Componentes reutilizables
+│   ├── lib/          # Cliente de Supabase
+│   ├── assets/       # Estilos e imágenes
+│   ├── router/       # Rutas de la aplicación
+│   └── *.vue         # Vistas principales
+├── public/
+└── package.json
 ```
-## Personas desarrolladoras del proyecto
 
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/meteoro-sys">
-        <img src="https://github.com/meteoro-sys.png" width="115px;" alt="Perfil"/><br>
-        <sub><b>Maximo Sandoval</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/julifunes2010-bit">
-        <img src="https://github.com/julifunes2010-bit.png" width="115px;" alt="Perfil"/><br>
-        <sub><b>Julian Funes</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/yairLozano">
-        <img src="https://github.com/yairLozano.png" width="115px;" alt="Perfil"/><br>
-        <sub><b>Yair Lozano</b></sub>
-      </a>
-  </tr>
-</table>
+## Estado
 
-## Profesor
+El sistema está en desarrollo y el frontend todavía no tiene una versión de lanzamiento (el `package.json` declara `0.0.0`). Este repositorio no incluye instrucciones de despliegue ni un esquema de base de datos.
 
-<table>
-<td align="center">
-      <a href="https://github.com/luis-siccardi">
-        <img src="https://github.com/Luis-Siccardi.png" width="115px;" alt="Perfil"/><br>
-        <sub><b>Luis Siccardi</b></sub>
-      </a>
-  </tr>
-</table>
+## Equipo
 
+- [Maximo Sandoval](https://github.com/meteoro-sys)
+- [Julian Funes](https://github.com/julifunes2010-bit)
+- [Yair Lozano](https://github.com/yairLozano)
 
-![🎓 TUTORÍAS PROA](https://capsule-render.vercel.app/api?type=waving&color=0:111827,35:312E81,65:6366F1,100:A5B4FC&height=230&section=header&text=%20EN%20PROCESO%20&fontSize=55&fontColor=FFFFFF&fontAlignY=40&animation=fadeIn)
-
+Profesor: [Luis Siccardi](https://github.com/luis-siccardi)
