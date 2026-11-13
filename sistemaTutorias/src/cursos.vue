@@ -144,14 +144,33 @@
         </div>
       </section>
 
-      <footer class="footer">
-        <p class="contact-title">Comunicate con nosotros</p>
-        <div class="contact-info">
-          <span>🟢 +54 9 3548 32-0643</span>
-          <span>✉️ jfqmw@esc.edu.ar</span>
+          <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-mark" aria-hidden="true">P</div>
+          <div class="footer-brand-copy">
+            <strong>Tutorías PROA</strong>
+            <span>Acompañamiento académico y educativo</span>
+          </div>
         </div>
-        <p class="copyright">© 2026 Tutorías ProA · Sistema de tutorías</p>
-      </footer>
+
+        <nav class="footer-links" aria-label="Información de contacto">
+          <a href="https://wa.me/5493548320643" target="_blank" rel="noopener noreferrer">
+            <span aria-hidden="true">◉</span>
+            WhatsApp · +54 9 3548 32-0643
+          </a>
+          <a href="mailto:jfqmw@esc.edu.ar">
+            <span aria-hidden="true">✉</span>
+            jfqmw@esc.edu.ar
+          </a>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© {{ new Date().getFullYear() }} Tutorías PROA</span>
+        <span>Todos los derechos reservados</span>
+      </div>
+    </footer>
 
     </main>
   </div>
@@ -380,10 +399,145 @@ tbody tr:hover { background: #fafbff; }
 .contact a:hover { color: #5159d8; text-decoration: underline; }
 .empty { text-align: center; padding: 40px; color: #999; }
 
-.footer { margin-top: auto; border-top: 1px solid #dcdcdc; padding: 25px 0 20px; text-align: center; }
-.contact-title { margin: 0 0 15px; color: #777; font-size: 15px; }
-.contact-info { display: flex; justify-content: center; align-items: center; gap: 40px; color: #888; font-size: 13px; }
-.copyright { margin: 15px 0 0; color: #aaa; font-size: 12px; }
+/* =========================================
+   FOOTER INSTITUCIONAL
+========================================= */
+
+.footer {
+  width: 100%;
+  margin-top: auto;
+  padding: 32px clamp(20px, 5vw, 64px) 18px;
+  color: #f7f8f4;
+  background: linear-gradient(135deg, #263f33 0%, #345b46 100%);
+  border-top: 3px solid #b8794b;
+}
+
+.footer-content {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-mark {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+
+.footer-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.footer-brand-copy strong {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.footer-brand-copy span {
+  color: rgba(255, 255, 255, .72);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 9px;
+  color: #fff;
+  background: rgba(255, 255, 255, .07);
+  font-size: 12px;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.footer-links a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .16);
+  border-color: rgba(255, 255, 255, .42);
+  transform: translateY(-1px);
+}
+
+.footer-links a span {
+  color: #e4bd91;
+  font-size: 15px;
+}
+
+.footer-bottom {
+  width: 100%;
+  max-width: 1180px;
+  margin: 24px auto 0;
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .62);
+  font-size: 11px;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 27px 20px 17px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
+  .footer-links {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footer-links a {
+    justify-content: flex-start;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 7px;
+    margin-top: 20px;
+  }
+}
+
 
 @media (max-width: 800px) {
   .sidebar { width: 210px; min-width: 210px; }
