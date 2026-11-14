@@ -334,6 +334,7 @@
 
 
 <script>
+import { supabase } from "./lib/supabase.js"
 
 export default {
 
@@ -369,10 +370,8 @@ export default {
       localStorage.setItem("tutorias-theme", theme)
     },
 
-    bloquearCuenta() {
-      // El prototipo puede cerrar la sesión local; el bloqueo remoto requiere un backend de autenticación.
-      localStorage.removeItem("sistemaTutoriasSession")
-      this.$router.push("/")
+    async bloquearCuenta() {
+      await this.cerrarSesion()
     },
 
 
@@ -385,10 +384,13 @@ export default {
     },
 
 
-    cerrarSesion() {
-      // Cierra la sesión local además de volver a la pantalla de acceso.
-      localStorage.removeItem("sistemaTutoriasSession")
-      this.$router.push("/")
+    async cerrarSesion() {
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        alert("No se pudo cerrar la sesión. Intentá de nuevo.")
+        return
+      }
+      await this.$router.push("/")
     }
 
   }

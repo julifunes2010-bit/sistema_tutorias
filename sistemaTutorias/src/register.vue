@@ -93,9 +93,9 @@
 
 
         <!-- REGISTRARSE -->
-        <button type="submit">
-  Registrarse
-</button>
+        <button type="submit" :disabled="cargando">
+          {{ cargando ? "Conectando…" : "Registrarse" }}
+        </button>
       </form>
 
 
@@ -120,109 +120,67 @@
 
 
 <script setup>
-
 import { ref, computed } from "vue"
 import { useRouter } from "vue-router"
+import { supabase } from "./lib/supabase.js"
 
 const router = useRouter()
-
-// Datos del formulario
 const email = ref("")
 const password = ref("")
 const confirmPassword = ref("")
 const rol = ref("profesor")
-
-// Mensaje de error
 const error = ref("")
-// Las cuentas del prototipo se conservan localmente en este navegador.
-const USERS_STORAGE_KEY = "sistemaTutoriasUsers"
+const cargando = ref(false)
 
-function leerUsuarios() {
-  try {
-    const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || "[]")
-    return Array.isArray(usuarios) ? usuarios : []
-  } catch {
-    return []
-  }
-}
+const esCorreoInstitucional = computed(() =>
+  /^[a-zA-Z0-9._%+-]+@escuelasproa\.edu\.ar$/.test(email.value.trim())
+)
 
-// Verificar correo institucional
-const esCorreoInstitucional = computed(() => {
-
-  const regex =
-    /^[a-zA-Z0-9._%+-]+@escuelasproa\.edu\.ar$/
-
-  return regex.test(email.value)
-
-})
-
-
-// REGISTRARSE
-function registrarse() {
-
+async function registrarse() {
   error.value = ""
 
-  // Verificar correo
   if (!esCorreoInstitucional.value) {
-
-    error.value =
-      "El correo ingresado no es institucional."
-
+    error.value = "Debes utilizar un correo institucional."
     return
   }
 
-
-  // Verificar contraseña
   if (password.value !== confirmPassword.value) {
-
-    error.value =
-      "Las contraseñas no coinciden."
-
+    error.value = "Las contraseñas no coinciden."
     return
   }
 
-
-  // Verificar contraseña vacía
-  if (password.value.length < 6) {
-
-    error.value =
-      "La contraseña debe tener al menos 6 caracteres."
-
+  if (password.value.length < 8) {
+    error.value = "La contraseña debe tener al menos 8 caracteres."
     return
   }
 
-  const correoRegistrado = email.value.trim().toLowerCase()
-  const usuarios = leerUsuarios()
-
-  if (usuarios.some(usuario => usuario.email === correoRegistrado)) {
-    error.value = "Ya existe una cuenta con ese correo."
-    return
-  }
-
-  usuarios.push({
-    email: correoRegistrado,
-    password: password.value,
-    rol: rol.value
-  })
-
+  cargando.value = true
   try {
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(usuarios))
-  } catch {
-    error.value = "No se pudo guardar la cuenta en este navegador."
-    return
+    const { data, error: authError } = await supabase.auth.signUp({
+      email: email.value.trim().toLowerCase(),
+      password: password.value,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+        // Es un rol solicitado por el usuario, no un dato confiable para autorizar acciones.
+        data: { requested_role: rol.value }
+      }
+    })
+
+    if (authError) throw authError
+
+    if (data.session) {
+      await router.push("/home")
+      return
+    }
+
+    alert("Cuenta creada. Revisá tu correo y confirmá la dirección antes de iniciar sesión.")
+    await router.push("/")
+  } catch (authError) {
+    error.value = authError?.message || "No se pudo crear la cuenta. Revisá tu conexión e intentá de nuevo."
+  } finally {
+    cargando.value = false
   }
-
-  // Registro correcto
-  console.log("Correo:", correoRegistrado)
-  console.log("Rol:", rol.value)
-
-  alert("Cuenta creada correctamente.")
-
-  // Volver al login
-  router.push("/")
-
 }
-
 </script>
 
 

@@ -9,6 +9,7 @@ import recuperar from "../recuperar.vue"
 import cursos from "../cursos.vue"
 import NuevaCitacion from "../nueva-citacion.vue"
 import MisCitaciones from "../misCitaciones.vue"
+import { supabase } from "../lib/supabase.js"
 
 // para usar router pega este codigo en la terminal: npm install vue-router
 const router = createRouter({
@@ -68,10 +69,11 @@ const router = createRouter({
 
 })
 
-// Protege las pantallas internas: el acceso se habilita solo tras iniciar sesión en este navegador.
-router.beforeEach((to) => {
+// Este guard mejora la navegación; las reglas RLS protegen los datos en la base.
+router.beforeEach(async (to) => {
   const rutasPublicas = ["/", "/register", "/recuperar"]
-  const sesionActiva = Boolean(localStorage.getItem("sistemaTutoriasSession"))
+  const { data, error } = await supabase.auth.getSession()
+  const sesionActiva = !error && Boolean(data.session)
 
   if (!rutasPublicas.includes(to.path) && !sesionActiva) return "/"
   if (to.path === "/" && sesionActiva) return "/home"
