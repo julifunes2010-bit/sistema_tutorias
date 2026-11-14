@@ -28,6 +28,10 @@
         Ingresá a tu cuenta para continuar
       </p>
 
+      <p v-if="mensajeError" class="error-message" role="alert">
+        {{ mensajeError }}
+      </p>
+
 
       <!-- =========================
            FORMULARIO
@@ -48,18 +52,9 @@
             type="email"
             v-model="email"
             placeholder="Ingresá tu correo"
-            :class="{ 'input-error': errorTipo === 'email' || errorTipo === 'ambos' }"
             @input="limpiarError"
             required
           />
-
-          <!-- Error correo -->
-          <p
-            v-if="errorTipo === 'email' || errorTipo === 'ambos'"
-            class="error-message"
-          >
-            El correo electrónico no coincide.
-          </p>
 
         </div>
 
@@ -78,12 +73,7 @@
               :type="mostrarPassword ? 'text' : 'password'"
               v-model="password"
               placeholder="Ingresá tu contraseña"
-              :class="{
-                'input-error':
-                  errorTipo === 'password' ||
-                  errorTipo === 'ambos'
-              }"
-              @input="limpiarError"
+                @input="limpiarError"
               required
             />
 
@@ -153,15 +143,6 @@
 
           </div>
 
-
-          <!-- Error contraseña -->
-          <p
-            v-if="errorTipo === 'password' || errorTipo === 'ambos'"
-            class="error-message"
-          >
-            La contraseña no coincide.
-          </p>
-
         </div>
 
 
@@ -195,8 +176,9 @@
         <button
           type="submit"
           class="login-button"
+          :disabled="cargando"
         >
-          INICIAR SESIÓN
+          {{ cargando ? "CONECTANDO…" : "INICIAR SESIÓN" }}
         </button>
 
       </form>
@@ -275,23 +257,12 @@
 
 
 <script>
+import { useRouter } from "vue-router"
+import { supabase } from "./lib/supabase.js"
 
-import { useRouter } from 'vue-router'
-
-const USERS_STORAGE_KEY = "sistemaTutoriasUsers"
 const REMEMBERED_EMAIL_KEY = "sistemaTutoriasRememberedEmail"
 
-function leerUsuarios() {
-  try {
-    const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY) || "[]")
-    return Array.isArray(usuarios) ? usuarios : []
-  } catch {
-    return []
-  }
-}
-
 function correoNormalizado(correo) {
-  // Normaliza también valores incompletos de localStorage para que una entrada dañada no rompa el login.
   return String(correo || "").trim().toLowerCase()
 }
 
@@ -303,143 +274,60 @@ function correoRecordado() {
   }
 }
 
-
 export default {
-
   name: "Login",
 
-
   setup() {
-
-    const router = useRouter()
-    return { router }
-
+    return { router: useRouter() }
   },
 
   data() {
-
     return {
-
-      // Datos del formulario
-
       email: correoRecordado(),
-
       password: "",
-
-
-      // Checkbox
-
       recordar: false,
-
-
-      // Mostrar contraseña
-
       mostrarPassword: false,
-
-
-      // Tipo de error
-
-      errorTipo: ""
-
+      mensajeError: "",
+      cargando: false
     }
-
   },
 
-
   methods: {
-
-
-    /* =========================
-       INICIAR SESIÓN
-    ========================== */
-
-    iniciarSesion() {
-
-      // Eliminamos errores anteriores
-
-      this.errorTipo = ""
-
-
-      const correoIngresado = correoNormalizado(this.email)
-      const usuarioRegistrado = leerUsuarios().find(
-        usuario => correoNormalizado(usuario.email) === correoIngresado
-      )
-      // Solo se autentican cuentas registradas en este navegador; se quita la credencial fija de demostración.
-      const correoValido = Boolean(usuarioRegistrado)
-      const passwordValida = Boolean(usuarioRegistrado) && usuarioRegistrado.password === this.password
-
-      if (!correoValido && !passwordValida) {
-
-        this.errorTipo = "ambos"
-
-        return
-
-      }
-
-
-      // Correo incorrecto
-
-      if (!correoValido) {
-
-        this.errorTipo = "email"
-
-        return
-
-      }
-
-
-      // Contraseña incorrecta
-
-      if (!passwordValida) {
-
-        this.errorTipo = "password"
-
-        return
-
-      }
-
-
-      // =========================
-      // LOGIN CORRECTO
-      // =========================
+    async iniciarSesion() {
+      this.mensajeError = ""
+      this.cargando = true
 
       try {
-        // Esta marca permite al guard del router proteger las pantallas internas.
-        localStorage.setItem("sistemaTutoriasSession", correoIngresado)
-        if (this.recordar) {
-          localStorage.setItem(REMEMBERED_EMAIL_KEY, correoIngresado)
-        } else {
-          localStorage.removeItem(REMEMBERED_EMAIL_KEY)
+        const { error } = await supabase.auth.signInWithPassword({
+          email: correoNormalizado(this.email),
+          password: this.password
+        })
+
+        if (error) throw error
+
+        try {
+          if (this.recordar) {
+            localStorage.setItem(REMEMBERED_EMAIL_KEY, correoNormalizado(this.email))
+          } else {
+            localStorage.removeItem(REMEMBERED_EMAIL_KEY)
+          }
+        } catch {
+          // Recordar el correo es opcional y no afecta la autenticación.
         }
-      } catch {
-        // El inicio de sesión no debe fallar si el navegador bloquea el almacenamiento.
+
+        await this.router.push("/home")
+      } catch (error) {
+        this.mensajeError = error?.message || "No se pudo iniciar sesión. Revisá tu conexión e intentá de nuevo."
+      } finally {
+        this.cargando = false
       }
-
-      this.router.push("/home")
-
     },
-
-
-    /* =========================
-       LIMPIAR ERROR
-    ========================== */
 
     limpiarError() {
-
-      this.errorTipo = ""
-
-    },
-
-
-    /* =========================
-       RECUPERAR CONTRASEÑA
-    ========================== */
-
-
+      this.mensajeError = ""
+    }
   }
-
 }
-
 </script>
 
 
