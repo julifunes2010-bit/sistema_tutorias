@@ -7,41 +7,183 @@
     ========================================== -->
 
     <aside class="sidebar">
-      <!-- Navegación compartida para mantener el mismo lateral en todas las pantallas. -->
-      <router-link to="/home" class="sidebar-brand sidebar-brand-link">
-        <img class="brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
-        <div>
-          <h2>Tutorías</h2>
-          <span>ProA</span>
-        </div>
-      </router-link>
 
+      <!-- LOGO / NOMBRE -->
+      <div class="sidebar-header">
+
+        <div class="logo">
+          T
+        </div>
+
+        <div class="brand">
+
+          <span class="brand-title">
+            Tutorías
+          </span>
+
+          <span class="brand-subtitle">
+            ProA
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- SEPARADOR -->
+      <div class="separator"></div>
+
+
+      <!-- MENÚ PRINCIPAL -->
       <nav class="menu">
-        <router-link to="/home" class="menu-item">
-          <span class="icon">⌂</span>
-          <span>Inicio</span>
+
+        <!-- INICIO -->
+        <router-link
+          to="/home"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ♧
+          </span>
+
+          <span>
+            Inicio
+          </span>
+
         </router-link>
-        <router-link to="/nueva-citacion" class="menu-item">
-          <span class="icon">＋</span>
-          <span>Nueva citación</span>
+
+
+        <!-- NUEVA CITACIÓN -->
+        <router-link
+          to="/nueva-citacion"
+          class="menu-item"
+        >
+
+          <span class="menu-icon plus">
+            +
+          </span>
+
+          <span>
+            Nueva citación
+          </span>
+
         </router-link>
-        <router-link to="/mis-citaciones" class="menu-item">
-          <span class="icon">▣</span>
-          <span>Mis citaciones</span>
+
+
+        <!-- MIS CITACIONES -->
+        <router-link
+          to="/mis-citaciones"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ▣
+          </span>
+
+          <span>
+            Mis citaciones
+          </span>
+
         </router-link>
-        <router-link to="/cursos" class="menu-item">
-          <span class="icon">▤</span>
-          <span>Cursos</span>
+
+
+        <!-- CURSOS -->
+        <router-link
+          to="/cursos"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ▤
+          </span>
+
+          <span>
+            Cursos
+          </span>
+
         </router-link>
-        <router-link to="/reportes" class="menu-item">
-          <span class="icon">▥</span>
-          <span>Reportes</span>
+
+
+        <!-- MATERIAS -->
+        <router-link
+          to="/materias"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            📚
+          </span>
+
+          <span>
+            Materias
+          </span>
+
         </router-link>
-        <router-link to="/setting" class="menu-item">
-          <span class="icon">≡</span>
-          <span>Configuración</span>
+
+
+        
+
+
+        <!-- HORARIOS -->
+        <router-link
+          to="/horarios"
+          class="menu-item"
+        >
+
+          <span class="menu-icon">
+            ◷
+          </span>
+
+          <span>
+            Horarios de tutoría
+          </span>
+
         </router-link>
+
       </nav>
+
+
+      <!-- =========================================
+           OPCIONES INFERIORES
+      ========================================== -->
+
+      <div class="bottom-menu">
+
+        <!-- REPORTES -->
+        <router-link
+          class="menu-item bottom-item active"
+        >
+
+          <span class="menu-icon">
+            ⚙
+          </span>
+
+          <span>
+            Reportes
+          </span>
+
+        </router-link>
+
+
+        <!-- CONFIGURACIÓN -->
+        <router-link
+          to="/Setting"
+          class="menu-item bottom-item"
+        >
+
+          <span class="menu-icon">
+            ⚙
+          </span>
+
+          <span>
+            Configuración
+          </span>
+
+        </router-link>
+
+      </div>
+
     </aside>
 
 
@@ -157,12 +299,12 @@
         <div class="contact-info">
 
           <span>
-            Tel. +54 9 3548 32-0643
+            🟢 +54 9 3548 32-0643
           </span>
 
 
           <span>
-            Correo jfqmw@esc.edu.ar
+            ✉️ jfqmw@esc.edu.ar
           </span>
 
         </div>
@@ -187,8 +329,11 @@ export default {
   methods: {
 
     contactar() {
-      // El botón abre un correo dirigido al contacto que figura en esta pantalla.
-      window.location.href = "mailto:jfqmw@esc.edu.ar?subject=Consulta%20sobre%20Tutor%C3%ADas%20ProA"
+
+      alert(
+        "Podés comunicarte con nosotros mediante WhatsApp o correo electrónico."
+      )
+
     }
 
   }

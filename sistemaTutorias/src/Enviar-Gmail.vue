@@ -1,7 +1,6 @@
 <template>
   <div class="forgot-container">
     <div class="forgot-box">
-      <img class="auth-brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
       <h1>RECUPERAR CONTRASEÑA</h1>
 
       <p class="subtitle">
@@ -19,7 +18,7 @@
           required
         />
 
-        <p v-if="error" class="error">! {{ error }}</p>
+        <p v-if="error" class="error">⚠ {{ error }}</p>
         <p v-if="mensaje" class="success">✓ {{ mensaje }}</p>
 
         <button type="submit" :disabled="cargando">
