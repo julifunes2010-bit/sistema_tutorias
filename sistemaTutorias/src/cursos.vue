@@ -4,13 +4,13 @@
 
     <!-- BARRA LATERAL -->
     <aside class="sidebar">
-      <div class="sidebar-header">
-        <div class="logo">T</div>
+      <router-link to="/home" class="sidebar-header sidebar-brand-link">
+        <img class="brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
         <div class="brand">
           <span class="brand-title">Tutorías</span>
           <span class="brand-subtitle">ProA</span>
         </div>
-      </div>
+      </router-link>
 
       <div class="separator"></div>
 
@@ -36,12 +36,12 @@
         </router-link>
 
         <router-link to="/reportes" class="menu-item">
-          <span class="menu-icon">📊</span>
+          <span class="menu-icon">▥</span>
           <span>Reportes</span>
         </router-link>
 
         <router-link to="/setting" class="menu-item">
-          <span class="menu-icon">⚙</span>
+          <span class="menu-icon">≡</span>
           <span>Configuración</span>
         </router-link>
       </nav>
@@ -125,7 +125,7 @@
             <tbody>
               <tr v-for="curso in cursosFiltrados" :key="curso.id">
                 <td class="course-name">
-                  <div class="course-icon">📚</div>
+                  <div class="course-icon">▤</div>
                   <span>{{ curso.nombre }}</span>
                 </td>
                 <td>{{ curso.ano }}</td>
@@ -147,8 +147,8 @@
       <footer class="footer">
         <p class="contact-title">Comunicate con nosotros</p>
         <div class="contact-info">
-          <span>🟢 +54 9 3548 32-0643</span>
-          <span>✉️ jfqmw@esc.edu.ar</span>
+          <span>Tel. +54 9 3548 32-0643</span>
+          <span>Correo jfqmw@esc.edu.ar</span>
         </div>
         <p class="copyright">© 2026 Tutorías ProA · Sistema de tutorías</p>
       </footer>

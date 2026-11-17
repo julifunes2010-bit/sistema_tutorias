@@ -3,13 +3,13 @@
 
     <!-- BARRA LATERAL -->
     <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-icon">T</div>
+      <router-link to="/home" class="logo sidebar-brand-link">
+        <img class="brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
         <div>
           <h2>Tutorías</h2>
           <span>ProA</span>
         </div>
-      </div>
+      </router-link>
 
       <nav class="menu">
         <router-link to="/home" class="menu-item">
@@ -33,12 +33,12 @@
         </router-link>
 
         <router-link to="/reportes" class="menu-item">
-          <span class="icon">📊</span>
+          <span class="icon">▥</span>
           <span>Reportes</span>
         </router-link>
 
         <router-link to="/setting" class="menu-item">
-          <span class="icon">⚙</span>
+          <span class="icon">≡</span>
           <span>Configuración</span>
         </router-link>
       </nav>
@@ -51,23 +51,11 @@
           <h1>Nueva citación</h1>
           <p>Programá una nueva tutoría para un estudiante</p>
         </div>
-
-        <div class="user-area">
-          <span class="notification">🔔</span>
-
-          <div class="user">
-            <div class="avatar">👤</div>
-            <div>
-              <strong>Profe Luis</strong>
-              <small>Docente</small>
-            </div>
-          </div>
-        </div>
       </header>
 
       <section class="form-card">
         <div class="form-title">
-          <div class="form-icon">📅</div>
+          <div class="form-icon">◷</div>
           <div>
             <h2>Datos de la tutoría</h2>
             <p>Completá los datos para crear la citación.</p>
@@ -80,12 +68,7 @@
               <label for="ano">Año</label>
               <select id="ano" v-model="ano" required>
                 <option value="" disabled>Seleccioná el año</option>
-                <option>1° Año</option>
-                <option>2° Año</option>
-                <option>3° Año</option>
-                <option>4° Año</option>
-                <option>5° Año</option>
-                <option>6° Año</option>
+                <option v-for="opcion in anosDisponibles" :key="opcion" :value="opcion">{{ opcion }}</option>
               </select>
             </div>
 
@@ -166,13 +149,16 @@ const materia = ref("")
 const fecha = ref("")
 const hora = ref("")
 const mensaje = ref("")
+const anosDisponibles = ["1° Año", "2° Año", "3° Año", "4° Año", "5° Año", "6° Año"]
 const horariosDisponibles = [
   "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
   "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
   "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
   "17:00", "17:30", "18:00"
 ]
-const fechaMinima = new Date().toISOString().split("T")[0]
+// Usa la fecha local para que el límite no cambie por la diferencia horaria UTC.
+const hoy = new Date()
+const fechaMinima = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${String(hoy.getDate()).padStart(2, "0")}`
 const fechaFormateada = computed(() => {
   if (!fecha.value) return ""
   return new Intl.DateTimeFormat("es-AR", { day: "2-digit", month: "long", year: "numeric" })
@@ -180,6 +166,11 @@ const fechaFormateada = computed(() => {
 })
 
 function crearCitacion() {
+  if (!anosDisponibles.includes(ano.value)) {
+    mensaje.value = "Seleccioná un año válido, del 1° al 6° Año."
+    return
+  }
+
   if (!horariosDisponibles.includes(hora.value)) {
     mensaje.value = "Seleccioná un horario válido, disponible entre las 08:00 y las 18:00."
     return
@@ -193,8 +184,15 @@ function crearCitacion() {
     hora: hora.value
   }
 
-  const guardadas = localStorage.getItem("citaciones")
-  const citaciones = guardadas ? JSON.parse(guardadas) : []
+  let citaciones = []
+  try {
+    const guardadas = JSON.parse(localStorage.getItem("citaciones") || "[]")
+    citaciones = Array.isArray(guardadas) ? guardadas : []
+  } catch {
+    // Si el almacenamiento quedó corrupto, se informa y se evita descartar o pisar datos en silencio.
+    mensaje.value = "No se pudieron leer las citaciones guardadas. Revisá el almacenamiento de este navegador."
+    return
+  }
 
   const horarioOcupado = citaciones.some(citacion => citacion.fecha === fecha.value && citacion.hora === hora.value)
   if (horarioOcupado) {
@@ -203,7 +201,13 @@ function crearCitacion() {
   }
 
   citaciones.push(nuevaCitacion)
-  localStorage.setItem("citaciones", JSON.stringify(citaciones))
+  try {
+    localStorage.setItem("citaciones", JSON.stringify(citaciones))
+  } catch {
+    // El formulario permanece visible si el navegador no permite guardar.
+    mensaje.value = "No se pudo guardar la citación en este navegador."
+    return
+  }
 
   router.push("/mis-citaciones")
 }

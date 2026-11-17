@@ -1,230 +1,120 @@
 <template>
   <div class="pagina">
-
     <div class="contenedor">
-
+      <img class="auth-brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
       <h1>RECUPERAR<br>CONTRASEÑA</h1>
 
-      <!-- INGRESAR CORREO -->
-      <div v-if="!mostrarCodigo">
-
-        <p class="descripcion">
-          Ingresá tu correo electrónico para recuperar tu contraseña.
-        </p>
-
+      <form v-if="!actualizandoPassword" @submit.prevent="enviarCodigo">
+        <p class="descripcion">Ingresá tu correo institucional y te enviaremos un enlace para restablecer la contraseña.</p>
         <div class="campo">
           <label for="correo">Correo electrónico</label>
-
-          <input
-            id="correo"
-            v-model="correo"
-            type="email"
-            placeholder="Ingresá tu correo"
-          >
+          <input id="correo" v-model.trim="correo" type="email" autocomplete="email" required placeholder="Ingresá tu correo">
         </div>
-
-        <button class="boton" @click="enviarCodigo">
-          Continuar
+        <button class="boton" type="submit" :disabled="cargando">
+          {{ cargando ? "Enviando…" : "Enviar enlace" }}
         </button>
+      </form>
 
-      </div>
-
-
-      <!-- INGRESAR CÓDIGO -->
-      <div v-else>
-
-        <p class="descripcion">
-          Ingresá el código de 6 dígitos que recibiste en tu correo.
-        </p>
-
-        <div class="codigo">
-
-          <input
-            v-for="(numero, index) in codigo"
-            :key="index"
-            v-model="codigo[index]"
-            maxlength="1"
-            type="text"
-            inputmode="numeric"
-            class="numero"
-            @input="siguienteCasillero(index)"
-          >
-
+      <form v-else @submit.prevent="cambiarPassword">
+        <p class="descripcion">Elegí una contraseña nueva para tu cuenta.</p>
+        <div class="campo">
+          <label for="nueva-password">Nueva contraseña</label>
+          <input id="nueva-password" v-model="nuevaPassword" type="password" minlength="8" autocomplete="new-password" required>
         </div>
-
-        <button
-  class="boton"
-  @click="verificarCodigo"
-  
->
-  Continuar
-</button>
-
-        <button class="boton volver" @click="volver">
-          Volver
+        <div class="campo">
+          <label for="confirmar-password">Confirmar contraseña</label>
+          <input id="confirmar-password" v-model="confirmarPassword" type="password" minlength="8" autocomplete="new-password" required>
+        </div>
+        <button class="boton" type="submit" :disabled="cargando">
+          {{ cargando ? "Guardando…" : "Cambiar contraseña" }}
         </button>
+      </form>
 
-      </div>
-
-
-      <!-- MENSAJES -->
-      <p
-        v-if="mensaje"
-        :class="tipoMensaje"
-      >
-        {{ mensaje }}
-      </p>
-
+      <p v-if="mensaje" :class="tipoMensaje" role="status">{{ mensaje }}</p>
+      <router-link to="/" class="volver-login">Volver al inicio de sesión</router-link>
     </div>
-
   </div>
 </template>
 
-
 <script setup>
+import { onUnmounted, ref } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { supabase } from "./lib/supabase.js"
 
-import { ref } from "vue"
-
-const correo = ref("")
-
-const mostrarCodigo = ref(false)
-
-const codigo = ref([
-  "",
-  "",
-  "",
-  "",
-  "",
-  ""
-])
-
-// Código que se genera al presionar "Enviar código"
-const codigoGenerado = ref("")
-
+const route = useRoute()
+const router = useRouter()
+const correo = ref(String(route.query.email || ""))
+const actualizandoPassword = ref(false)
+const nuevaPassword = ref("")
+const confirmarPassword = ref("")
 const mensaje = ref("")
-
 const tipoMensaje = ref("")
+const cargando = ref(false)
 
-
-
-function enviarCodigo() {
-
-  if (correo.value === "") {
-
-    mensaje.value =
-      "Por favor, ingresá tu correo electrónico."
-
-    tipoMensaje.value = "error"
-
-    return
+const { data: authListener } = supabase.auth.onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY" || (event === "INITIAL_SESSION" && window.location.hash.includes("type=recovery"))) {
+    actualizandoPassword.value = true
+    mensaje.value = ""
   }
+})
+onUnmounted(() => authListener.subscription.unsubscribe())
 
-  if (!correo.value.includes("@")) {
-
-    mensaje.value =
-      "Ingresá un correo electrónico válido."
-
-    tipoMensaje.value = "error"
-
-    return
-  }
-
-  // Genera un código aleatorio de 6 números
-  codigoGenerado.value =
-    Math.floor(100000 + Math.random() * 900000).toString()
-
-  // Para el prototipo, mostramos el código en la consola
-  console.log("Código generado:", codigoGenerado.value)
-
-  // Muestra la pantalla para ingresar el código
-  mostrarCodigo.value = true
-
-  mensaje.value =
-    "Se generó un código de verificación."
-
-  tipoMensaje.value = "correcto"
-}
-
-
-
-function siguienteCasillero(index) {
-
-  // Solo permite números
-  codigo.value[index] =
-    codigo.value[index].replace(/\D/g, "")
-
-  // Pasa automáticamente al siguiente casillero
-  if (
-    codigo.value[index] !== "" &&
-    index < 5
-  ) {
-
-    const casilleros =
-      document.querySelectorAll(".numero")
-
-    casilleros[index + 1].focus()
-  }
-}
-
-
-
-function verificarCodigo() {
-
-  // Une los 6 casilleros
-  const codigoCompleto =
-    codigo.value.join("")
-
-  // Comprueba que haya 6 números
-  if (codigoCompleto.length !== 6) {
-
-    mensaje.value =
-      "Ingresá los 6 números del código."
-
-    tipoMensaje.value = "error"
-
-    return
-  }
-
-  // Comprueba que el código sea correcto
-  if (codigoCompleto !== codigoGenerado.value) {
-
-    mensaje.value =
-      "El código ingresado es incorrecto."
-
-    tipoMensaje.value = "error"
-
-    return
-  }
-
-  // Código correcto
-  mensaje.value =
-    "Código verificado correctamente."
-
-  tipoMensaje.value = "correcto"
-}
-
-
-
-function volver() {
-
-  mostrarCodigo.value = false
-
-  codigo.value = [
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
-  ]
-
+async function enviarCodigo() {
   mensaje.value = ""
-
   tipoMensaje.value = ""
+  cargando.value = true
+
+  try {
+    const institucional = /^[a-zA-Z0-9._%+-]+@escuelasproa\.edu\.ar$/.test(correo.value.trim())
+    if (!institucional) throw new Error("Ingresá un correo institucional válido.")
+
+    const { error } = await supabase.auth.resetPasswordForEmail(
+      correo.value.trim().toLowerCase(),
+      { redirectTo: `${window.location.origin}/recuperar` }
+    )
+    if (error) throw error
+
+    mensaje.value = "Si la cuenta existe, recibirás un enlace para cambiar la contraseña. Revisá también el correo no deseado."
+    tipoMensaje.value = "correcto"
+  } catch (error) {
+    mensaje.value = error?.message || "No se pudo enviar el enlace. Intentá de nuevo."
+    tipoMensaje.value = "error"
+  } finally {
+    cargando.value = false
+  }
 }
 
-</script>
+async function cambiarPassword() {
+  mensaje.value = ""
+  tipoMensaje.value = ""
 
+  if (nuevaPassword.value.length < 8) {
+    mensaje.value = "La contraseña debe tener al menos 8 caracteres."
+    tipoMensaje.value = "error"
+    return
+  }
+  if (nuevaPassword.value !== confirmarPassword.value) {
+    mensaje.value = "Las contraseñas no coinciden."
+    tipoMensaje.value = "error"
+    return
+  }
+
+  cargando.value = true
+  try {
+    const { error } = await supabase.auth.updateUser({ password: nuevaPassword.value })
+    if (error) throw error
+    await supabase.auth.signOut()
+    mensaje.value = "Contraseña actualizada. Ya podés iniciar sesión."
+    tipoMensaje.value = "correcto"
+    setTimeout(() => router.push("/"), 900)
+  } catch (error) {
+    mensaje.value = error?.message || "No se pudo actualizar la contraseña. Volvé a pedir el enlace."
+    tipoMensaje.value = "error"
+  } finally {
+    cargando.value = false
+  }
+}
+</script>
 
 <style scoped>
 

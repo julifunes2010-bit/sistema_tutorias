@@ -5,13 +5,13 @@
     <aside class="sidebar">
 
       <!-- Logo -->
-      <div class="logo">
-        <div class="logo-icon">T</div>
+      <router-link to="/home" class="logo sidebar-brand-link">
+        <img class="brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
         <div>
           <h2>Tutorías</h2>
           <span>ProA</span>
         </div>
-      </div>
+      </router-link>
 
       <!-- Menú -->
       <nav class="menu">
@@ -40,12 +40,12 @@
         </router-link>
 
         <router-link to="/reportes" class="menu-item">
-          <span class="icon">📊</span>
+          <span class="icon">▥</span>
           <span>Reportes</span>
         </router-link>
 
         <router-link to="/setting" class="menu-item">
-          <span class="icon">⚙</span>
+          <span class="icon">≡</span>
           <span>Configuración</span>
         </router-link>
 
@@ -64,18 +64,7 @@
           <p>Panel principal del sistema de tutorías</p>
         </div>
 
-        <div class="user-area">
-          <span class="notification">🔔</span>
-
-          <div class="user">
-            <div class="avatar">👤</div>
-
-            <div>
-              <strong>Profe Luis</strong>
-              <small>Docente</small>
-            </div>
-          </div>
-        </div>
+        <ProfileEditor @saved="actualizarPerfil" />
 
       </header>
 
@@ -83,7 +72,7 @@
       <section class="welcome">
 
         <div>
-          <h2>¡Hola, Profe Luis! 👋</h2>
+          <h2>Hola, Profe {{ perfilNombre }}</h2>
 
           <p>
             Bienvenido al sistema de tutorías.
@@ -97,26 +86,26 @@
       <section class="cards">
 
         <div class="card">
-          <div class="card-icon">📅</div>
+          <div class="card-icon">◷</div>
           <div>
             <span>Próximas tutorías</span>
-            <h3>2</h3>
+            <h3>{{ proximasTutorias }}</h3>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-icon">👥</div>
+          <div class="card-icon">＋</div>
           <div>
             <span>Estudiantes citados</span>
-            <h3>8</h3>
+            <h3>{{ estudiantesCitados }}</h3>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-icon">📚</div>
+          <div class="card-icon">▤</div>
           <div>
             <span>Tutorías realizadas</span>
-            <h3>15</h3>
+            <h3>{{ tutoriasRealizadas }}</h3>
           </div>
         </div>
 
@@ -127,88 +116,28 @@
 
         <div class="section-header">
           <h2>Próximas tutorías</h2>
-          <button>Ver todas</button>
+          <router-link to="/mis-citaciones" class="ver-todas">Ver todas</router-link>
         </div>
 
-        <div class="tutorias">
-
-          <div class="tutoria">
+        <!-- La lista se obtiene de las citaciones reales guardadas en el navegador. -->
+        <div v-if="proximasLista.length" class="tutorias">
+          <div v-for="(citacion, index) in proximasLista" :key="`${citacion.fecha}-${citacion.hora}-${index}`" class="tutoria">
             <div class="fecha">
-              <strong>Miércoles</strong>
-              <span>19 de julio</span>
+              <strong>{{ new Intl.DateTimeFormat("es-AR", { weekday: "long" }).format(new Date(`${citacion.fecha}T00:00:00`)) }}</strong>
+              <span>{{ new Intl.DateTimeFormat("es-AR", { day: "numeric", month: "long" }).format(new Date(`${citacion.fecha}T00:00:00`)) }}</span>
             </div>
-
-            <div class="hora">
-              <strong>15:00 hs</strong>
-            </div>
-
+            <div class="hora"><strong>{{ citacion.hora }} hs</strong></div>
             <div class="alumno">
-              <div class="student-avatar">👤</div>
-              <div>
-                <strong>Juan Pérez</strong>
-                <span>5° Año</span>
-              </div>
+              <div class="student-avatar">&middot;</div>
+              <div><strong>{{ citacion.materia }}</strong><span>{{ citacion.ano }}</span></div>
             </div>
           </div>
-
-          <div class="tutoria">
-            <div class="fecha">
-              <strong>Viernes</strong>
-              <span>21 de julio</span>
-            </div>
-
-            <div class="hora">
-              <strong>16:00 hs</strong>
-            </div>
-
-            <div class="alumno">
-              <div class="student-avatar">👤</div>
-              <div>
-                <strong>Martina López</strong>
-                <span>4° Año</span>
-              </div>
-            </div>
-          </div>
-
         </div>
+        <p v-else class="sin-tutorias">No tenés tutorías próximas. <router-link to="/nueva-citacion">Agendá una</router-link>.</p>
 
       </section>
 
-      <!-- NOTIFICACIONES -->
-      <section class="section">
 
-        <div class="section-header">
-          <h2>Notificaciones</h2>
-          <button>Ver todas</button>
-        </div>
-
-        <div class="notifications">
-
-          <div class="notification-item">
-            <div class="notification-icon">🔔</div>
-
-            <div class="notification-text">
-              <strong>Nueva citación</strong>
-              <p>Se agregó una nueva tutoría.</p>
-            </div>
-
-            <span class="time">Hace 10 min</span>
-          </div>
-
-          <div class="notification-item">
-            <div class="notification-icon">📅</div>
-
-            <div class="notification-text">
-              <strong>Próxima tutoría</strong>
-              <p>Tenés una tutoría programada para hoy.</p>
-            </div>
-
-            <span class="time">Hace 1 h</span>
-          </div>
-
-        </div>
-
-      </section>
 
     </main>
 
@@ -217,9 +146,56 @@
 
 <script>
 import { useRouter } from "vue-router"
+import ProfileEditor from "./components/ProfileEditor.vue"
 
 export default {
   name: "Home",
+  // En Inicio se registra el acceso al editor; no se monta en las demás pantallas.
+  components: { ProfileEditor },
+
+  data() {
+    let perfil = { nombre: "Luis", apellido: "" }
+    try {
+      perfil = { ...perfil, ...JSON.parse(localStorage.getItem("sistemaTutoriasProfile") || "{}") }
+    } catch {
+      // Si hay datos locales inválidos, se conserva el nombre de ejemplo.
+    }
+    return { perfilNombre: [perfil.nombre, perfil.apellido].filter(Boolean).join(" ") }
+  },
+
+  methods: {
+    actualizarPerfil(perfil) {
+      // El componente ya guardó el perfil; aquí sincronizamos el saludo de esta pantalla.
+      this.perfilNombre = [perfil.nombre, perfil.apellido].filter(Boolean).join(" ")
+    }
+  },
+
+  // Las tarjetas se calculan a partir de las citaciones guardadas y dejan de mostrar cifras de ejemplo.
+  computed: {
+    citacionesGuardadas() {
+      try {
+        const datos = JSON.parse(localStorage.getItem("citaciones") || "[]")
+        return Array.isArray(datos) ? datos : []
+      } catch {
+        return []
+      }
+    },
+    proximasLista() {
+      const ahora = new Date()
+      const hoy = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, "0")}-${String(ahora.getDate()).padStart(2, "0")}`
+      return this.citacionesGuardadas.filter(item => item.fecha >= hoy && item.estado !== "realizada")
+        .sort((a, b) => `${a.fecha} ${a.hora}`.localeCompare(`${b.fecha} ${b.hora}`))
+    },
+    proximasTutorias() {
+      return this.proximasLista.length
+    },
+    estudiantesCitados() {
+      return new Set(this.citacionesGuardadas.map(item => item.estudiante || `${item.ano}-${item.materia}`)).size
+    },
+    tutoriasRealizadas() {
+      return this.citacionesGuardadas.filter(item => item.estado === "realizada").length
+    }
+  },
 
   setup() {
     const router = useRouter()

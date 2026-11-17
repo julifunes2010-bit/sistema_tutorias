@@ -3,13 +3,13 @@
 
     <!-- BARRA LATERAL -->
     <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-icon">T</div>
+      <router-link to="/home" class="logo sidebar-brand-link">
+        <img class="brand-logo" src="./assets/proa.jpg" alt="Logo ProA">
         <div>
           <h2>Tutorías</h2>
           <span>ProA</span>
         </div>
-      </div>
+      </router-link>
 
       <nav class="menu">
         <router-link to="/home" class="menu-item">
@@ -33,12 +33,12 @@
         </router-link>
 
         <router-link to="/reportes" class="menu-item">
-          <span class="icon">📊</span>
+          <span class="icon">▥</span>
           <span>Reportes</span>
         </router-link>
 
         <router-link to="/setting" class="menu-item">
-          <span class="icon">⚙</span>
+          <span class="icon">≡</span>
           <span>Configuración</span>
         </router-link>
       </nav>
@@ -51,24 +51,12 @@
           <h1>Mis citaciones</h1>
           <p>Consultá las tutorías que programaste.</p>
         </div>
-
-        <div class="user-area">
-          <span class="notification">🔔</span>
-
-          <div class="user">
-            <div class="avatar">👤</div>
-            <div>
-              <strong>Profe Luis</strong>
-              <small>Docente</small>
-            </div>
-          </div>
-        </div>
       </header>
 
       <!-- Las citaciones aparecen solamente cuando existen -->
       <section v-if="citaciones.length > 0" class="citaciones">
         <article v-for="(citacion, index) in citaciones" :key="index" class="citacion-card" :class="{ realizada: citacion.estado === 'realizada' }">
-          <div class="card-icon">📅</div>
+          <div class="card-icon">◷</div>
 
           <div class="datos">
             <div class="dato-principal">
@@ -109,6 +97,7 @@
           </div>
         </article>
       </section>
+      <p v-else class="empty-state">Todavía no hay citaciones. <router-link to="/nueva-citacion">Crear una citación</router-link>.</p>
     </main>
   </div>
 </template>
@@ -119,13 +108,15 @@ import { ref, onMounted } from "vue"
 const citaciones = ref([])
 
 function cargarCitaciones() {
-  const guardadas = localStorage.getItem("citaciones")
-
-  if (guardadas) {
-    citaciones.value = JSON.parse(guardadas).map(citacion => ({
+  try {
+    const guardadas = JSON.parse(localStorage.getItem("citaciones") || "[]")
+    // Valida la forma del dato guardado antes de renderizarlo para evitar que un JSON inválido rompa la pantalla.
+    citaciones.value = (Array.isArray(guardadas) ? guardadas : []).map(citacion => ({
       ...citacion,
       estado: citacion.estado || "pendiente"
     }))
+  } catch {
+    citaciones.value = []
   }
 }
 
@@ -133,7 +124,12 @@ function alternarEstado(index) {
   citaciones.value[index].estado = citaciones.value[index].estado === "realizada"
     ? "pendiente"
     : "realizada"
-  localStorage.setItem("citaciones", JSON.stringify(citaciones.value))
+  try {
+    localStorage.setItem("citaciones", JSON.stringify(citaciones.value))
+  } catch {
+    // Revierte la marca visual si el almacenamiento no pudo actualizarse.
+    citaciones.value[index].estado = citaciones.value[index].estado === "realizada" ? "pendiente" : "realizada"
+  }
 }
 
 function formatearFecha(fecha) {
